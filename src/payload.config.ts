@@ -22,9 +22,7 @@ export default buildConfig({
     },
     meta: {
       titleSuffix: '— SG U.N.S. Rheinhessen',
-      favicon: '/vereine/sguns_volleys.png',
     },
-    css: path.resolve(dirname, 'app/(payload)/admin/custom.css'),
     components: {
       graphics: {
         Logo: '/components/admin/AdminLogo#AdminLogo',
