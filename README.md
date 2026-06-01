@@ -11,7 +11,7 @@ npm run dev
 
 `.env` benötigt:
 ```
-DATABASE_URL=file:./payload.db
+DATABASE_URL=postgresql://...   (Neon Connection String)
 PAYLOAD_SECRET=<beliebiger-string>
 ```
 
@@ -59,8 +59,26 @@ Trainer sollen nur ihre eigene Mannschaft bearbeiten dürfen.
 - Access Control in `Mannschaften` Collection: Trainer darf nur eigene Mannschaft bearbeiten
 - Siehe Payload Docs: Access Control mit Query Constraints
 
-### Spielplan im CMS
-Aktuell sind Spielpläne statisch in `src/lib/mannschaften.ts` hardcodiert.
-- Neue Payload Collection `spiele` mit Feldern: datum, uhrzeit, heimspiel, gegner, ergebnis, mannschaft (Relation)
-- Detailseite liest Spielplan dann aus Payload statt aus statischer Datei
-- Erst relevant wenn SAMS-API nicht kommt
+### Sponsoren
+Sponsoren-Sektion auf der Startseite einbauen sobald Logos und URLs vorliegen.
+- Logos als PNG in `public/sponsoren/` ablegen
+- Neue Section `SpensorenSection.tsx` analog zu `UeberUnsSection.tsx`
+- Auf der Startseite zwischen Über uns und Aktuelles einbinden
+
+### Newsletter
+E-Mail-Newsletter für Vereinsnachrichten.
+- Empfehlung: Brevo (brevo.com) oder Mailchimp — kostenlos für kleine Verteiler
+- Anmeldeformular auf der Webseite einbinden
+- Newsletter werden direkt im jeweiligen Tool erstellt, kein Code nötig
+
+### Admin CSS Branding
+Payload Admin-Panel in Vereinsfarben — aktuell wegen fehlender Typ-Unterstützung deaktiviert.
+- `css`-Feld in `admin` Config ist in dieser Payload-Version nicht im Typ definiert
+- Custom CSS liegt bereits unter `src/app/(payload)/admin/custom.css`
+- Mit `// @ts-ignore` oberhalb der Zeile lässt sich das temporär erzwingen
+
+### Alle Mannschaften ins CMS
+Aktuell werden 2. und 3. Herren noch aus statischen Daten geladen.
+- Im Admin weitere Mannschaften anlegen (slug: `2-herren`, `3-herren`)
+- Danach statische Einträge in `src/lib/mannschaften.ts` entfernen
+
