@@ -25,7 +25,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-white/10">
           <div className="flex flex-col gap-4">
             <Image
-              src="/sguns_volleys.png"
+              src="/vereine/sguns_volleys.png"
               alt="SG U.N.S. Rheinhessen Volleys"
               width={200}
               height={200}
