@@ -2,7 +2,7 @@ export type Position = 'Zuspiel' | 'Außenannahme' | 'Diagonal' | 'Mittelblocker
 
 export type Spieler = {
   name: string
-  nummer: number
+  nummer?: number
   position: Position
   foto?: string
   nationalitaet?: string

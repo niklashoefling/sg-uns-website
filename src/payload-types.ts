@@ -207,7 +207,7 @@ export interface Mannschaften {
   spieler?:
     | {
         name: string;
-        nummer: number;
+        nummer?: number | null;
         position: 'Zuspiel' | 'Außenannahme' | 'Diagonal' | 'Mittelblocker' | 'Libero' | 'Universal';
         foto?: (number | null) | Media;
         nationalitaet?: string | null;

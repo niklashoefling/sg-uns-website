@@ -71,12 +71,6 @@ E-Mail-Newsletter für Vereinsnachrichten.
 - Anmeldeformular auf der Webseite einbinden
 - Newsletter werden direkt im jeweiligen Tool erstellt, kein Code nötig
 
-### Admin CSS Branding
-Payload Admin-Panel in Vereinsfarben — aktuell wegen fehlender Typ-Unterstützung deaktiviert.
-- `css`-Feld in `admin` Config ist in dieser Payload-Version nicht im Typ definiert
-- Custom CSS liegt bereits unter `src/app/(payload)/admin/custom.css`
-- Mit `// @ts-ignore` oberhalb der Zeile lässt sich das temporär erzwingen
-
 ### Alle Mannschaften ins CMS
 Aktuell werden 2. und 3. Herren noch aus statischen Daten geladen.
 - Im Admin weitere Mannschaften anlegen (slug: `2-herren`, `3-herren`)

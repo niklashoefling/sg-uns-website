@@ -27,7 +27,7 @@ export default function HeroSection() {
             Unsere Mannschaften
           </a>
           <a
-            href="#kontakt"
+            href="/kontakt"
             className="border-2 border-white/60 text-white hover:border-white hover:bg-white/10 font-semibold px-7 py-3 rounded-lg transition-colors"
           >
             Mitspielen

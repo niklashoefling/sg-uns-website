@@ -115,7 +115,6 @@ export const Mannschaften: CollectionConfig = {
         {
           name: 'nummer',
           type: 'number',
-          required: true,
         },
         {
           name: 'position',
