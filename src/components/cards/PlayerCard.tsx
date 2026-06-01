@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { positionFarbe } from '@/lib/utils'
 
 export type SpielerData = {
   name: string
@@ -31,9 +30,6 @@ export default function PlayerCard({ spieler }: { spieler: SpielerData }) {
 
       <div className="p-4">
         <p className="font-bold text-secondary text-sm mb-1">{spieler.name}</p>
-        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${positionFarbe[spieler.position] ?? 'bg-gray-100 text-gray-700'}`}>
-          {spieler.position}
-        </span>
 
         {(spieler.nationalitaet || spieler.geburtsjahr || spieler.groesse) && (
           <div className="mt-3 space-y-1 border-t border-gray-50 pt-3">
