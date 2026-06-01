@@ -2,6 +2,8 @@ import HeroSection from '@/components/sections/HeroSection'
 import UeberUnsSection from '@/components/sections/UeberUnsSection'
 import AktuellesPreview from '@/components/sections/AktuellesPreview'
 
+export const dynamic = 'force-dynamic'
+
 export default function HomePage() {
   return (
     <>

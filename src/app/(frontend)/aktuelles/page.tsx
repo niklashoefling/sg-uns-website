@@ -4,6 +4,8 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Artikel, Media } from '@/payload-types'
 
+export const dynamic = 'force-dynamic'
+
 function formatDatum(datum: string) {
   return new Date(datum).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })
 }
