@@ -48,7 +48,8 @@ Aktuell zeigt das Formular nur eine Erfolgsmeldung ohne echten Versand.
 
 ### Impressum & Datenschutz
 Gesetzlich Pflicht vor dem Go-Live.
-- Seiten unter `/impressum` und `/datenschutz` anlegen
+- Seiten `/impressum` und `/datenschutz` sind angelegt (Platzhalter)
+- Inhalt muss noch eingetragen werden
 - Datenschutzerklärung muss auf den eingesetzten Cookie/Tracking-Stand passen
 - Aktuell kein Tracking → einfache Erklärung reicht
 
@@ -72,7 +73,8 @@ E-Mail-Newsletter für Vereinsnachrichten.
 - Newsletter werden direkt im jeweiligen Tool erstellt, kein Code nötig
 
 ### Alle Mannschaften ins CMS
-Aktuell werden 2. und 3. Herren noch aus statischen Daten geladen.
+Aktuell werden 2. und 3. Herren noch aus statischen Daten in `src/lib/mannschaften.ts` geladen.
 - Im Admin weitere Mannschaften anlegen (slug: `2-herren`, `3-herren`)
-- Danach statische Einträge in `src/lib/mannschaften.ts` entfernen
+- Danach statische Einträge in `src/lib/mannschaften.ts` für diese Teams entfernen
+- 1. Herren ist bereits vollständig im CMS verwaltet
 
