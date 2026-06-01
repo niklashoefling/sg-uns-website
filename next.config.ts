@@ -12,6 +12,12 @@ const nextConfig: NextConfig = {
       { pathname: '/api/media/file/**' },
       { pathname: '/**' },
     ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.neon.tech',
+      },
+    ],
   },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
