@@ -69,6 +69,8 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    mannschaften: Mannschaften;
+    artikel: Artikel;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,13 +80,15 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    mannschaften: MannschaftenSelect<false> | MannschaftenSelect<true>;
+    artikel: ArtikelSelect<false> | ArtikelSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   fallbackLocale: null;
   globals: {};
@@ -122,7 +126,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -147,7 +151,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -162,11 +166,106 @@ export interface Media {
   focalY?: number | null;
 }
 /**
+ * Verwalte die Mannschaften der SG U.N.S. Rheinhessen
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mannschaften".
+ */
+export interface Mannschaften {
+  id: number;
+  /**
+   * URL-Bezeichner, z.B. "1-herren"
+   */
+  slug: string;
+  name: string;
+  liga: string;
+  /**
+   * z.B. "2025/26"
+   */
+  saison: string;
+  beschreibung: string;
+  trainer: string;
+  cotrainer?: string | null;
+  /**
+   * Kontaktadresse der Mannschaft, z.B. "1herren@sg-uns.de"
+   */
+  email?: string | null;
+  halle: string;
+  halleAdresse: string;
+  training: {
+    /**
+     * z.B. "Mittwoch"
+     */
+    tag: string;
+    /**
+     * z.B. "20:00 - 22:00 Uhr"
+     */
+    uhrzeit: string;
+    id?: string | null;
+  }[];
+  teamfoto?: (number | null) | Media;
+  spieler?:
+    | {
+        name: string;
+        nummer: number;
+        position: 'Zuspiel' | 'Außenannahme' | 'Diagonal' | 'Mittelblocker' | 'Libero' | 'Universal';
+        foto?: (number | null) | Media;
+        nationalitaet?: string | null;
+        geburtsjahr?: number | null;
+        /**
+         * in cm
+         */
+        groesse?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * News und Beiträge für die Aktuelles-Seite
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "artikel".
+ */
+export interface Artikel {
+  id: number;
+  titel: string;
+  /**
+   * URL-Bezeichner, z.B. "saisonauftakt-2025"
+   */
+  slug: string;
+  datum: string;
+  kategorie: 'Spieltag' | 'Vereinsnews' | 'Jugend' | 'Sonstiges';
+  /**
+   * Kurze Vorschau für die Übersichtsseite (1–2 Sätze)
+   */
+  teaser: string;
+  inhalt: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  bild?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string;
+  id: number;
   key: string;
   data:
     | {
@@ -183,20 +282,28 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'mannschaften';
+        value: number | Mannschaften;
+      } | null)
+    | ({
+        relationTo: 'artikel';
+        value: number | Artikel;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -206,10 +313,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -229,7 +336,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -274,6 +381,59 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mannschaften_select".
+ */
+export interface MannschaftenSelect<T extends boolean = true> {
+  slug?: T;
+  name?: T;
+  liga?: T;
+  saison?: T;
+  beschreibung?: T;
+  trainer?: T;
+  cotrainer?: T;
+  email?: T;
+  halle?: T;
+  halleAdresse?: T;
+  training?:
+    | T
+    | {
+        tag?: T;
+        uhrzeit?: T;
+        id?: T;
+      };
+  teamfoto?: T;
+  spieler?:
+    | T
+    | {
+        name?: T;
+        nummer?: T;
+        position?: T;
+        foto?: T;
+        nationalitaet?: T;
+        geburtsjahr?: T;
+        groesse?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "artikel_select".
+ */
+export interface ArtikelSelect<T extends boolean = true> {
+  titel?: T;
+  slug?: T;
+  datum?: T;
+  kategorie?: T;
+  teaser?: T;
+  inhalt?: T;
+  bild?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

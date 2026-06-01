@@ -1,67 +1,66 @@
-# Payload Blank Template
+# SG U.N.S. Rheinhessen Volleys – Website
 
-This template comes configured with the bare minimum to get started on anything you need.
+Next.js 16 + Payload CMS 3 Vereinswebseite für die SG U.N.S. Rheinhessen.
 
-## Quick start
+## Setup
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+```bash
+npm install
+npm run dev
+```
 
-## Quick Start - local setup
+`.env` benötigt:
+```
+DATABASE_URL=file:./payload.db
+PAYLOAD_SECRET=<beliebiger-string>
+```
 
-To spin up this template locally, follow these steps:
+Admin-Panel: `http://localhost:3000/admin`
 
-### Clone
+## Geplante Features / Backlog
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+### SAMS API – Tabellen & Spielpläne
+Die Ligatabellen und Spielpläne sollen langfristig automatisch aus der SAMS-Datenbank des DVV gezogen werden.
+- SAMS ist die offizielle Volleyball-Datenbank des DVV
+- API-Zugang muss beantragt werden (erst nach Projektgenehmigung)
+- Aktuell: Tabellendaten statisch in `src/lib/tabelle.ts`, Spielpläne in `src/lib/mannschaften.ts`
+- Ziel: `getTabelle(slug)` und Spielplan-Daten durch API-Calls ersetzen
 
-### Development
+### Google Kalender – Spieltermine
+Öffentlichen Google Kalender einbetten um Spieltermine zentral zu pflegen.
+- Kalender in Google Calendar anlegen und auf „öffentlich" stellen
+- Embed-Code über Google Calendar → Einstellungen → Kalender einbetten
+- Auf der Mannschaftsdetailseite oder einer eigenen Terminseite einbinden
+- Alternativ: iCal-Feed per API auslesen für natives Rendering
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+### Wegbeschreibungen zu den Hallen
+Karten-Embeds für die Spielhallen auf den Mannschaftsdetailseiten.
+- Google Maps Embed API (kein API-Key nötig für einfache Embeds)
+- Adresse ist bereits in der Mannschaften-Collection als `halleAdresse` gespeichert
+- Embed-URL Schema: `https://maps.google.com/maps?q=<adresse>&output=embed`
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+### Kontaktformular – E-Mail-Versand
+Aktuell zeigt das Formular nur eine Erfolgsmeldung ohne echten Versand.
+- Empfehlung: Resend (resend.com) – einfaches Setup, großzügiges Gratis-Kontingent
+- Alternative: Nodemailer mit SMTP
+- API-Route in `src/app/api/kontakt/route.ts` anlegen
+- Formular auf `fetch('/api/kontakt', ...)` umstellen
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+### Impressum & Datenschutz
+Gesetzlich Pflicht vor dem Go-Live.
+- Seiten unter `/impressum` und `/datenschutz` anlegen
+- Datenschutzerklärung muss auf den eingesetzten Cookie/Tracking-Stand passen
+- Aktuell kein Tracking → einfache Erklärung reicht
 
-#### Docker (Optional)
+### Rollen & Rechteverwaltung
+Trainer sollen nur ihre eigene Mannschaft bearbeiten dürfen.
+- `Users` Collection um `rolle`-Feld erweitern (`admin` | `trainer`)
+- Trainer-User einer Mannschaft zuweisen (Relationship-Feld)
+- Access Control in `Mannschaften` Collection: Trainer darf nur eigene Mannschaft bearbeiten
+- Siehe Payload Docs: Access Control mit Query Constraints
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
-
-To do so, follow these steps:
-
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
-
-## How it works
-
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
-
-### Collections
-
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
-
-- #### Users (Authentication)
-
-  Users are auth-enabled collections that have access to the admin panel.
-
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/3.x/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
-
-- #### Media
-
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
-
-### Docker
-
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
-
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
-
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
-
-## Questions
-
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+### Spielplan im CMS
+Aktuell sind Spielpläne statisch in `src/lib/mannschaften.ts` hardcodiert.
+- Neue Payload Collection `spiele` mit Feldern: datum, uhrzeit, heimspiel, gegner, ergebnis, mannschaft (Relation)
+- Detailseite liest Spielplan dann aus Payload statt aus statischer Datei
+- Erst relevant wenn SAMS-API nicht kommt
