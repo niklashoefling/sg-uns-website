@@ -2,7 +2,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import PageHeader from '@/components/layout/PageHeader'
 import type { Metadata } from 'next'
-import type { Media } from '@/payload-types'
+import { resolveMediaUrl } from '@/lib/media'
 
 export const dynamic = 'force-dynamic'
 
@@ -39,9 +39,7 @@ export default async function HallenPage() {
         )}
         <div className="grid md:grid-cols-2 gap-6">
           {hallen.map((halle) => {
-            const fotoUrl = halle.foto && typeof halle.foto === 'object'
-              ? (halle.foto as Media).url ?? null
-              : null
+            const fotoUrl = resolveMediaUrl(halle.foto)
             const mapsUrl = `https://maps.google.com/maps?q=${encodeURIComponent(halle.adresse)}&output=embed`
             const teams = mannschaftenByHalle[String(halle.id)] ?? []
             return (

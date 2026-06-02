@@ -67,12 +67,6 @@ Die Ligatabellen und Spielpläne sollen langfristig automatisch aus der SAMS-Dat
 - Auf der Mannschaftsdetailseite oder einer eigenen Terminseite einbinden
 - Alternativ: iCal-Feed per API auslesen für natives Rendering
 
-### Wegbeschreibungen zu den Hallen
-Karten-Embeds für die Spielhallen auf den Mannschaftsdetailseiten.
-- Google Maps Embed API (kein API-Key nötig für einfache Embeds)
-- Adresse ist bereits in der Mannschaften-Collection als `halleAdresse` gespeichert
-- Embed-URL Schema: `https://maps.google.com/maps?q=<adresse>&output=embed`
-
 ### Kontaktformular – E-Mail-Versand
 Aktuell zeigt das Formular nur eine Erfolgsmeldung ohne echten Versand.
 - Empfehlung: Resend (resend.com) – einfaches Setup, großzügiges Gratis-Kontingent
@@ -113,12 +107,6 @@ E-Mail-Newsletter für Vereinsnachrichten.
 - Empfehlung: Brevo (brevo.com) oder Mailchimp — kostenlos für kleine Verteiler
 - Anmeldeformular auf der Webseite einbinden
 - Newsletter werden direkt im jeweiligen Tool erstellt, kein Code nötig
-
-### Trainingszeiten
-Trainingszeiten der Mannschaften anzeigen — wann und wo welches Team trainiert.
-- Trainingszeiten als Feld in der `Mannschaften` Collection ergänzen (z.B. strukturiertes Feld: Wochentag, Uhrzeit, Halle)
-- Auf der Mannschaftsdetailseite unterhalb der Spielplan-/Tabelleninfo anzeigen
-- Optional: Zentrale Trainingsübersicht als eigene Seite oder Sektion
 
 ### Bildergalerie
 Fotos von Spielen, Events und Mannschaften auf der Website präsentieren.
@@ -164,9 +152,3 @@ Trainerprofile auf den Mannschaftsdetailseiten oder einer eigenen Seite.
 - `Trainer` Collection anlegen mit: Name, Foto, Lizenz (A/B/C-Lizenz), zugeordnete Mannschaft
 - Auf der Mannschaftsdetailseite einbinden
 - Optional: Zentrale Trainerübersicht unter „Über uns"
-
-### Alle Mannschaften ins CMS
-2. und 3. Herren müssen noch im Admin angelegt werden.
-- Im Admin weitere Mannschaften anlegen (slug: `2-herren`, `3-herren`)
-- Alle Felder (Trainer, Halle, Training, Spieler, Spielplan) befüllen
-

@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Mannschaft } from '@/lib/mannschaften'
+import CategoryBadge from '@/components/ui/CategoryBadge'
+import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 
 export default function TeamCard({ team, index }: { team: Mannschaft; index: number }) {
   return (
@@ -17,9 +19,7 @@ export default function TeamCard({ team, index }: { team: Mannschaft; index: num
             className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <span className="text-4xl opacity-20">🏐</span>
-          </div>
+          <ImagePlaceholder emoji="🏐" size="md" />
         )}
       </div>
 
@@ -33,9 +33,7 @@ export default function TeamCard({ team, index }: { team: Mannschaft; index: num
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-3 mb-1">
             <h2 className="text-xl font-bold text-secondary">{team.name}</h2>
-            <span className="bg-primary/10 text-primary border border-primary/20 text-xs font-semibold px-2.5 py-0.5 rounded-full">
-              {team.liga}
-            </span>
+            <CategoryBadge label={team.liga} />
           </div>
           <p className="text-sm text-gray-500 line-clamp-3">{team.beschreibung}</p>
         </div>

@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 
 export type SpielerData = {
   name: string
@@ -22,9 +23,7 @@ export default function PlayerCard({ spieler }: { spieler: SpielerData }) {
             className="object-cover object-top"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <span className="text-5xl text-secondary/20">👤</span>
-          </div>
+          <ImagePlaceholder emoji="👤" />
         )}
         {spieler.nummer != null && (
           <div className="absolute top-3 left-3 w-9 h-9 rounded-full bg-secondary flex items-center justify-center shadow-md">

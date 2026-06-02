@@ -4,7 +4,8 @@ import Image from 'next/image'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Metadata } from 'next'
-import type { Media, Hallen } from '@/payload-types'
+import type { Hallen } from '@/payload-types'
+import { resolveMediaUrl } from '@/lib/media'
 import LigaTabelle from '@/components/sections/LigaTabelle'
 import type { SpielerData } from '@/components/cards/PlayerCard'
 import KaderSection from '@/components/sections/KaderSection'
@@ -112,15 +113,10 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
   if (docs.length === 0) notFound()
 
   const team = docs[0]
-  const teamfotoUrl =
-    team.teamfoto && typeof team.teamfoto === 'object'
-      ? (team.teamfoto as Media).url ?? null
-      : null
+  const teamfotoUrl = resolveMediaUrl(team.teamfoto)
 
   const spieler: SpielerData[] = (team.spieler ?? []).map((s) =>
-    toSpielerData(s, (foto) =>
-      foto && typeof foto === 'object' ? (foto as Media).url ?? null : null
-    )
+    toSpielerData(s, (foto) => resolveMediaUrl(foto))
   )
 
   const halle: { name: string; adresse: string } | null =

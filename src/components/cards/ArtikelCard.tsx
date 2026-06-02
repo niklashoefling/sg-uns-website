@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import type { Media } from '@/payload-types'
 import { formatDatum } from '@/lib/utils'
+import { resolveMediaUrl } from '@/lib/media'
+import CategoryBadge from '@/components/ui/CategoryBadge'
+import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 
 export type ArtikelData = {
   id: string | number
@@ -24,8 +26,7 @@ export default function ArtikelCard({
   headingTag: Heading = 'h2',
   featured = false,
 }: Props) {
-  const bildUrl =
-    artikel.bild && typeof artikel.bild === 'object' ? ((artikel.bild as Media).url ?? null) : null
+  const bildUrl = resolveMediaUrl(artikel.bild)
 
   if (featured) {
     return (
@@ -37,16 +38,14 @@ export default function ArtikelCard({
           {bildUrl ? (
             <Image src={bildUrl} alt={artikel.titel} fill className="object-cover" />
           ) : (
-            <div className="w-full h-full bg-secondary flex items-center justify-center">
-              <span className="text-5xl opacity-20">🏐</span>
+            <div className="w-full h-full bg-secondary relative">
+              <ImagePlaceholder emoji="🏐" />
             </div>
           )}
         </div>
         <div className="p-8 flex flex-col justify-center">
           <div className="flex items-center gap-2 mb-4">
-            <span className="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-0.5 rounded-full">
-              {artikel.kategorie}
-            </span>
+            <CategoryBadge label={artikel.kategorie} />
             <span className="text-xs text-gray-400">{formatDatum(artikel.datum)}</span>
           </div>
           <Heading className="text-2xl font-bold text-secondary mb-3 group-hover:text-primary transition-colors">
@@ -67,16 +66,14 @@ export default function ArtikelCard({
         {bildUrl ? (
           <Image src={bildUrl} alt={artikel.titel} fill className="object-cover" />
         ) : (
-          <div className="w-full h-full bg-secondary flex items-center justify-center">
-            <span className="text-5xl opacity-20">🏐</span>
+          <div className="w-full h-full bg-secondary relative">
+            <ImagePlaceholder emoji="🏐" />
           </div>
         )}
       </div>
       <div className="p-6">
         <div className="flex items-center gap-2 mb-3">
-          <span className="bg-primary/10 text-primary text-xs font-semibold px-2.5 py-0.5 rounded-full">
-            {artikel.kategorie}
-          </span>
+          <CategoryBadge label={artikel.kategorie} />
           <span className="text-xs text-gray-400">{formatDatum(artikel.datum)}</span>
         </div>
         <Heading className="text-base font-bold text-secondary mb-2 group-hover:text-primary transition-colors">
