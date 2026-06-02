@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { formatDatum } from '@/lib/utils'
+import { formatDatum, lexicalToPlainText } from '@/lib/utils'
 import { resolveMediaUrl } from '@/lib/media'
 import CategoryBadge from '@/components/ui/CategoryBadge'
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
@@ -11,7 +11,7 @@ export type ArtikelData = {
   titel: string
   datum: string
   kategorie: string
-  teaser: string
+  inhalt?: unknown
   bild?: { url?: string | null } | string | number | null
 }
 
@@ -27,6 +27,7 @@ export default function ArtikelCard({
   featured = false,
 }: Props) {
   const bildUrl = resolveMediaUrl(artikel.bild)
+  const text = lexicalToPlainText(artikel.inhalt)
 
   if (featured) {
     return (
@@ -51,7 +52,7 @@ export default function ArtikelCard({
           <Heading className="text-2xl font-bold text-secondary mb-3 group-hover:text-primary transition-colors">
             {artikel.titel}
           </Heading>
-          <p className="text-sm text-gray-500 leading-relaxed line-clamp-4">{artikel.teaser}</p>
+          <p className="text-sm text-gray-500 leading-relaxed line-clamp-4">{text}</p>
         </div>
       </Link>
     )
@@ -79,7 +80,7 @@ export default function ArtikelCard({
         <Heading className="text-base font-bold text-secondary mb-2 group-hover:text-primary transition-colors">
           {artikel.titel}
         </Heading>
-        <p className="text-sm text-gray-500 leading-relaxed line-clamp-3">{artikel.teaser}</p>
+        <p className="text-sm text-gray-500 leading-relaxed line-clamp-3">{text}</p>
       </div>
     </Link>
   )

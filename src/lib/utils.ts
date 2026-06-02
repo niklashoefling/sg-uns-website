@@ -2,11 +2,21 @@ export function formatDatum(datum: string) {
   return new Date(datum).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
-export const positionFarbe: Record<string, string> = {
-  Zuspiel: 'bg-blue-100 text-blue-700',
-  Außenannahme: 'bg-green-100 text-green-700',
-  Diagonal: 'bg-orange-100 text-orange-700',
-  Mittelblocker: 'bg-purple-100 text-purple-700',
-  Libero: 'bg-yellow-100 text-yellow-700',
-  Universal: 'bg-gray-100 text-gray-700',
+type LexicalNode = {
+  type: string
+  text?: string
+  children?: LexicalNode[]
+}
+
+function extractText(node: LexicalNode): string {
+  if (node.type === 'text') return node.text ?? ''
+  if (node.children) return node.children.map(extractText).join('')
+  return ''
+}
+
+export function lexicalToPlainText(inhalt: unknown): string {
+  if (!inhalt || typeof inhalt !== 'object') return ''
+  const root = (inhalt as { root?: LexicalNode }).root
+  if (!root) return ''
+  return extractText(root).replace(/\s+/g, ' ').trim()
 }

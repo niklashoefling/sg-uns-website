@@ -1,27 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-
-const navLinks = [
-  { href: '/#ueber-uns', label: 'Über U.N.S.' },
-  { href: '/mannschaften', label: 'Mannschaften' },
-  { href: '/hallen', label: 'Hallen' },
-  { href: '/jugendarbeit', label: 'Jugendarbeit' },
-  { href: '/aktuelles', label: 'Aktuelles' },
-]
-
-const stammvereine = [
-  {
-    name: 'TV Undenheim',
-    url: 'https://tv-undenheim.de/volleyball/',
-    logo: '/vereine/TVU_Logo.png',
-  },
-  {
-    name: 'SC Schornsheim',
-    url: 'https://www.scs97.de/abteilungen/volleyball',
-    logo: '/vereine/SCS_Logo.png',
-  },
-  { name: 'TV Nieder-Olm', url: 'https://www.tvno.de', logo: '/vereine/TVNO_Logo-Volleyball.png' },
-]
+import { navLinks, stammvereine } from '@/lib/site'
 
 export default function Footer() {
   return (

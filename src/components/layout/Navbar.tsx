@@ -2,13 +2,7 @@
 
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-
-const links = [
-  { href: '/#ueber-uns', label: 'Über U.N.S.' },
-  { href: '/mannschaften', label: 'Mannschaften' },
-  { href: '/jugendarbeit', label: 'Jugendarbeit' },
-  { href: '/aktuelles', label: 'Aktuelles' },
-]
+import { navLinks } from '@/lib/site'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -37,7 +31,7 @@ export default function Navbar() {
         </a>
 
         <ul className="hidden md:flex items-center gap-2 list-none">
-          {links.map((link) => (
+          {navLinks.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
@@ -58,6 +52,7 @@ export default function Navbar() {
         </ul>
 
         <button
+          type="button"
           className="md:hidden flex flex-col gap-1.5 p-1 bg-transparent border-none cursor-pointer"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Menü öffnen"
@@ -76,7 +71,7 @@ export default function Navbar() {
 
       {menuOpen && (
         <div className="md:hidden bg-secondary-dark px-6 pb-6 flex flex-col gap-1">
-          {links.map((link) => (
+          {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}

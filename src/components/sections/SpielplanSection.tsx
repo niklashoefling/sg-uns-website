@@ -13,8 +13,8 @@ export default function SpielplanSection({ spielplan }: { spielplan: Spiel[] }) 
         ) : (
           <div className="space-y-2">
             {gespielt.map((spiel) => {
-              const gewonnen =
-                spiel.ergebnis && parseInt(spiel.ergebnis[0]) > parseInt(spiel.ergebnis[2])
+              const parts = spiel.ergebnis?.match(/^(\d+):(\d+)$/)
+              const gewonnen = parts ? parseInt(parts[1]) > parseInt(parts[2]) : false
               return (
                 <div
                   key={`${spiel.datum}-${spiel.gegner}`}

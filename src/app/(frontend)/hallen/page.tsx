@@ -1,6 +1,7 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import PageHeader from '@/components/layout/PageHeader'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import { resolveMediaUrl } from '@/lib/media'
 
@@ -47,8 +48,8 @@ export default async function HallenPage() {
                 <div className="flex h-56">
                   {fotoUrl && (
                     <>
-                      <div className="w-1/2 shrink-0">
-                        <img src={fotoUrl} alt={halle.name} className="w-full h-full object-cover" />
+                      <div className="w-1/2 shrink-0 relative">
+                        <Image src={fotoUrl} alt={halle.name} fill className="object-cover" sizes="(max-width: 768px) 50vw, 300px" />
                       </div>
                       <div className="w-px bg-gray-100 shrink-0" />
                     </>

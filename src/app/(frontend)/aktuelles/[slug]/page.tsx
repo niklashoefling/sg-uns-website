@@ -5,7 +5,7 @@ import config from '@payload-config'
 import type { Metadata } from 'next'
 import type { Media } from '@/payload-types'
 import RichTextRenderer from '@/components/ui/RichTextRenderer'
-import { formatDatum } from '@/lib/utils'
+import { formatDatum, lexicalToPlainText } from '@/lib/utils'
 import BackButton from '@/components/ui/BackButton'
 
 export async function generateMetadata({
@@ -25,7 +25,7 @@ export async function generateMetadata({
     const a = docs[0]
     return {
       title: `${a.titel} | SG U.N.S. Rheinhessen`,
-      description: a.teaser,
+      description: lexicalToPlainText(a.inhalt).slice(0, 160),
     }
   }
   return {}
@@ -76,9 +76,6 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
       )}
 
       <div className="max-w-4xl mx-auto px-6 py-12">
-        <p className="text-lg text-gray-600 leading-relaxed mb-8 font-medium border-l-4 border-primary pl-4">
-          {artikel.teaser}
-        </p>
         <RichTextRenderer
           content={
             artikel.inhalt as { root: Parameters<typeof RichTextRenderer>[0]['content']['root'] }

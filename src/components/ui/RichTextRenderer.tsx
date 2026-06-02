@@ -73,10 +73,11 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
   }
 
   if (node.type === 'link') {
+    const href = typeof node.url === 'string' ? node.url : '#'
     return (
       <a
         key={index}
-        href={node.url as string}
+        href={href}
         className="text-primary hover:underline"
         target="_blank"
         rel="noopener noreferrer"
@@ -94,5 +95,6 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
 }
 
 export default function RichTextRenderer({ content }: { content: { root: LexicalNode } }) {
-  return <div>{content.root.children?.map((node, i) => renderNode(node, i))}</div>
+  if (!content?.root?.children) return null
+  return <div>{content.root.children.map((node, i) => renderNode(node, i))}</div>
 }
