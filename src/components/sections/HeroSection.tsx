@@ -24,7 +24,7 @@ export default function HeroSection() {
             href="/mannschaften"
             className="bg-primary hover:bg-primary-dark text-white font-semibold px-7 py-3 rounded-lg transition-colors"
           >
-            Unsere Mannschaften
+            U.N.S.ere Mannschaften
           </a>
           <a
             href="/kontakt"
