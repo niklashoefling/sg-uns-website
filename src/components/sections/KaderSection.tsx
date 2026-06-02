@@ -4,8 +4,8 @@ import type { SpielerData } from '@/components/cards/PlayerCard'
 const POSITION_ORDER = [
   'Zuspiel',
   'Diagonal',
-  'Außenannahme',
-  'Mittelblocker',
+  'Außenangriff',
+  'Mittelblock',
   'Universal',
   'Libero',
 ]
