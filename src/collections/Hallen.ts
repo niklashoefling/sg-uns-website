@@ -13,6 +13,9 @@ export const Hallen: CollectionConfig = {
   },
   access: {
     read: () => true,
+    create: ({ req }) => req.user?.rolle === 'admin',
+    update: ({ req }) => req.user?.rolle === 'admin',
+    delete: ({ req }) => req.user?.rolle === 'admin',
   },
   fields: [
     {
