@@ -16,6 +16,7 @@ export default function TeamCard({ team, index }: { team: Mannschaft; index: num
             src={team.teamfoto}
             alt={`${team.name} Vorschau`}
             fill
+            sizes="224px"
             className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
           />
         ) : (

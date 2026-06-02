@@ -13,6 +13,14 @@ export const metadata = {
   description: 'Alle Herrenmannschaften der SG U.N.S. Rheinhessen – 1., 2. und 3. Herren.',
 }
 
+const WOCHENTAGE = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag']
+
+type TrainingsGruppe = {
+  mannschaft: string
+  slug: string
+  zeilen: { halle: string; tag: string; uhrzeit: string }[]
+}
+
 export default async function MannschaftenPage() {
   const payload = await getPayload({ config })
   const { docs } = await payload.find({
@@ -40,16 +48,16 @@ export default async function MannschaftenPage() {
     }
   })
 
-  const trainingszeilen = docs.flatMap((m) => {
+  const trainingsgruppen: TrainingsGruppe[] = docs.map((m) => {
     const halle = m.halle && typeof m.halle === 'object' ? (m.halle as Hallen) : null
-    return (m.training ?? []).map((t) => ({
-      mannschaft: m.name,
-      slug: m.slug,
-      halle: halle?.name ?? '–',
-      tag: t.tag,
-      uhrzeit: t.uhrzeit,
-    }))
-  }).sort((a, b) => a.halle.localeCompare(b.halle) || a.tag.localeCompare(b.tag))
+    const zeilen = (m.training ?? [])
+      .map((t) => ({ halle: halle?.name ?? '–', tag: t.tag, uhrzeit: t.uhrzeit }))
+      .sort((a, b) => {
+        const tagDiff = WOCHENTAGE.indexOf(a.tag) - WOCHENTAGE.indexOf(b.tag)
+        return tagDiff !== 0 ? tagDiff : a.uhrzeit.localeCompare(b.uhrzeit)
+      })
+    return { mannschaft: m.name, slug: m.slug, zeilen }
+  }).filter((g) => g.zeilen.length > 0)
 
   return (
     <div className="min-h-screen bg-white">
@@ -68,25 +76,38 @@ export default async function MannschaftenPage() {
             <table className="w-full text-sm">
               <thead className="bg-gray-50 text-left">
                 <tr>
-                  <th className="px-5 py-3 font-semibold text-secondary">Halle</th>
                   <th className="px-5 py-3 font-semibold text-secondary">Mannschaft</th>
+                  <th className="px-5 py-3 font-semibold text-secondary">Halle</th>
                   <th className="px-5 py-3 font-semibold text-secondary">Tag</th>
                   <th className="px-5 py-3 font-semibold text-secondary">Uhrzeit</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
-                {trainingszeilen.map((z, i) => (
-                  <tr key={i} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-5 py-3 text-gray-500">{z.halle}</td>
-                    <td className="px-5 py-3">
-                      <a href={`/mannschaften/${z.slug}`} className="text-secondary font-medium hover:text-primary transition-colors">
-                        {z.mannschaft}
-                      </a>
-                    </td>
-                    <td className="px-5 py-3 text-gray-500">{z.tag}</td>
-                    <td className="px-5 py-3 text-gray-500">{z.uhrzeit}</td>
-                  </tr>
-                ))}
+              <tbody className="divide-y divide-gray-100">
+                {trainingsgruppen.map((gruppe) =>
+                  gruppe.zeilen.map((z, zi) => {
+                    const halleWiederholt = zi > 0 && gruppe.zeilen[zi - 1].halle === z.halle
+                    return (
+                    <tr key={`${gruppe.slug}-${zi}`} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-5 py-3">
+                        {zi === 0 ? (
+                          <a href={`/mannschaften/${gruppe.slug}`} className="text-secondary font-medium hover:text-primary transition-colors">
+                            {gruppe.mannschaft}
+                          </a>
+                        ) : null}
+                      </td>
+                      <td className="px-5 py-3 text-gray-500">
+                        {!halleWiederholt ? (
+                          <a href="/hallen" className="hover:text-primary transition-colors">
+                            {z.halle}
+                          </a>
+                        ) : null}
+                      </td>
+                      <td className="px-5 py-3 text-gray-500">{z.tag}</td>
+                      <td className="px-5 py-3 text-gray-500">{z.uhrzeit}</td>
+                    </tr>
+                    )
+                  })
+                )}
               </tbody>
             </table>
           </div>

@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Metadata } from 'next'
@@ -35,11 +35,19 @@ export async function generateMetadata({
   return {}
 }
 
-function toSpielerData(s: {
-  name: string; nummer?: number | null; position: string
-  foto?: unknown; fotoUrl?: string | null
-  nationalitaet?: string | null; geburtsjahr?: number | null; groesse?: number | null
-}, resolveFoto?: (foto: unknown) => string | null): SpielerData {
+function toSpielerData(
+  s: {
+    name: string
+    nummer?: number | null
+    position: string
+    foto?: unknown
+    fotoUrl?: string | null
+    nationalitaet?: string | null
+    geburtsjahr?: number | null
+    groesse?: number | null
+  },
+  resolveFoto?: (foto: unknown) => string | null,
+): SpielerData {
   return {
     name: s.name,
     nummer: s.nummer,
@@ -51,9 +59,13 @@ function toSpielerData(s: {
   }
 }
 
-function TeamDetails({ team, halle }: {
+function TeamDetails({
+  team,
+  halle,
+}: {
   team: {
-    trainer: string; cotrainer?: string | null
+    trainer: string
+    cotrainer?: string | null
     beschreibung: string
     training: { tag: string; uhrzeit: string }[]
   }
@@ -62,11 +74,15 @@ function TeamDetails({ team, halle }: {
   return (
     <div className="grid md:grid-cols-2 gap-10">
       <div>
-        <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">Über die Mannschaft</h2>
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">
+          Über die Mannschaft
+        </h2>
         <p className="text-gray-500 leading-relaxed">{team.beschreibung}</p>
       </div>
       <div>
-        <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">Details</h2>
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">
+          Details
+        </h2>
         <div className="space-y-3">
           {[
             { label: 'Trainer', value: team.trainer },
@@ -89,7 +105,9 @@ function TeamDetails({ team, halle }: {
             <span className="w-24 shrink-0 font-semibold text-secondary">Training</span>
             <div className="space-y-1">
               {team.training.map((t) => (
-                <div key={t.tag} className="text-gray-500">{t.tag} · {t.uhrzeit}</div>
+                <div key={t.tag} className="text-gray-500">
+                  {t.tag} · {t.uhrzeit}
+                </div>
               ))}
             </div>
           </div>
@@ -116,16 +134,20 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
   const teamfotoUrl = resolveMediaUrl(team.teamfoto)
 
   const spieler: SpielerData[] = (team.spieler ?? []).map((s) =>
-    toSpielerData(s, (foto) => resolveMediaUrl(foto))
+    toSpielerData(s, (foto) => resolveMediaUrl(foto)),
   )
 
   const halle: { name: string; adresse: string } | null =
-    team.halle && typeof team.halle === 'object'
-      ? (team.halle as Hallen)
-      : null
+    team.halle && typeof team.halle === 'object' ? (team.halle as Hallen) : null
 
   // Spielplan kommt später per SAMS API
-  const spielplan: { datum: string; uhrzeit: string; heimspiel: boolean; gegner: string; ergebnis?: string }[] = []
+  const spielplan: {
+    datum: string
+    uhrzeit: string
+    heimspiel: boolean
+    gegner: string
+    ergebnis?: string
+  }[] = []
 
   return (
     <div className="min-h-screen bg-white">
@@ -157,7 +179,7 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
       )}
 
       <div className="max-w-6xl mx-auto px-6 py-16 space-y-16">
-        <TeamDetails team={team} halle={halle} />
+        <TeamDetails team={{ ...team }} halle={halle} />
         {spieler.length > 0 && <KaderSection spieler={spieler} />}
         <LigaTabelle tabelle={null} />
         <SpielplanSection spielplan={spielplan} />
