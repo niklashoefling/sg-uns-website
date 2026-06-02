@@ -115,7 +115,8 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
     )
   )
 
-  const spielplan = (team.spielplan ?? []) as { datum: string; uhrzeit: string; heimspiel: boolean; gegner: string; ergebnis?: string }[]
+  // Spielplan kommt später per SAMS API
+  const spielplan: { datum: string; uhrzeit: string; heimspiel: boolean; gegner: string; ergebnis?: string }[] = []
 
   return (
     <div className="min-h-screen bg-white">

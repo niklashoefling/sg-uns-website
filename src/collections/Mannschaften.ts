@@ -151,38 +151,5 @@ export const Mannschaften: CollectionConfig = {
         },
       ],
     },
-    {
-      name: 'spielplan',
-      type: 'array',
-      fields: [
-        {
-          name: 'datum',
-          type: 'text',
-          required: true,
-          admin: { description: 'z.B. "15.11.2025"' },
-        },
-        {
-          name: 'uhrzeit',
-          type: 'text',
-          required: true,
-          admin: { description: 'z.B. "18:00 Uhr"' },
-        },
-        {
-          name: 'gegner',
-          type: 'text',
-          required: true,
-        },
-        {
-          name: 'heimspiel',
-          type: 'checkbox',
-          defaultValue: true,
-        },
-        {
-          name: 'ergebnis',
-          type: 'text',
-          admin: { description: 'z.B. "3:1" — leer lassen wenn noch nicht gespielt' },
-        },
-      ],
-    },
   ],
 }
