@@ -140,8 +140,14 @@ Vorschläge zu thematisch verwandten Artikeln am Ende einer Artikel-Detailseite.
 - Bessere Variante: Artikel mit gemeinsamen Tags filtern (erfordert `tags`-Feld in der `Artikel` Collection)
 - Umsetzung als eigene `AehnlicheArtikel`-Komponente analog zu `ArtikelCard`
 
-### Trainerstab *(Nice to have)*
-Trainerprofile auf den Mannschaftsdetailseiten oder einer eigenen Seite.
-- `Trainer` Collection anlegen mit: Name, Foto, Lizenz (A/B/C-Lizenz), zugeordnete Mannschaft
-- Auf der Mannschaftsdetailseite einbinden
-- Optional: Zentrale Trainerübersicht unter „Über uns"
+### ~~Trainerstab~~ ✅ Umgesetzt
+- Trainer-Profil-Felder (Name, Foto, Lizenz, Kurzvorstellung, Aktiv seit) direkt auf dem User-Objekt
+- `/trainer` Übersichtsseite mit allen Trainern
+- Trainer-Karten auf der Mannschaftsdetailseite im Abschnitt „Trainerstab"
+- Klick auf Trainer-Karte → `/trainer`
+
+### robots.txt & Sitemap
+Next.js kann beides automatisch generieren — bereits angelegt als `src/app/robots.ts` und `src/app/sitemap.ts`, müssen aber noch mit den echten URLs befüllt werden.
+- `robots.ts`: `siteUrl` auf die echte Domain setzen (aktuell Platzhalter)
+- `sitemap.ts`: dynamische Routen (Artikel, Mannschaften) aus der DB laden und eintragen
+- Wichtig vor Go-Live: korrekte Domain eintragen damit Google-Bot die Seite crawlen kann

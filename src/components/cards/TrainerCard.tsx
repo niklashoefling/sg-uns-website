@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Image from 'next/image'
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 
@@ -11,7 +12,10 @@ export type TrainerData = {
 
 export default function TrainerCard({ trainer }: { trainer: TrainerData }) {
   return (
-    <div className="border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
+    <Link
+      href="/trainer"
+      className="border border-gray-100 rounded-xl overflow-hidden hover:shadow-md hover:border-primary/30 transition-all block"
+    >
       <div className="relative h-48 bg-secondary/10">
         {trainer.fotoUrl ? (
           <Image
@@ -44,6 +48,6 @@ export default function TrainerCard({ trainer }: { trainer: TrainerData }) {
           </div>
         )}
       </div>
-    </div>
+    </Link>
   )
 }
