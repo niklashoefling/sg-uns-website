@@ -2,10 +2,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 const navLinks = [
-  { href: '#ueber-uns', label: 'Über U.N.S.' },
-  { href: '#mannschaften', label: 'Mannschaften' },
-  { href: '#jugendarbeit', label: 'Jugendarbeit' },
-  { href: '#aktuelles', label: 'Aktuelles' },
+  { href: '/#ueber-uns', label: 'Über U.N.S.' },
+  { href: '/mannschaften', label: 'Mannschaften' },
+  { href: '/hallen', label: 'Hallen' },
+  { href: '/jugendarbeit', label: 'Jugendarbeit' },
+  { href: '/aktuelles', label: 'Aktuelles' },
 ]
 
 const stammvereine = [
