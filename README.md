@@ -114,13 +114,6 @@ E-Mail-Newsletter für Vereinsnachrichten.
 - Anmeldeformular auf der Webseite einbinden
 - Newsletter werden direkt im jeweiligen Tool erstellt, kein Code nötig
 
-### Hallenverzeichnis
-Übersicht aller Spielhallen mit Adresse, Karte und zugeordneten Mannschaften.
-- Eigene `Hallen` Collection anlegen mit: Name, Adresse, Google Maps Embed
-- In der `Mannschaften` Collection als Relationship-Feld verknüpfen (statt freiem Text)
-- Auf der Mannschaftsdetailseite als Karten-Embed einbinden
-- Optional: Eigene `/hallen`-Seite mit allen Hallen im Überblick
-
 ### Trainingszeiten
 Trainingszeiten der Mannschaften anzeigen — wann und wo welches Team trainiert.
 - Trainingszeiten als Feld in der `Mannschaften` Collection ergänzen (z.B. strukturiertes Feld: Wochentag, Uhrzeit, Halle)
