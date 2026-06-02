@@ -65,7 +65,6 @@ function TeamDetails({
   halle,
 }: {
   team: {
-    trainer: TrainerData[]
     beschreibung: string
     training: { tag: string; uhrzeit: string }[]
   }
@@ -84,20 +83,6 @@ function TeamDetails({
           Details
         </h2>
         <div className="space-y-3">
-          {team.trainer.length > 0 && (
-            <div className="flex gap-4 text-sm">
-              <span className="w-24 shrink-0 font-semibold text-secondary">
-                {team.trainer.length === 1 ? 'Trainer' : 'Trainer'}
-              </span>
-              <div className="space-y-1">
-                {team.trainer.map((t) => (
-                  <div key={t.name} className="text-gray-500">
-                    {t.name}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
           {halle && (
             <div className="flex gap-4 text-sm">
               <span className="w-24 shrink-0 font-semibold text-secondary">Halle</span>
@@ -204,7 +189,7 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
       )}
 
       <div className="max-w-6xl mx-auto px-6 py-16 space-y-16">
-        <TeamDetails team={{ ...team, trainer }} halle={halle} />
+        <TeamDetails team={team} halle={halle} />
         {trainer.length > 0 && (
           <div>
             <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-6">

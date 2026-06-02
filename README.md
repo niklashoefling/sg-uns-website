@@ -83,12 +83,6 @@ Die SG ist kein eigenständiger Verein und hat keine eigene Rechtspersönlichkei
 - Die anderen beiden Stammvereine können zusätzlich genannt werden, ist aber nicht Pflicht
 - Empfehlung: Impressum-Generator von eRecht24 nutzen (kostenlose Basisversion reicht), betreibenden Stammverein eintragen, Text direkt im Payload Admin unter `/impressum` eintragen
 
-### ~~Rollen & Rechteverwaltung~~ ✅ Umgesetzt
-- `Users` Collection: `rolle`-Feld (`admin` | `trainer`) + Relationship zur Mannschaft
-- Trainer darf nur eigene Mannschaft bearbeiten (Query Constraint in Access Control)
-- Trainer kann Artikel erstellen, aber nur eigene bearbeiten/löschen (`autor`-Feld, automatisch gesetzt)
-- Trainer anlegen: `/admin` → Users → Neu → Rolle „Trainer" + Mannschaft zuweisen
-
 ### Sponsoren
 Sponsoren-Sektion auf der Startseite einbauen sobald Logos und URLs vorliegen.
 - Logos als PNG in `public/sponsoren/` ablegen
@@ -127,6 +121,12 @@ Aktuelles-Artikel als RSS-Feed bereitstellen für Abonnenten und Aggregatoren.
 - Artikel aus der `Artikel` Collection per Payload API abrufen und als XML ausgeben
 - Feed-URL in `<head>` via `alternates.types` in den Metadaten eintragen
 
+### robots.txt & Sitemap
+Next.js kann beides automatisch generieren — bereits angelegt als `src/app/robots.ts` und `src/app/sitemap.ts`, müssen aber noch mit den echten URLs befüllt werden.
+- `robots.ts`: `siteUrl` auf die echte Domain setzen (aktuell Platzhalter)
+- `sitemap.ts`: dynamische Routen (Artikel, Mannschaften) aus der DB laden und eintragen
+- Wichtig vor Go-Live: korrekte Domain eintragen damit Google-Bot die Seite crawlen kann
+
 ### Suche *(Nice to have)*
 Artikel und Mannschaften auf der Website durchsuchbar machen.
 - Einfachste Variante: Client-seitiger Filter auf der Aktuelles-Seite nach Titel
@@ -140,14 +140,3 @@ Vorschläge zu thematisch verwandten Artikeln am Ende einer Artikel-Detailseite.
 - Bessere Variante: Artikel mit gemeinsamen Tags filtern (erfordert `tags`-Feld in der `Artikel` Collection)
 - Umsetzung als eigene `AehnlicheArtikel`-Komponente analog zu `ArtikelCard`
 
-### ~~Trainerstab~~ ✅ Umgesetzt
-- Trainer-Profil-Felder (Name, Foto, Lizenz, Kurzvorstellung, Aktiv seit) direkt auf dem User-Objekt
-- `/trainer` Übersichtsseite mit allen Trainern
-- Trainer-Karten auf der Mannschaftsdetailseite im Abschnitt „Trainerstab"
-- Klick auf Trainer-Karte → `/trainer`
-
-### robots.txt & Sitemap
-Next.js kann beides automatisch generieren — bereits angelegt als `src/app/robots.ts` und `src/app/sitemap.ts`, müssen aber noch mit den echten URLs befüllt werden.
-- `robots.ts`: `siteUrl` auf die echte Domain setzen (aktuell Platzhalter)
-- `sitemap.ts`: dynamische Routen (Artikel, Mannschaften) aus der DB laden und eintragen
-- Wichtig vor Go-Live: korrekte Domain eintragen damit Google-Bot die Seite crawlen kann
