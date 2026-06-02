@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { navLinks, stammvereine } from '@/lib/site'
+import { footerLinks, stammvereine } from '@/lib/site'
 
 export default function Footer() {
   return (
@@ -43,7 +43,7 @@ export default function Footer() {
               Navigation
             </h3>
             <ul className="space-y-2">
-              {navLinks.map((link) => (
+              {footerLinks.map((link) => (
                 <li key={link.href}>
                   <a href={link.href} className="text-sm hover:text-white transition-colors">
                     {link.label}

@@ -93,15 +93,6 @@ function TeamDetails({
                 {team.trainer.map((t) => (
                   <div key={t.name} className="text-gray-500">
                     {t.name}
-                    {t.email && (
-                      <>
-                        {' '}
-                        ·{' '}
-                        <a href={`mailto:${t.email}`} className="text-primary hover:underline">
-                          {t.email}
-                        </a>
-                      </>
-                    )}
                   </div>
                 ))}
               </div>
@@ -167,7 +158,6 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
       }
       return {
         name: u.name ?? u.email ?? '–',
-        email: u.email,
         fotoUrl: resolveMediaUrl(u.foto),
         lizenz: u.lizenz,
         kurzvorstellung: u.kurzvorstellung,

@@ -3,7 +3,6 @@ import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 
 export type TrainerData = {
   name: string
-  email?: string
   fotoUrl?: string | null
   lizenz?: string | null
   kurzvorstellung?: string | null
@@ -36,25 +35,12 @@ export default function TrainerCard({ trainer }: { trainer: TrainerData }) {
             {trainer.kurzvorstellung}
           </p>
         )}
-        {(trainer.aktivSeit || trainer.email) && (
-          <div className="mt-3 space-y-1 border-t border-gray-50 pt-3">
-            {trainer.aktivSeit && (
-              <div className="flex justify-between text-xs text-gray-500">
-                <span>Trainer seit</span>
-                <span className="font-medium text-secondary">{trainer.aktivSeit}</span>
-              </div>
-            )}
-            {trainer.email && (
-              <div className="flex justify-between text-xs text-gray-500">
-                <span>Kontakt</span>
-                <a
-                  href={`mailto:${trainer.email}`}
-                  className="font-medium text-primary hover:underline"
-                >
-                  E-Mail
-                </a>
-              </div>
-            )}
+        {trainer.aktivSeit && (
+          <div className="mt-3 border-t border-gray-50 pt-3">
+            <div className="flex justify-between text-xs text-gray-500">
+              <span>Trainer seit</span>
+              <span className="font-medium text-secondary">{trainer.aktivSeit}</span>
+            </div>
           </div>
         )}
       </div>

@@ -22,7 +22,6 @@ export default async function TrainerPage() {
 
   const trainer: TrainerData[] = docs.map((u) => ({
     name: (u as any).name ?? u.email ?? '–',
-    email: u.email,
     fotoUrl: resolveMediaUrl((u as any).foto),
     lizenz: (u as any).lizenz,
     kurzvorstellung: (u as any).kurzvorstellung,
@@ -44,7 +43,7 @@ export default async function TrainerPage() {
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
             {trainer.map((t) => (
-              <TrainerCard key={t.email ?? t.name} trainer={t} />
+              <TrainerCard key={t.name} trainer={t} />
             ))}
           </div>
         )}
