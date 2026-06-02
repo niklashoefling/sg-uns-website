@@ -66,13 +66,12 @@ export const Mannschaften: CollectionConfig = {
     },
     {
       name: 'halle',
-      type: 'text',
+      type: 'relationship',
+      relationTo: 'hallen',
       required: true,
-    },
-    {
-      name: 'halleAdresse',
-      type: 'text',
-      required: true,
+      admin: {
+        description: 'Spielhalle der Mannschaft',
+      },
     },
     {
       name: 'training',

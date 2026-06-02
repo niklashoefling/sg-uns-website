@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 const links = [
   { href: '/#ueber-uns', label: 'Über U.N.S.' },
   { href: '/mannschaften', label: 'Mannschaften' },
+  { href: '/hallen', label: 'Hallen' },
   { href: '/jugendarbeit', label: 'Jugendarbeit' },
   { href: '/aktuelles', label: 'Aktuelles' },
 ]

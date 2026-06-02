@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     mannschaften: Mannschaften;
     artikel: Artikel;
+    hallen: Hallen;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +83,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     mannschaften: MannschaftenSelect<false> | MannschaftenSelect<true>;
     artikel: ArtikelSelect<false> | ArtikelSelect<true>;
+    hallen: HallenSelect<false> | HallenSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -190,8 +192,10 @@ export interface Mannschaften {
    * Kontaktadresse der Mannschaft, z.B. "1herren@sg-uns.de"
    */
   email?: string | null;
-  halle: string;
-  halleAdresse: string;
+  /**
+   * Spielhalle der Mannschaft
+   */
+  halle: number | Hallen;
   training: {
     /**
      * z.B. "Mittwoch"
@@ -219,6 +223,29 @@ export interface Mannschaften {
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Spielhallen der SG U.N.S. Rheinhessen
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hallen".
+ */
+export interface Hallen {
+  id: number;
+  /**
+   * z.B. "Sporthalle Nieder-Olm"
+   */
+  name: string;
+  /**
+   * z.B. "Jahnstraße 1, 55268 Nieder-Olm"
+   */
+  adresse: string;
+  /**
+   * Optionale Hinweise zur Halle (Parkplätze, Eingang, etc.)
+   */
+  beschreibung?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -299,6 +326,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'artikel';
         value: number | Artikel;
+      } | null)
+    | ({
+        relationTo: 'hallen';
+        value: number | Hallen;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -396,7 +427,6 @@ export interface MannschaftenSelect<T extends boolean = true> {
   cotrainer?: T;
   email?: T;
   halle?: T;
-  halleAdresse?: T;
   training?:
     | T
     | {
@@ -432,6 +462,17 @@ export interface ArtikelSelect<T extends boolean = true> {
   teaser?: T;
   inhalt?: T;
   bild?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hallen_select".
+ */
+export interface HallenSelect<T extends boolean = true> {
+  name?: T;
+  adresse?: T;
+  beschreibung?: T;
   updatedAt?: T;
   createdAt?: T;
 }

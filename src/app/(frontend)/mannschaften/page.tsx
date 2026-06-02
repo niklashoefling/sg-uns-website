@@ -3,7 +3,7 @@ import config from '@payload-config'
 import PageHeader from '@/components/layout/PageHeader'
 import TeamCard from '@/components/cards/TeamCard'
 import type { Mannschaft } from '@/lib/mannschaften'
-import type { Media } from '@/payload-types'
+import type { Media, Hallen } from '@/payload-types'
 
 export const dynamic = 'force-dynamic'
 
@@ -20,24 +20,27 @@ export default async function MannschaftenPage() {
     depth: 1,
   })
 
-  const mannschaften: Mannschaft[] = docs.map((m) => ({
-    slug: m.slug,
-    name: m.name,
-    liga: m.liga,
-    saison: m.saison,
-    teamfoto:
-      m.teamfoto && typeof m.teamfoto === 'object'
-        ? (m.teamfoto as Media).url ?? undefined
-        : undefined,
-    trainer: m.trainer,
-    cotrainer: m.cotrainer ?? undefined,
-    training: m.training ?? [],
-    halle: m.halle,
-    halleAdresse: m.halleAdresse,
-    beschreibung: m.beschreibung,
-    spieler: [],
-    spielplan: [],
-  }))
+  const mannschaften: Mannschaft[] = docs.map((m) => {
+    const halle = m.halle && typeof m.halle === 'object' ? (m.halle as Hallen) : null
+    return {
+      slug: m.slug,
+      name: m.name,
+      liga: m.liga,
+      saison: m.saison,
+      teamfoto:
+        m.teamfoto && typeof m.teamfoto === 'object'
+          ? (m.teamfoto as Media).url ?? undefined
+          : undefined,
+      trainer: m.trainer,
+      cotrainer: m.cotrainer ?? undefined,
+      training: m.training ?? [],
+      halle: halle?.name ?? '',
+      halleAdresse: halle?.adresse ?? '',
+      beschreibung: m.beschreibung,
+      spieler: [],
+      spielplan: [],
+    }
+  })
 
   return (
     <div className="min-h-screen bg-white">

@@ -9,11 +9,13 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Mannschaften } from './collections/Mannschaften'
 import { Artikel } from './collections/Artikel'
+import { Hallen } from './collections/Hallen'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
   admin: {
     user: Users.slug,
     theme: 'light',
@@ -31,7 +33,7 @@ export default buildConfig({
       },
     },
   },
-  collections: [Users, Media, Mannschaften, Artikel],
+  collections: [Users, Media, Mannschaften, Artikel, Hallen],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

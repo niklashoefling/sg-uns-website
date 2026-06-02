@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Metadata } from 'next'
-import type { Media } from '@/payload-types'
+import type { Media, Hallen } from '@/payload-types'
 import LigaTabelle from '@/components/sections/LigaTabelle'
 import type { SpielerData } from '@/components/cards/PlayerCard'
 import KaderSection from '@/components/sections/KaderSection'
@@ -49,13 +49,18 @@ function toSpielerData(s: {
   }
 }
 
-function TeamDetails({ team }: {
+function TeamDetails({ team, halle }: {
   team: {
     trainer: string; cotrainer?: string | null
-    halle: string; halleAdresse: string; beschreibung: string
+    beschreibung: string
     training: { tag: string; uhrzeit: string }[]
   }
+  halle: { name: string; adresse: string } | null
 }) {
+  const mapsUrl = halle
+    ? `https://maps.google.com/maps?q=${encodeURIComponent(halle.adresse)}&output=embed`
+    : null
+
   return (
     <div className="grid md:grid-cols-2 gap-10">
       <div>
@@ -68,8 +73,7 @@ function TeamDetails({ team }: {
           {[
             { label: 'Trainer', value: team.trainer },
             ...(team.cotrainer ? [{ label: 'Co-Trainer', value: team.cotrainer }] : []),
-            { label: 'Halle', value: team.halle },
-            { label: 'Adresse', value: team.halleAdresse },
+            ...(halle ? [{ label: 'Halle', value: halle.name }, { label: 'Adresse', value: halle.adresse }] : []),
           ].map(({ label, value }) => (
             <div key={label} className="flex gap-4 text-sm">
               <span className="w-24 shrink-0 font-semibold text-secondary">{label}</span>
@@ -86,6 +90,23 @@ function TeamDetails({ team }: {
           </div>
         </div>
       </div>
+      {mapsUrl && (
+        <div className="md:col-span-2">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">Wegbeschreibung</h2>
+          <div className="w-full h-64 md:h-80 rounded-xl overflow-hidden border border-gray-100">
+            <iframe
+              src={mapsUrl}
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title={`Karte: ${halle!.name}`}
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -114,6 +135,11 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
       foto && typeof foto === 'object' ? (foto as Media).url ?? null : null
     )
   )
+
+  const halle: { name: string; adresse: string } | null =
+    team.halle && typeof team.halle === 'object'
+      ? (team.halle as Hallen)
+      : null
 
   // Spielplan kommt später per SAMS API
   const spielplan: { datum: string; uhrzeit: string; heimspiel: boolean; gegner: string; ergebnis?: string }[] = []
@@ -148,7 +174,7 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
       )}
 
       <div className="max-w-6xl mx-auto px-6 py-16 space-y-16">
-        <TeamDetails team={team} />
+        <TeamDetails team={team} halle={halle} />
         {spieler.length > 0 && <KaderSection spieler={spieler} />}
         <LigaTabelle tabelle={null} />
         <SpielplanSection spielplan={spielplan} />
