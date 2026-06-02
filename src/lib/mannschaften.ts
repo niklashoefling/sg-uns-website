@@ -1,4 +1,10 @@
-export type Position = 'Zuspiel' | 'Außenangriff' | 'Diagonal' | 'Mittelblock' | 'Libero' | 'Universal'
+export type Position =
+  | 'Zuspiel'
+  | 'Außenangriff'
+  | 'Diagonal'
+  | 'Mittelblock'
+  | 'Libero'
+  | 'Universal'
 
 export type Spieler = {
   name: string

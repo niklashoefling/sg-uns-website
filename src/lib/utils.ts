@@ -1,5 +1,9 @@
 export function formatDatum(datum: string) {
-  return new Date(datum).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })
+  return new Date(datum).toLocaleDateString('de-DE', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
 }
 
 type LexicalNode = {

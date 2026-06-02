@@ -23,7 +23,12 @@ export default async function AktuellesPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <PageHeader eyebrow="SG U.N.S. Rheinhessen" title="Aktuelles" backHref="/" backLabel="Startseite" />
+      <PageHeader
+        eyebrow="SG U.N.S. Rheinhessen"
+        title="Aktuelles"
+        backHref="/"
+        backLabel="Startseite"
+      />
 
       <div className="max-w-6xl mx-auto px-6 py-16">
         <div className="grid md:grid-cols-3 gap-6">

@@ -46,9 +46,7 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
 
   const artikel = docs[0]
   const bildUrl =
-    artikel.bild && typeof artikel.bild === 'object'
-      ? (artikel.bild as Media).url ?? null
-      : null
+    artikel.bild && typeof artikel.bild === 'object' ? ((artikel.bild as Media).url ?? null) : null
 
   return (
     <div className="min-h-screen bg-white">
@@ -63,7 +61,9 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
             </span>
             <span className="text-white/50 text-sm">{formatDatum(artikel.datum)}</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight">{artikel.titel}</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+            {artikel.titel}
+          </h1>
         </div>
       </div>
 

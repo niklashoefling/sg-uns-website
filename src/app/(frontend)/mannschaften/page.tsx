@@ -48,20 +48,27 @@ export default async function MannschaftenPage() {
     }
   })
 
-  const trainingsgruppen: TrainingsGruppe[] = docs.map((m) => {
-    const halle = m.halle && typeof m.halle === 'object' ? (m.halle as Hallen) : null
-    const zeilen = (m.training ?? [])
-      .map((t) => ({ halle: halle?.name ?? '–', tag: t.tag, uhrzeit: t.uhrzeit }))
-      .sort((a, b) => {
-        const tagDiff = WOCHENTAGE.indexOf(a.tag) - WOCHENTAGE.indexOf(b.tag)
-        return tagDiff !== 0 ? tagDiff : a.uhrzeit.localeCompare(b.uhrzeit)
-      })
-    return { mannschaft: m.name, slug: m.slug, zeilen }
-  }).filter((g) => g.zeilen.length > 0)
+  const trainingsgruppen: TrainingsGruppe[] = docs
+    .map((m) => {
+      const halle = m.halle && typeof m.halle === 'object' ? (m.halle as Hallen) : null
+      const zeilen = (m.training ?? [])
+        .map((t) => ({ halle: halle?.name ?? '–', tag: t.tag, uhrzeit: t.uhrzeit }))
+        .sort((a, b) => {
+          const tagDiff = WOCHENTAGE.indexOf(a.tag) - WOCHENTAGE.indexOf(b.tag)
+          return tagDiff !== 0 ? tagDiff : a.uhrzeit.localeCompare(b.uhrzeit)
+        })
+      return { mannschaft: m.name, slug: m.slug, zeilen }
+    })
+    .filter((g) => g.zeilen.length > 0)
 
   return (
     <div className="min-h-screen bg-white">
-      <PageHeader eyebrow="SG U.N.S. Rheinhessen" title="Mannschaften" backHref="/" backLabel="Startseite" />
+      <PageHeader
+        eyebrow="SG U.N.S. Rheinhessen"
+        title="Mannschaften"
+        backHref="/"
+        backLabel="Startseite"
+      />
 
       <div className="max-w-6xl mx-auto px-6 py-16 space-y-16">
         <div className="flex flex-col gap-5">
@@ -71,7 +78,9 @@ export default async function MannschaftenPage() {
         </div>
 
         <div>
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-6">Trainingszeiten</h2>
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-6">
+            Trainingszeiten
+          </h2>
           <div className="border border-gray-100 rounded-xl overflow-hidden">
             <table className="w-full text-sm">
               <thead className="bg-gray-50 text-left">
@@ -87,26 +96,32 @@ export default async function MannschaftenPage() {
                   gruppe.zeilen.map((z, zi) => {
                     const halleWiederholt = zi > 0 && gruppe.zeilen[zi - 1].halle === z.halle
                     return (
-                    <tr key={`${gruppe.slug}-${zi}`} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-5 py-3">
-                        {zi === 0 ? (
-                          <a href={`/mannschaften/${gruppe.slug}`} className="text-secondary font-medium hover:text-primary transition-colors">
-                            {gruppe.mannschaft}
-                          </a>
-                        ) : null}
-                      </td>
-                      <td className="px-5 py-3 text-gray-500">
-                        {!halleWiederholt ? (
-                          <a href="/hallen" className="hover:text-primary transition-colors">
-                            {z.halle}
-                          </a>
-                        ) : null}
-                      </td>
-                      <td className="px-5 py-3 text-gray-500">{z.tag}</td>
-                      <td className="px-5 py-3 text-gray-500">{z.uhrzeit}</td>
-                    </tr>
+                      <tr
+                        key={`${gruppe.slug}-${zi}`}
+                        className="hover:bg-gray-50 transition-colors"
+                      >
+                        <td className="px-5 py-3">
+                          {zi === 0 ? (
+                            <a
+                              href={`/mannschaften/${gruppe.slug}`}
+                              className="text-secondary font-medium hover:text-primary transition-colors"
+                            >
+                              {gruppe.mannschaft}
+                            </a>
+                          ) : null}
+                        </td>
+                        <td className="px-5 py-3 text-gray-500">
+                          {!halleWiederholt ? (
+                            <a href="/hallen" className="hover:text-primary transition-colors">
+                              {z.halle}
+                            </a>
+                          ) : null}
+                        </td>
+                        <td className="px-5 py-3 text-gray-500">{z.tag}</td>
+                        <td className="px-5 py-3 text-gray-500">{z.uhrzeit}</td>
+                      </tr>
                     )
-                  })
+                  }),
                 )}
               </tbody>
             </table>

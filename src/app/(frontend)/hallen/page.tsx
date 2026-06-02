@@ -27,12 +27,17 @@ export default async function HallenPage() {
       acc[key] = [...(acc[key] ?? []), { name: m.name, slug: m.slug }]
       return acc
     },
-    {}
+    {},
   )
 
   return (
     <div className="min-h-screen bg-white">
-      <PageHeader eyebrow="SG U.N.S. Rheinhessen" title="Hallen" backHref="/" backLabel="Startseite" />
+      <PageHeader
+        eyebrow="SG U.N.S. Rheinhessen"
+        title="Hallen"
+        backHref="/"
+        backLabel="Startseite"
+      />
 
       <div className="max-w-6xl mx-auto px-6 py-16">
         {hallen.length === 0 && (
@@ -49,7 +54,13 @@ export default async function HallenPage() {
                   {fotoUrl && (
                     <>
                       <div className="w-1/2 shrink-0 relative">
-                        <Image src={fotoUrl} alt={halle.name} fill className="object-cover" sizes="(max-width: 768px) 50vw, 300px" />
+                        <Image
+                          src={fotoUrl}
+                          alt={halle.name}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 50vw, 300px"
+                        />
                       </div>
                       <div className="w-px bg-gray-100 shrink-0" />
                     </>
