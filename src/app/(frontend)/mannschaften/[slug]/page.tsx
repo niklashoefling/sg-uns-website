@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
 import Image from 'next/image'
 import { getPayload } from 'payload'
 import config from '@payload-config'
@@ -11,6 +10,7 @@ import LigaTabelle from '@/components/sections/LigaTabelle'
 import type { SpielerData } from '@/components/cards/PlayerCard'
 import KaderSection from '@/components/sections/KaderSection'
 import SpielplanSection from '@/components/sections/SpielplanSection'
+import BackButton from '@/components/ui/BackButton'
 
 export async function generateStaticParams() {
   return mannschaften.map((m) => ({ slug: m.slug }))
@@ -105,9 +105,9 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
       <div className="min-h-screen bg-white">
         <div className="bg-secondary pt-32 pb-32 px-6">
           <div className="max-w-6xl mx-auto">
-            <Link href="/mannschaften" className="text-white/50 hover:text-white text-sm transition-colors mb-4 inline-block">
-              ← Alle Mannschaften
-            </Link>
+            <div className="mb-8">
+              <BackButton href="/mannschaften" label="Alle Mannschaften" variant="dark" />
+            </div>
             <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">
               {team.liga} · Saison {team.saison}
             </span>
@@ -152,9 +152,7 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
     <div className="min-h-screen bg-white">
       <div className="bg-secondary pt-32 pb-32 px-6">
         <div className="max-w-6xl mx-auto">
-          <Link href="/mannschaften" className="text-white/50 hover:text-white text-sm transition-colors mb-4 inline-block">
-            ← Alle Mannschaften
-          </Link>
+          <BackButton href="/mannschaften" label="Alle Mannschaften" variant="dark" />
           <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">
             {team.liga} · Saison {team.saison}
           </span>

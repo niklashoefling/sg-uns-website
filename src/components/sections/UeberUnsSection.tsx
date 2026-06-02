@@ -2,8 +2,16 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 const stammvereine = [
-  { name: 'TV Undenheim', url: 'https://tv-undenheim.de/volleyball/', logo: '/vereine/TVU_Logo.png' },
-  { name: 'SC Schornsheim', url: 'https://www.scs97.de/abteilungen/volleyball', logo: '/vereine/SCS_Logo.png' },
+  {
+    name: 'TV Undenheim',
+    url: 'https://tv-undenheim.de/volleyball/',
+    logo: '/vereine/TVU_Logo.png',
+  },
+  {
+    name: 'SC Schornsheim',
+    url: 'https://www.scs97.de/abteilungen/volleyball',
+    logo: '/vereine/SCS_Logo.png',
+  },
   { name: 'TV Nieder-Olm', url: 'https://www.tvno.de', logo: '/vereine/TVNO_Logo-Volleyball.png' },
 ]
 
@@ -21,20 +29,23 @@ export default function UeberUnsSection() {
             </h2>
             <div className="space-y-4 text-gray-500 leading-relaxed">
               <p>
-                Die SG U.N.S. Rheinhessen ist eine Spielgemeinschaft der Vereine TV Undenheim, SC Schornsheim
-                und TV Nieder-Olm. Was als enge Zusammenarbeit in der Jugend begann, ist heute eine starke
-                Gemeinschaft mit drei Herrenmannschaften in unterschiedlichen Ligen.
+                Die SG U.N.S. Rheinhessen ist eine Spielgemeinschaft der Vereine TV Undenheim, SC
+                Schornsheim und TV Nieder-Olm. Was als enge Zusammenarbeit in der Jugend begann, ist
+                heute eine starke Gemeinschaft mit drei Herrenmannschaften in unterschiedlichen
+                Ligen.
               </p>
               <p>
                 Unser Ziel: talentierten Spielern aus der Region ein passendes Umfeld bieten. Vom
-                Nachwuchs bis zum ambitionierten Vereinsspieler. Wer Volleyball liebt und in Rheinhessen
-                zu Hause ist, ist bei uns richtig.
+                Nachwuchs bis zum ambitionierten Vereinsspieler. Wer Volleyball liebt und in
+                Rheinhessen zu Hause ist, ist bei uns richtig.
               </p>
             </div>
           </div>
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-6">Unsere Stammvereine</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-6">
+              Unsere Stammvereine
+            </p>
             <div className="grid grid-cols-3 gap-6">
               {stammvereine.map((v) => (
                 <a

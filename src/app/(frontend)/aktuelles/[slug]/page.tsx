@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
 import Image from 'next/image'
 import { getPayload } from 'payload'
 import config from '@payload-config'
@@ -7,6 +6,7 @@ import type { Media } from '@/payload-types'
 import RichTextRenderer from '@/components/ui/RichTextRenderer'
 import { formatDatum } from '@/lib/utils'
 import { mockArtikel } from '@/lib/artikel'
+import BackButton from '@/components/ui/BackButton'
 
 export default async function ArtikelPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -30,12 +30,9 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
       <div className="min-h-screen bg-white">
         <div className="bg-secondary pt-32 pb-16 px-6">
           <div className="max-w-4xl mx-auto">
-            <Link
-              href="/aktuelles"
-              className="text-white/50 hover:text-white text-sm transition-colors mb-4 inline-block"
-            >
-              ← Alle Beiträge
-            </Link>
+            <div className="mb-8">
+              <BackButton href="/aktuelles" label="Alle Beiträge" variant="dark" />
+            </div>
             <div className="flex items-center gap-3 mb-4">
               <span className="bg-primary/20 text-primary text-xs font-semibold px-2.5 py-0.5 rounded-full">
                 {artikel.kategorie}
@@ -75,12 +72,7 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
     <div className="min-h-screen bg-white">
       <div className="bg-secondary pt-32 pb-16 px-6">
         <div className="max-w-4xl mx-auto">
-          <Link
-            href="/aktuelles"
-            className="text-white/50 hover:text-white text-sm transition-colors mb-4 inline-block"
-          >
-            ← Alle Beiträge
-          </Link>
+          <BackButton href="/aktuelles" label="Alle Beiträge" variant="dark" />
           <div className="flex items-center gap-3 mb-4">
             <span className="bg-primary/20 text-primary text-xs font-semibold px-2.5 py-0.5 rounded-full">
               {mock.kategorie}

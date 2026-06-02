@@ -1,3 +1,5 @@
+import BackButton from '@/components/ui/BackButton'
+
 type Props = {
   eyebrow?: string
   title: string
@@ -11,9 +13,9 @@ export default function PageHeader({ eyebrow, title, backHref, backLabel, subtit
     <div className="bg-secondary pt-32 pb-16 px-6">
       <div className="max-w-6xl mx-auto">
         {backHref && (
-          <a href={backHref} className="text-white/50 hover:text-white text-sm transition-colors mb-4 inline-block">
-            ← {backLabel ?? 'Zurück'}
-          </a>
+          <div className="mb-4">
+            <BackButton href={backHref} label={backLabel ?? 'Zurück'} variant="dark" />
+          </div>
         )}
         {eyebrow && (
           <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">
@@ -21,9 +23,7 @@ export default function PageHeader({ eyebrow, title, backHref, backLabel, subtit
           </span>
         )}
         <h1 className="text-5xl font-bold text-white">{title}</h1>
-        {subtitle && (
-          <p className="text-white/60 mt-3 text-lg">{subtitle}</p>
-        )}
+        {subtitle && <p className="text-white/60 mt-3 text-lg">{subtitle}</p>}
       </div>
     </div>
   )

@@ -15,7 +15,12 @@ export default function PlayerCard({ spieler }: { spieler: SpielerData }) {
     <div className="border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
       <div className="relative h-48 bg-secondary/10">
         {spieler.fotoUrl ? (
-          <Image src={spieler.fotoUrl} alt={spieler.name} fill className="object-cover object-top" />
+          <Image
+            src={spieler.fotoUrl}
+            alt={spieler.name}
+            fill
+            className="object-cover object-top"
+          />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <span className="text-5xl text-secondary/20">👤</span>

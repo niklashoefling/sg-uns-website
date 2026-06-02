@@ -3,7 +3,7 @@ import PageHeader from '@/components/layout/PageHeader'
 export default function JugendarbeitPage() {
   return (
     <div className="min-h-screen bg-white">
-      <PageHeader eyebrow="SG U.N.S. Rheinhessen" title="Jugendarbeit" />
+      <PageHeader eyebrow="SG U.N.S. Rheinhessen" title="Jugendarbeit" backHref="/" backLabel="Startseite" />
 
       <div className="max-w-4xl mx-auto px-6 py-16 space-y-12">
         <div>

@@ -9,7 +9,11 @@ const navLinks = [
 ]
 
 const stammvereine = [
-  { name: 'TV Undenheim', url: 'https://tv-undenheim.de/volleyball/', logo: '/vereine/TVU_Logo.png' },
+  {
+    name: 'TV Undenheim',
+    url: 'https://tv-undenheim.de/volleyball/',
+    logo: '/vereine/TVU_Logo.png',
+  },
   {
     name: 'SC Schornsheim',
     url: 'https://www.scs97.de/abteilungen/volleyball',

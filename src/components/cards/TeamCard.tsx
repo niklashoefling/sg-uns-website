@@ -25,7 +25,9 @@ export default function TeamCard({ team, index }: { team: Mannschaft; index: num
 
       <div className="flex flex-1 flex-col md:flex-row md:items-center gap-4 p-6 md:py-8">
         <div className="shrink-0 w-10 h-10 rounded-full bg-secondary/10 border border-secondary/20 flex items-center justify-center group-hover:bg-primary/10 group-hover:border-primary/30 transition-colors">
-          <span className="text-secondary group-hover:text-primary font-bold transition-colors">{index + 1}</span>
+          <span className="text-secondary group-hover:text-primary font-bold transition-colors">
+            {index + 1}
+          </span>
         </div>
 
         <div className="flex-1 min-w-0">
@@ -46,7 +48,9 @@ export default function TeamCard({ team, index }: { team: Mannschaft; index: num
           ))}
         </div>
 
-        <span className="shrink-0 text-gray-300 group-hover:text-primary transition-colors text-xl hidden md:block">→</span>
+        <span className="shrink-0 text-gray-300 group-hover:text-primary transition-colors text-xl hidden md:block">
+          →
+        </span>
       </div>
     </Link>
   )

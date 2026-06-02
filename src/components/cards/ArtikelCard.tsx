@@ -19,11 +19,13 @@ type Props = {
   featured?: boolean
 }
 
-export default function ArtikelCard({ artikel, headingTag: Heading = 'h2', featured = false }: Props) {
+export default function ArtikelCard({
+  artikel,
+  headingTag: Heading = 'h2',
+  featured = false,
+}: Props) {
   const bildUrl =
-    artikel.bild && typeof artikel.bild === 'object'
-      ? (artikel.bild as Media).url ?? null
-      : null
+    artikel.bild && typeof artikel.bild === 'object' ? ((artikel.bild as Media).url ?? null) : null
 
   if (featured) {
     return (

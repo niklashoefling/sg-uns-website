@@ -72,6 +72,18 @@ E-Mail-Newsletter für Vereinsnachrichten.
 - Anmeldeformular auf der Webseite einbinden
 - Newsletter werden direkt im jeweiligen Tool erstellt, kein Code nötig
 
+### Trainingszeiten
+Trainingszeiten der Mannschaften anzeigen — wann und wo welches Team trainiert.
+- Trainingszeiten als Feld in der `Mannschaften` Collection ergänzen (z.B. strukturiertes Feld: Wochentag, Uhrzeit, Halle)
+- Auf der Mannschaftsdetailseite unterhalb der Spielplan-/Tabelleninfo anzeigen
+- Optional: Zentrale Trainingsübersicht als eigene Seite oder Sektion
+
+### Trainerstab *(Nice to have)*
+Trainerprofile auf den Mannschaftsdetailseiten oder einer eigenen Seite.
+- `Trainer` Collection anlegen mit: Name, Foto, Lizenz (A/B/C-Lizenz), zugeordnete Mannschaft
+- Auf der Mannschaftsdetailseite einbinden
+- Optional: Zentrale Trainerübersicht unter „Über uns"
+
 ### Alle Mannschaften ins CMS
 Aktuell werden 2. und 3. Herren noch aus statischen Daten in `src/lib/mannschaften.ts` geladen.
 - Im Admin weitere Mannschaften anlegen (slug: `2-herren`, `3-herren`)
