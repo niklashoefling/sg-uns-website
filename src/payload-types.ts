@@ -219,6 +219,25 @@ export interface Mannschaften {
         id?: string | null;
       }[]
     | null;
+  spielplan?:
+    | {
+        /**
+         * z.B. "15.11.2025"
+         */
+        datum: string;
+        /**
+         * z.B. "18:00 Uhr"
+         */
+        uhrzeit: string;
+        gegner: string;
+        heimspiel?: boolean | null;
+        /**
+         * z.B. "3:1" — leer lassen wenn noch nicht gespielt
+         */
+        ergebnis?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -415,6 +434,16 @@ export interface MannschaftenSelect<T extends boolean = true> {
         nationalitaet?: T;
         geburtsjahr?: T;
         groesse?: T;
+        id?: T;
+      };
+  spielplan?:
+    | T
+    | {
+        datum?: T;
+        uhrzeit?: T;
+        gegner?: T;
+        heimspiel?: T;
+        ergebnis?: T;
         id?: T;
       };
   updatedAt?: T;
