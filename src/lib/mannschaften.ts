@@ -1,4 +1,4 @@
-export type Position = 'Zuspiel' | 'Außenannahme' | 'Diagonal' | 'Mittelblocker' | 'Libero' | 'Universal'
+export type Position = 'Zuspiel' | 'Außenangriff' | 'Diagonal' | 'Mittelblock' | 'Libero' | 'Universal'
 
 export type Spieler = {
   name: string
@@ -52,11 +52,11 @@ export const mannschaften: Mannschaft[] = [
       'Die 1. Herren ist das Aushängeschild der SG U.N.S. Rheinhessen. Mit einer eingespielten Mannschaft und ambitionierten Zielen gehen wir in jede Saison. Wir freuen uns immer über neue Mitspieler!',
     spieler: [
       { name: 'Cassian Zgraja', nummer: 1, position: 'Zuspiel', nationalitaet: 'Deutschland', geburtsjahr: 2006, groesse: 1.84 },
-      { name: 'Thomas Beispiel', nummer: 4, position: 'Außenannahme' },
+      { name: 'Thomas Beispiel', nummer: 4, position: 'Außenangriff' },
       { name: 'Lars Probst', nummer: 7, position: 'Diagonal' },
-      { name: 'Felix Groß', nummer: 9, position: 'Mittelblocker' },
-      { name: 'Jonas Klein', nummer: 11, position: 'Außenannahme' },
-      { name: 'Stefan Weiß', nummer: 13, position: 'Mittelblocker' },
+      { name: 'Felix Groß', nummer: 9, position: 'Mittelblock' },
+      { name: 'Jonas Klein', nummer: 11, position: 'Außenangriff' },
+      { name: 'Stefan Weiß', nummer: 13, position: 'Mittelblock' },
       { name: 'Nico Braun', nummer: 15, position: 'Libero' },
     ],
     spielplan: [
@@ -85,8 +85,8 @@ export const mannschaften: Mannschaft[] = [
       'Die 2. Herren bietet erfahrenen Spielern ein starkes Umfeld für kompetitiven Volleyball auf Bezirksebene.',
     spieler: [
       { name: 'Paul Muster', nummer: 2, position: 'Zuspiel' },
-      { name: 'Andreas Test', nummer: 5, position: 'Außenannahme' },
-      { name: 'Markus Lang', nummer: 8, position: 'Mittelblocker' },
+      { name: 'Andreas Test', nummer: 5, position: 'Außenangriff' },
+      { name: 'Markus Lang', nummer: 8, position: 'Mittelblock' },
       { name: 'Simon Kurz', nummer: 10, position: 'Libero' },
     ],
     spielplan: [
@@ -107,7 +107,7 @@ export const mannschaften: Mannschaft[] = [
     beschreibung:
       'Für alle, die Volleyball mit Freude und Ehrgeiz spielen wollen. Die 3. Herren ist offen für neue Mitspieler jeden Levels.',
     spieler: [
-      { name: 'Klaus Demo', nummer: 3, position: 'Außenannahme' },
+      { name: 'Klaus Demo', nummer: 3, position: 'Außenangriff' },
       { name: 'Bernd Test', nummer: 6, position: 'Zuspiel' },
       { name: 'Frank Probe', nummer: 12, position: 'Diagonal' },
     ],

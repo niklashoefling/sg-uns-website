@@ -122,9 +122,9 @@ export const Mannschaften: CollectionConfig = {
           required: true,
           options: [
             { label: 'Zuspiel', value: 'Zuspiel' },
-            { label: 'Außenannahme', value: 'Außenannahme' },
+            { label: 'Außenangriff', value: 'Außenangriff' },
             { label: 'Diagonal', value: 'Diagonal' },
-            { label: 'Mittelblocker', value: 'Mittelblocker' },
+            { label: 'Mittelblock', value: 'Mittelblock' },
             { label: 'Libero', value: 'Libero' },
             { label: 'Universal', value: 'Universal' },
           ],
