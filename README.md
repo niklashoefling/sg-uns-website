@@ -7,13 +7,7 @@ Next.js 16 + Payload CMS 3 Vereinswebseite für die SG U.N.S. Rheinhessen.
 ```bash
 npm install
 npm run dev
-```
-
-`.env` benötigt:
-```
-DATABASE_URL=postgresql://...   (Neon Connection String)
-PAYLOAD_SECRET=<beliebiger-string>
-```
+``
 
 Admin-Panel: `http://localhost:3000/admin`
 
@@ -89,12 +83,11 @@ Die SG ist kein eigenständiger Verein und hat keine eigene Rechtspersönlichkei
 - Die anderen beiden Stammvereine können zusätzlich genannt werden, ist aber nicht Pflicht
 - Empfehlung: Impressum-Generator von eRecht24 nutzen (kostenlose Basisversion reicht), betreibenden Stammverein eintragen, Text direkt im Payload Admin unter `/impressum` eintragen
 
-### Rollen & Rechteverwaltung
-Trainer sollen nur ihre eigene Mannschaft bearbeiten dürfen.
-- `Users` Collection um `rolle`-Feld erweitern (`admin` | `trainer`)
-- Trainer-User einer Mannschaft zuweisen (Relationship-Feld)
-- Access Control in `Mannschaften` Collection: Trainer darf nur eigene Mannschaft bearbeiten
-- Siehe Payload Docs: Access Control mit Query Constraints
+### ~~Rollen & Rechteverwaltung~~ ✅ Umgesetzt
+- `Users` Collection: `rolle`-Feld (`admin` | `trainer`) + Relationship zur Mannschaft
+- Trainer darf nur eigene Mannschaft bearbeiten (Query Constraint in Access Control)
+- Trainer kann Artikel erstellen, aber nur eigene bearbeiten/löschen (`autor`-Feld, automatisch gesetzt)
+- Trainer anlegen: `/admin` → Users → Neu → Rolle „Trainer" + Mannschaft zuweisen
 
 ### Sponsoren
 Sponsoren-Sektion auf der Startseite einbauen sobald Logos und URLs vorliegen.
