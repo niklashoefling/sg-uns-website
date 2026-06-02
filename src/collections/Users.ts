@@ -4,10 +4,48 @@ export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
     useAsTitle: 'email',
+    defaultColumns: ['email', 'rolle'],
   },
   auth: true,
+  access: {
+    read: ({ req }) => !!req.user,
+    create: ({ req }) => isAdmin(req.user),
+    update: ({ req }) => isAdmin(req.user),
+    delete: ({ req }) => isAdmin(req.user),
+  },
   fields: [
-    // Email added by default
-    // Add more fields as needed
+    {
+      name: 'rolle',
+      type: 'select',
+      required: true,
+      defaultValue: 'trainer',
+      saveToJWT: true,
+      options: [
+        { label: 'Admin', value: 'admin' },
+        { label: 'Trainer', value: 'trainer' },
+      ],
+    },
+    {
+      name: 'mannschaft',
+      type: 'relationship',
+      relationTo: 'mannschaften',
+      admin: {
+        description: 'Nur bei Rolle "Trainer" relevant',
+        condition: (data) => data.rolle === 'trainer',
+      },
+    },
   ],
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isAdmin(user: any): boolean {
+  return user?.rolle === 'admin'
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isTrainerOf(user: any, mannschaftId: string | number | null | undefined): boolean {
+  if (!user || !mannschaftId) return false
+  if (isAdmin(user)) return true
+  const eigene = typeof user.mannschaft === 'object' ? user.mannschaft?.id : user.mannschaft
+  return String(eigene) === String(mannschaftId)
 }

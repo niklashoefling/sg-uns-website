@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isAdmin, isTrainerOf } from './Users'
 
 export const Mannschaften: CollectionConfig = {
   slug: 'mannschaften',
@@ -13,6 +14,19 @@ export const Mannschaften: CollectionConfig = {
   },
   access: {
     read: () => true,
+    create: ({ req }) => isAdmin(req.user),
+    delete: ({ req }) => isAdmin(req.user),
+    update: ({ req }) => {
+      if (isAdmin(req.user)) return true
+      // Trainer darf nur eigene Mannschaft bearbeiten – Payload prüft dann per ID-Constraint
+      if (req.user?.rolle === 'trainer') {
+        const eigene =
+          typeof req.user.mannschaft === 'object' ? req.user.mannschaft?.id : req.user.mannschaft
+        if (!eigene) return false
+        return { id: { equals: eigene } }
+      }
+      return false
+    },
   },
   fields: [
     {

@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isAdmin } from './Users'
 
 export const Artikel: CollectionConfig = {
   slug: 'artikel',
@@ -8,11 +9,36 @@ export const Artikel: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'titel',
-    defaultColumns: ['titel', 'kategorie', 'datum'],
+    defaultColumns: ['titel', 'kategorie', 'datum', 'autor'],
     description: 'News und Beiträge für die Aktuelles-Seite',
   },
   access: {
     read: () => true,
+    create: ({ req }) => !!req.user,
+    update: ({ req }) => {
+      if (isAdmin(req.user)) return true
+      if (req.user?.rolle === 'trainer') {
+        return { autor: { equals: req.user.id } }
+      }
+      return false
+    },
+    delete: ({ req }) => {
+      if (isAdmin(req.user)) return true
+      if (req.user?.rolle === 'trainer') {
+        return { autor: { equals: req.user.id } }
+      }
+      return false
+    },
+  },
+  hooks: {
+    beforeChange: [
+      async ({ data, operation, req }) => {
+        if (operation === 'create' && req.user) {
+          data.autor = req.user.id
+        }
+        return data
+      },
+    ],
   },
   fields: [
     {
@@ -70,6 +96,16 @@ export const Artikel: CollectionConfig = {
       name: 'bild',
       type: 'upload',
       relationTo: 'media',
+    },
+    {
+      name: 'autor',
+      type: 'relationship',
+      relationTo: 'users',
+      admin: {
+        readOnly: true,
+        description: 'Wird automatisch beim Erstellen gesetzt',
+        position: 'sidebar',
+      },
     },
   ],
 }
