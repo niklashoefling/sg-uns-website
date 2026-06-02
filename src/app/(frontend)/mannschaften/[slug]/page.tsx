@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import { getPayload } from 'payload'
@@ -57,10 +58,6 @@ function TeamDetails({ team, halle }: {
   }
   halle: { name: string; adresse: string } | null
 }) {
-  const mapsUrl = halle
-    ? `https://maps.google.com/maps?q=${encodeURIComponent(halle.adresse)}&output=embed`
-    : null
-
   return (
     <div className="grid md:grid-cols-2 gap-10">
       <div>
@@ -73,13 +70,20 @@ function TeamDetails({ team, halle }: {
           {[
             { label: 'Trainer', value: team.trainer },
             ...(team.cotrainer ? [{ label: 'Co-Trainer', value: team.cotrainer }] : []),
-            ...(halle ? [{ label: 'Halle', value: halle.name }, { label: 'Adresse', value: halle.adresse }] : []),
           ].map(({ label, value }) => (
             <div key={label} className="flex gap-4 text-sm">
               <span className="w-24 shrink-0 font-semibold text-secondary">{label}</span>
               <span className="text-gray-500">{value}</span>
             </div>
           ))}
+          {halle && (
+            <div className="flex gap-4 text-sm">
+              <span className="w-24 shrink-0 font-semibold text-secondary">Halle</span>
+              <Link href="/hallen" className="text-primary hover:underline">
+                {halle.name}
+              </Link>
+            </div>
+          )}
           <div className="flex gap-4 text-sm">
             <span className="w-24 shrink-0 font-semibold text-secondary">Training</span>
             <div className="space-y-1">
@@ -90,23 +94,6 @@ function TeamDetails({ team, halle }: {
           </div>
         </div>
       </div>
-      {mapsUrl && (
-        <div className="md:col-span-2">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">Wegbeschreibung</h2>
-          <div className="w-full h-64 md:h-80 rounded-xl overflow-hidden border border-gray-100">
-            <iframe
-              src={mapsUrl}
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title={`Karte: ${halle!.name}`}
-            />
-          </div>
-        </div>
-      )}
     </div>
   )
 }
