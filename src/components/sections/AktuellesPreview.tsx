@@ -3,7 +3,6 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import ArtikelCard from '@/components/cards/ArtikelCard'
 import type { ArtikelData } from '@/components/cards/ArtikelCard'
-import { mockArtikel } from '@/lib/artikel'
 
 export default async function AktuellesPreview() {
   const payload = await getPayload({ config })
@@ -14,7 +13,9 @@ export default async function AktuellesPreview() {
     depth: 1,
   })
 
-  const artikel: ArtikelData[] = docs.length > 0 ? docs.slice(0, 3) : mockArtikel.slice(0, 3)
+  const artikel: ArtikelData[] = docs
+
+  if (artikel.length === 0) return null
 
   return (
     <section id="aktuelles" className="py-20 px-6 bg-gray-50">

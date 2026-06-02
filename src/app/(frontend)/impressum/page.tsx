@@ -1,5 +1,10 @@
 import PageHeader from '@/components/layout/PageHeader'
 
+export const metadata = {
+  title: 'Impressum | SG U.N.S. Rheinhessen',
+  robots: { index: false },
+}
+
 export default function ImpressumPage() {
   return (
     <div className="min-h-screen bg-white">

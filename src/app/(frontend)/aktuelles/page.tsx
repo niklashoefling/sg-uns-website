@@ -3,7 +3,11 @@ import config from '@payload-config'
 import PageHeader from '@/components/layout/PageHeader'
 import ArtikelCard from '@/components/cards/ArtikelCard'
 import type { ArtikelData } from '@/components/cards/ArtikelCard'
-import { mockArtikel } from '@/lib/artikel'
+
+export const metadata = {
+  title: 'Aktuelles | SG U.N.S. Rheinhessen',
+  description: 'Neuigkeiten und Berichte der SG U.N.S. Rheinhessen.',
+}
 
 export const dynamic = 'force-dynamic'
 
@@ -15,7 +19,7 @@ export default async function AktuellesPage() {
     depth: 1,
   })
 
-  const artikel: ArtikelData[] = docs.length > 0 ? docs : mockArtikel
+  const artikel: ArtikelData[] = docs
 
   return (
     <div className="min-h-screen bg-white">

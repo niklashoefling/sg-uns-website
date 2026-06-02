@@ -1,5 +1,10 @@
 import PageHeader from '@/components/layout/PageHeader'
 
+export const metadata = {
+  title: 'Jugendarbeit | SG U.N.S. Rheinhessen',
+  description: 'Erfolgreiche Jugendarbeit der SG U.N.S. Rheinhessen – Tradition, Nachwuchs und Ziele.',
+}
+
 export default function JugendarbeitPage() {
   return (
     <div className="min-h-screen bg-white">

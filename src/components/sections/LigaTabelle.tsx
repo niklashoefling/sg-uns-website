@@ -1,6 +1,15 @@
 import { type Tabelle } from '@/lib/tabelle'
 
-export default function LigaTabelle({ tabelle }: { tabelle: Tabelle }) {
+export default function LigaTabelle({ tabelle }: { tabelle: Tabelle | null }) {
+  if (!tabelle) {
+    return (
+      <div>
+        <h2 className="text-2xl font-bold text-secondary mb-6">Tabelle</h2>
+        <p className="text-sm text-gray-400">Tabelle wird in Kürze verfügbar sein.</p>
+      </div>
+    )
+  }
+
   return (
     <div>
       <div className="flex items-end justify-between mb-6">

@@ -1,0 +1,156 @@
+/* ─── CSS Variablen ───────────────────────────────── */
+
+[data-theme="light"],
+:root {
+  --theme-bg: #f4f6f9;
+  --theme-input-bg: #ffffff;
+  --theme-text: #1e3a5f;
+  --theme-border-color: #dde2ec;
+  --theme-elevation-0:   #ffffff;
+  --theme-elevation-50:  #f4f6f9;
+  --theme-elevation-100: #eef0f5;
+  --theme-elevation-150: #e8ebf2;
+  --theme-elevation-200: #dde2ec;
+  --theme-elevation-250: #d2d8e6;
+  --theme-elevation-300: #c4ccde;
+  --theme-elevation-350: #b4bdd8;
+  --theme-elevation-400: #9aaacf;
+  --theme-elevation-450: #7e92c3;
+  --theme-elevation-500: #5e74b4;
+  --theme-elevation-550: #3a5a9e;
+  --theme-elevation-600: #1e3a5f;
+  --theme-elevation-700: #172e4e;
+  --theme-elevation-750: #12243e;
+  --theme-elevation-800: #0e1c30;
+  --theme-elevation-850: #0a1525;
+  --theme-elevation-900: #06101c;
+  --theme-elevation-950: #030810;
+  --theme-elevation-1000: #000000;
+}
+
+/* ─── Nav Sidebar ─────────────────────────────────── */
+
+.nav {
+  background-color: #1e3a5f;
+  border-right: none !important;
+  border-left: none !important;
+}
+
+.nav__wrap {
+  background-color: #1e3a5f;
+}
+
+.nav__scroll {
+  background-color: #1e3a5f;
+}
+
+/* Header-Bereich (Logo) */
+.nav__header {
+  background-color: #1e3a5f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Nav Links */
+.nav__link {
+  color: rgba(255, 255, 255, 0.7) !important;
+  border-radius: 6px;
+  padding-inline-start: 10px !important;
+  padding-inline-end: 10px !important;
+  padding-block: 6px !important;
+  margin-bottom: 2px;
+}
+
+.nav__link:hover {
+  color: #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.nav__link.active,
+.nav__link--active {
+  color: #ffffff !important;
+  background-color: rgba(232, 78, 15, 0.15);
+}
+
+.nav__link-indicator {
+  background: #e84e0f !important;
+}
+
+/* "COLLECTIONS" Label */
+.nav__label,
+.collections__label,
+.nav-group__toggle {
+  color: rgba(255, 255, 255, 0.35) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.08em !important;
+}
+
+.nav-group__toggle:hover {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.nav-group__toggle .stroke {
+  stroke: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Logout / Controls unten */
+.nav__controls {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 12px;
+}
+
+.nav__controls * {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.nav__controls *:hover {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ─── App Header ──────────────────────────────────── */
+
+.app-header {
+  background-color: #1e3a5f !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.app-header__bg {
+  background-color: #1e3a5f !important;
+}
+
+.app-header *,
+.app-header__step-nav-wrapper * {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.app-header a:hover {
+  color: #ffffff !important;
+}
+
+/* ─── Content Bereich ─────────────────────────────── */
+
+.collection-list__wrap,
+.collection-edit__main-wrapper {
+  padding-top: calc(var(--base) * 1.5) !important;
+}
+
+.doc-header__title {
+  padding-top: calc(var(--base) * 1.5) !important;
+}
+
+.btn.btn--style-primary,
+button[type="submit"].btn,
+.btn--style-primary {
+  background-color: #e84e0f !important;
+  border-color: #e84e0f !important;
+  color: #ffffff !important;
+}
+
+.btn.btn--style-primary:hover,
+button[type="submit"].btn:hover {
+  background-color: #c94009 !important;
+  border-color: #c94009 !important;
+}
+
+*:focus-visible {
+  outline-color: #e84e0f !important;
+}

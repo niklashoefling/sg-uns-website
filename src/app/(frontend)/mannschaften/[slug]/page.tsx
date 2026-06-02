@@ -2,18 +2,35 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import type { Metadata } from 'next'
 import type { Media } from '@/payload-types'
-import { getMannschaft, mannschaften } from '@/lib/mannschaften'
-import type { Spieler } from '@/lib/mannschaften'
-import { getTabelle } from '@/lib/tabelle'
 import LigaTabelle from '@/components/sections/LigaTabelle'
 import type { SpielerData } from '@/components/cards/PlayerCard'
 import KaderSection from '@/components/sections/KaderSection'
 import SpielplanSection from '@/components/sections/SpielplanSection'
 import BackButton from '@/components/ui/BackButton'
 
-export async function generateStaticParams() {
-  return mannschaften.map((m) => ({ slug: m.slug }))
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const payload = await getPayload({ config })
+  const { docs } = await payload.find({
+    collection: 'mannschaften',
+    where: { slug: { equals: slug } },
+    depth: 0,
+    limit: 1,
+  })
+  if (docs.length > 0) {
+    const team = docs[0]
+    return {
+      title: `${team.name} | SG U.N.S. Rheinhessen`,
+      description: `${team.name} – ${team.liga}, Saison ${team.saison}`,
+    }
+  }
+  return {}
 }
 
 function toSpielerData(s: {
@@ -84,75 +101,29 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
     limit: 1,
   })
 
-  if (docs.length > 0) {
-    const team = docs[0]
-    const tabelle = getTabelle(slug)
-    const teamfotoUrl =
-      team.teamfoto && typeof team.teamfoto === 'object'
-        ? (team.teamfoto as Media).url ?? null
-        : null
+  if (docs.length === 0) notFound()
 
-    const staticTeam = getMannschaft(slug)
-    const spielplan = staticTeam?.spielplan ?? []
+  const team = docs[0]
+  const teamfotoUrl =
+    team.teamfoto && typeof team.teamfoto === 'object'
+      ? (team.teamfoto as Media).url ?? null
+      : null
 
-    const spieler: SpielerData[] = (team.spieler ?? []).map((s) =>
-      toSpielerData(s, (foto) =>
-        foto && typeof foto === 'object' ? (foto as Media).url ?? null : null
-      )
+  const spieler: SpielerData[] = (team.spieler ?? []).map((s) =>
+    toSpielerData(s, (foto) =>
+      foto && typeof foto === 'object' ? (foto as Media).url ?? null : null
     )
-
-    return (
-      <div className="min-h-screen bg-white">
-        <div className="bg-secondary pt-32 pb-32 px-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="mb-8">
-              <BackButton href="/mannschaften" label="Alle Mannschaften" variant="dark" />
-            </div>
-            <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">
-              {team.liga} · Saison {team.saison}
-            </span>
-            <h1 className="text-5xl font-bold text-white">{team.name}</h1>
-          </div>
-        </div>
-
-        {teamfotoUrl && (
-          <div className="max-w-6xl mx-auto px-6 -mt-16">
-            <div className="relative w-full h-56 md:h-72 rounded-xl overflow-hidden shadow-xl">
-              <Image
-                src={teamfotoUrl}
-                alt={`${team.name} Teamfoto`}
-                fill
-                priority
-                sizes="(max-width: 768px) 100vw, 1152px"
-                className="object-cover object-center"
-              />
-            </div>
-          </div>
-        )}
-
-        <div className="max-w-6xl mx-auto px-6 py-16 space-y-16">
-          <TeamDetails team={team} />
-          {spieler.length > 0 && <KaderSection spieler={spieler} />}
-          {tabelle && <LigaTabelle tabelle={tabelle} />}
-          <SpielplanSection spielplan={spielplan} />
-        </div>
-      </div>
-    )
-  }
-
-  const team = getMannschaft(slug)
-  if (!team) notFound()
-
-  const tabelle = getTabelle(slug)
-  const spieler: SpielerData[] = team.spieler.map((s: Spieler) =>
-    toSpielerData({ ...s, fotoUrl: s.foto ?? null })
   )
+
+  const spielplan = (team.spielplan ?? []) as { datum: string; uhrzeit: string; heimspiel: boolean; gegner: string; ergebnis?: string }[]
 
   return (
     <div className="min-h-screen bg-white">
       <div className="bg-secondary pt-32 pb-32 px-6">
         <div className="max-w-6xl mx-auto">
-          <BackButton href="/mannschaften" label="Alle Mannschaften" variant="dark" />
+          <div className="mb-8">
+            <BackButton href="/mannschaften" label="Alle Mannschaften" variant="dark" />
+          </div>
           <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">
             {team.liga} · Saison {team.saison}
           </span>
@@ -160,11 +131,11 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
         </div>
       </div>
 
-      {team.teamfoto && (
+      {teamfotoUrl && (
         <div className="max-w-6xl mx-auto px-6 -mt-16">
           <div className="relative w-full h-56 md:h-72 rounded-xl overflow-hidden shadow-xl">
             <Image
-              src={team.teamfoto}
+              src={teamfotoUrl}
               alt={`${team.name} Teamfoto`}
               fill
               priority
@@ -177,9 +148,9 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
 
       <div className="max-w-6xl mx-auto px-6 py-16 space-y-16">
         <TeamDetails team={team} />
-        <KaderSection spieler={spieler} />
-        {tabelle && <LigaTabelle tabelle={tabelle} />}
-        <SpielplanSection spielplan={team.spielplan} />
+        {spieler.length > 0 && <KaderSection spieler={spieler} />}
+        <LigaTabelle tabelle={null} />
+        <SpielplanSection spielplan={spielplan} />
       </div>
     </div>
   )

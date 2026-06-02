@@ -23,9 +23,8 @@ export default buildConfig({
     meta: {
       titleSuffix: '— SG U.N.S. Rheinhessen',
     },
-    // @ts-ignore
-    css: path.resolve(dirname, 'app/(payload)/admin/custom.css'),
     components: {
+      beforeNavLinks: ['/components/admin/AdminBackButton#default'],
       graphics: {
         Logo: '/components/admin/AdminLogo#AdminLogo',
         Icon: '/components/admin/AdminLogo#AdminIcon',

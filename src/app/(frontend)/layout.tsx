@@ -1,11 +1,15 @@
 import React from 'react'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 export const metadata = {
-  description: 'SG U.N.S. Rheinhessen – Volleyball in Rheinhessen',
+  description: 'SG U.N.S. Rheinhessen - Volleyball in Rheinhessen',
   title: 'SG U.N.S. Rheinhessen',
+  icons: {
+    icon: '/vereine/SG-Icon.png',
+  },
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
@@ -17,6 +21,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   )
