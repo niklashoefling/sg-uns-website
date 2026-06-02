@@ -34,6 +34,46 @@ export const Users: CollectionConfig = {
         condition: (data) => data.rolle === 'trainer',
       },
     },
+    {
+      name: 'name',
+      type: 'text',
+      admin: {
+        description: 'Vollständiger Name, z.B. "Max Mustermann"',
+        condition: (data) => data.rolle === 'trainer',
+      },
+    },
+    {
+      name: 'foto',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        condition: (data) => data.rolle === 'trainer',
+      },
+    },
+    {
+      name: 'lizenz',
+      type: 'text',
+      admin: {
+        description: 'z.B. "B-Lizenz DVV"',
+        condition: (data) => data.rolle === 'trainer',
+      },
+    },
+    {
+      name: 'kurzvorstellung',
+      type: 'textarea',
+      admin: {
+        description: 'Kurze Vorstellung (2–3 Sätze)',
+        condition: (data) => data.rolle === 'trainer',
+      },
+    },
+    {
+      name: 'aktivSeit',
+      type: 'number',
+      admin: {
+        description: 'Jahr seit dem die Person als Trainer aktiv ist, z.B. 2018',
+        condition: (data) => data.rolle === 'trainer',
+      },
+    },
   ],
 }
 

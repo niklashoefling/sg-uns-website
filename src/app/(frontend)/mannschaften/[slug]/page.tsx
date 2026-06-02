@@ -11,6 +11,7 @@ import type { SpielerData } from '@/components/cards/PlayerCard'
 import KaderSection from '@/components/sections/KaderSection'
 import SpielplanSection from '@/components/sections/SpielplanSection'
 import BackButton from '@/components/ui/BackButton'
+import TrainerCard, { type TrainerData } from '@/components/cards/TrainerCard'
 
 export async function generateMetadata({
   params,
@@ -64,7 +65,7 @@ function TeamDetails({
   halle,
 }: {
   team: {
-    trainer: { name: string; email?: string }[]
+    trainer: TrainerData[]
     beschreibung: string
     training: { tag: string; uhrzeit: string }[]
   }
@@ -153,11 +154,25 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
   const halle: { name: string; adresse: string } | null =
     team.halle && typeof team.halle === 'object' ? (team.halle as Hallen) : null
 
-  const trainer = ((team.trainer as unknown[]) ?? [])
+  const trainer: TrainerData[] = ((team.trainer as unknown[]) ?? [])
     .filter((t) => typeof t === 'object' && t !== null)
     .map((t) => {
-      const u = t as { email?: string; name?: string }
-      return { name: u.name ?? u.email ?? '–', email: u.email }
+      const u = t as {
+        email?: string
+        name?: string
+        foto?: unknown
+        lizenz?: string
+        kurzvorstellung?: string
+        aktivSeit?: number
+      }
+      return {
+        name: u.name ?? u.email ?? '–',
+        email: u.email,
+        fotoUrl: resolveMediaUrl(u.foto),
+        lizenz: u.lizenz,
+        kurzvorstellung: u.kurzvorstellung,
+        aktivSeit: u.aktivSeit,
+      }
     })
 
   // Spielplan kommt später per SAMS API
@@ -200,6 +215,18 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
 
       <div className="max-w-6xl mx-auto px-6 py-16 space-y-16">
         <TeamDetails team={{ ...team, trainer }} halle={halle} />
+        {trainer.length > 0 && (
+          <div>
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-6">
+              Trainerstab
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {trainer.map((t) => (
+                <TrainerCard key={t.name} trainer={t} />
+              ))}
+            </div>
+          </div>
+        )}
         {spieler.length > 0 && <KaderSection spieler={spieler} />}
         <LigaTabelle tabelle={null} />
         <SpielplanSection spielplan={spielplan} />
