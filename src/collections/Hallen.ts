@@ -38,5 +38,13 @@ export const Hallen: CollectionConfig = {
         description: 'Optionale Hinweise zur Halle (Parkplätze, Eingang, etc.)',
       },
     },
+    {
+      name: 'foto',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Foto der Halle (optional)',
+      },
+    },
   ],
 }

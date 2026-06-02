@@ -246,6 +246,10 @@ export interface Hallen {
    * Optionale Hinweise zur Halle (Parkplätze, Eingang, etc.)
    */
   beschreibung?: string | null;
+  /**
+   * Foto der Halle (optional)
+   */
+  foto?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -473,6 +477,7 @@ export interface HallenSelect<T extends boolean = true> {
   name?: T;
   adresse?: T;
   beschreibung?: T;
+  foto?: T;
   updatedAt?: T;
   createdAt?: T;
 }
