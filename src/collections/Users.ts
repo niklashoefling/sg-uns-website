@@ -10,7 +10,14 @@ export const Users: CollectionConfig = {
   access: {
     read: ({ req }) => !!req.user,
     create: ({ req }) => isAdmin(req.user),
-    update: ({ req }) => isAdmin(req.user),
+    update: ({ req }) => {
+      if (isAdmin(req.user)) return true
+      // Trainer darf nur sich selbst bearbeiten
+      if (req.user?.rolle === 'trainer') {
+        return { id: { equals: req.user.id } }
+      }
+      return false
+    },
     delete: ({ req }) => isAdmin(req.user),
   },
   fields: [
@@ -20,6 +27,9 @@ export const Users: CollectionConfig = {
       required: true,
       defaultValue: 'trainer',
       saveToJWT: true,
+      access: {
+        update: ({ req }) => isAdmin(req.user),
+      },
       options: [
         { label: 'Admin', value: 'admin' },
         { label: 'Trainer', value: 'trainer' },
