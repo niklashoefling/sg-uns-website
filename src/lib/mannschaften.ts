@@ -30,8 +30,7 @@ export type Mannschaft = {
   liga: string
   saison: string
   teamfoto?: string
-  trainer: string
-  cotrainer?: string
+  trainer: { name: string; email?: string }[]
   training: { tag: string; uhrzeit: string }[]
   halle: string
   halleAdresse: string

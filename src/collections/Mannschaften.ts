@@ -64,12 +64,15 @@ export const Mannschaften: CollectionConfig = {
     },
     {
       name: 'trainer',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'cotrainer',
-      type: 'text',
+      type: 'relationship',
+      relationTo: 'users',
+      hasMany: true,
+      filterOptions: {
+        rolle: { equals: 'trainer' },
+      },
+      admin: {
+        description: 'Nur User mit Rolle "Trainer" werden angezeigt',
+      },
     },
     {
       name: 'email',

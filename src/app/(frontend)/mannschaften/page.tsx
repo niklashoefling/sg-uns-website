@@ -37,8 +37,12 @@ export default async function MannschaftenPage() {
       liga: m.liga,
       saison: m.saison,
       teamfoto: resolveMediaUrl(m.teamfoto) ?? undefined,
-      trainer: m.trainer,
-      cotrainer: m.cotrainer ?? undefined,
+      trainer: ((m.trainer as unknown[]) ?? [])
+        .filter((t) => typeof t === 'object' && t !== null)
+        .map((t) => {
+          const u = t as { email?: string; name?: string }
+          return { name: u.name ?? u.email ?? '–', email: u.email }
+        }),
       training: m.training ?? [],
       halle: halle?.name ?? '',
       halleAdresse: halle?.adresse ?? '',

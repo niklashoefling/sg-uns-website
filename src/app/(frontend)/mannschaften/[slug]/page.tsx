@@ -64,8 +64,7 @@ function TeamDetails({
   halle,
 }: {
   team: {
-    trainer: string
-    cotrainer?: string | null
+    trainer: { name: string; email?: string }[]
     beschreibung: string
     training: { tag: string; uhrzeit: string }[]
   }
@@ -84,15 +83,29 @@ function TeamDetails({
           Details
         </h2>
         <div className="space-y-3">
-          {[
-            { label: 'Trainer', value: team.trainer },
-            ...(team.cotrainer ? [{ label: 'Co-Trainer', value: team.cotrainer }] : []),
-          ].map(({ label, value }) => (
-            <div key={label} className="flex gap-4 text-sm">
-              <span className="w-24 shrink-0 font-semibold text-secondary">{label}</span>
-              <span className="text-gray-500">{value}</span>
+          {team.trainer.length > 0 && (
+            <div className="flex gap-4 text-sm">
+              <span className="w-24 shrink-0 font-semibold text-secondary">
+                {team.trainer.length === 1 ? 'Trainer' : 'Trainer'}
+              </span>
+              <div className="space-y-1">
+                {team.trainer.map((t) => (
+                  <div key={t.name} className="text-gray-500">
+                    {t.name}
+                    {t.email && (
+                      <>
+                        {' '}
+                        ·{' '}
+                        <a href={`mailto:${t.email}`} className="text-primary hover:underline">
+                          {t.email}
+                        </a>
+                      </>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
+          )}
           {halle && (
             <div className="flex gap-4 text-sm">
               <span className="w-24 shrink-0 font-semibold text-secondary">Halle</span>
@@ -140,6 +153,13 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
   const halle: { name: string; adresse: string } | null =
     team.halle && typeof team.halle === 'object' ? (team.halle as Hallen) : null
 
+  const trainer = ((team.trainer as unknown[]) ?? [])
+    .filter((t) => typeof t === 'object' && t !== null)
+    .map((t) => {
+      const u = t as { email?: string; name?: string }
+      return { name: u.name ?? u.email ?? '–', email: u.email }
+    })
+
   // Spielplan kommt später per SAMS API
   const spielplan: {
     datum: string
@@ -179,7 +199,7 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
       )}
 
       <div className="max-w-6xl mx-auto px-6 py-16 space-y-16">
-        <TeamDetails team={{ ...team }} halle={halle} />
+        <TeamDetails team={{ ...team, trainer }} halle={halle} />
         {spieler.length > 0 && <KaderSection spieler={spieler} />}
         <LigaTabelle tabelle={null} />
         <SpielplanSection spielplan={spielplan} />

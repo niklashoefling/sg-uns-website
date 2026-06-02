@@ -172,8 +172,10 @@ export interface Mannschaften {
    */
   saison: string;
   beschreibung: string;
-  trainer: string;
-  cotrainer?: string | null;
+  /**
+   * Nur User mit Rolle "Trainer" werden angezeigt
+   */
+  trainer?: (number | User)[] | null;
   /**
    * Kontaktadresse der Mannschaft, z.B. "1herren@sg-uns.de"
    */
@@ -439,7 +441,6 @@ export interface MannschaftenSelect<T extends boolean = true> {
   saison?: T;
   beschreibung?: T;
   trainer?: T;
-  cotrainer?: T;
   email?: T;
   halle?: T;
   training?:
