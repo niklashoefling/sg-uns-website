@@ -36,3 +36,45 @@ export const stammvereine = [
   },
   { name: 'TV Nieder-Olm', url: 'https://www.tvno.de', logo: '/vereine/TVNO_Logo-Volleyball.png' },
 ]
+
+export const FLAGGEN: Record<string, string> = {
+  deutschland: '🇩🇪',
+  österreich: '🇦🇹',
+  schweiz: '🇨🇭',
+  frankreich: '🇫🇷',
+  niederlande: '🇳🇱',
+  belgien: '🇧🇪',
+  italien: '🇮🇹',
+  spanien: '🇪🇸',
+  portugal: '🇵🇹',
+  polen: '🇵🇱',
+  tschechien: '🇨🇿',
+  slowakei: '🇸🇰',
+  ungarn: '🇭🇺',
+  kroatien: '🇭🇷',
+  serbien: '🇷🇸',
+  slowenien: '🇸🇮',
+  russland: '🇷🇺',
+  ukraine: '🇺🇦',
+  türkei: '🇹🇷',
+  brasilien: '🇧🇷',
+  usa: '🇺🇸',
+  kanada: '🇨🇦',
+  argentinien: '🇦🇷',
+  kuba: '🇨🇺',
+  japan: '🇯🇵',
+  china: '🇨🇳',
+  südkorea: '🇰🇷',
+  iran: '🇮🇷',
+  bulgarien: '🇧🇬',
+  rumänien: '🇷🇴',
+  griechenland: '🇬🇷',
+  finnland: '🇫🇮',
+  schweden: '🇸🇪',
+  norwegen: '🇳🇴',
+  dänemark: '🇩🇰',
+}
+
+export function toFlagge(nationalitaet: string): string {
+  return FLAGGEN[nationalitaet.toLowerCase()] ?? nationalitaet
+}

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
+import { toFlagge } from '@/lib/site'
 
 export type SpielerData = {
   name: string
@@ -31,19 +32,21 @@ export default function PlayerCard({ spieler }: { spieler: SpielerData }) {
             <span className="text-white text-xs font-bold">{spieler.nummer}</span>
           </div>
         )}
+        {spieler.nationalitaet && (
+          <div
+            className="absolute top-3 right-3 text-xl leading-none"
+            title={spieler.nationalitaet}
+          >
+            {toFlagge(spieler.nationalitaet)}
+          </div>
+        )}
       </div>
 
       <div className="p-4">
         <p className="font-bold text-secondary text-sm mb-1">{spieler.name}</p>
 
-        {(spieler.nationalitaet || spieler.geburtsjahr || spieler.groesse) && (
+        {(spieler.geburtsjahr || spieler.groesse) && (
           <div className="mt-3 space-y-1 border-t border-gray-50 pt-3">
-            {spieler.nationalitaet && (
-              <div className="flex justify-between text-xs text-gray-500">
-                <span>Nationalität</span>
-                <span className="font-medium text-secondary">{spieler.nationalitaet}</span>
-              </div>
-            )}
             {spieler.geburtsjahr && (
               <div className="flex justify-between text-xs text-gray-500">
                 <span>Jahrgang</span>
