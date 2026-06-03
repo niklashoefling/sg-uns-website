@@ -12,11 +12,18 @@ type Props = {
 export default function ContactForm({ anliegen }: Props) {
   const [state, setState] = useState<FormState>('idle')
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setState('loading')
-    // TODO: echten API-Call einbauen (Resend)
-    setTimeout(() => setState('success'), 800)
+    try {
+      const res = await fetch('/api/kontakt', {
+        method: 'POST',
+        body: new FormData(e.currentTarget),
+      })
+      setState(res.ok ? 'success' : 'error')
+    } catch {
+      setState('error')
+    }
   }
 
   if (state === 'error') {
