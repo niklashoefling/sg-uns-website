@@ -70,6 +70,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
+            <a href="/kontakt" className="text-sm hover:text-white transition-colors mt-4 block">
+              Kontakt
+            </a>
           </div>
 
           <div>
