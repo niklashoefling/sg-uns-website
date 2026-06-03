@@ -2,7 +2,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import PageHeader from '@/components/layout/PageHeader'
 import TrainerCard, { type TrainerData } from '@/components/cards/TrainerCard'
-import { resolveMediaUrl } from '@/lib/media'
+import { mapUserToTrainerData, filterRelations } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
 
@@ -20,12 +20,7 @@ export default async function TrainerPage() {
     limit: 50,
   })
 
-  const trainer: TrainerData[] = docs.map((u) => ({
-    name: (u as any).name ?? u.email ?? '–',
-    fotoUrl: resolveMediaUrl((u as any).foto),
-    lizenz: (u as any).lizenz,
-    aktivSeit: (u as any).aktivSeit,
-  }))
+  const trainer: TrainerData[] = filterRelations(docs as unknown[]).map(mapUserToTrainerData)
 
   return (
     <div className="min-h-screen bg-white">

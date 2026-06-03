@@ -6,12 +6,14 @@ import config from '@payload-config'
 import type { Metadata } from 'next'
 import type { Hallen } from '@/payload-types'
 import { resolveMediaUrl } from '@/lib/media'
+import { mapUserToTrainerData, filterRelations } from '@/lib/utils'
 import LigaTabelle from '@/components/sections/LigaTabelle'
 import type { SpielerData } from '@/components/cards/PlayerCard'
 import KaderSection from '@/components/sections/KaderSection'
 import SpielplanSection from '@/components/sections/SpielplanSection'
 import BackButton from '@/components/ui/BackButton'
 import TrainerCard, { type TrainerData } from '@/components/cards/TrainerCard'
+import SectionHeading from '@/components/ui/SectionHeading'
 
 export async function generateMetadata({
   params,
@@ -73,15 +75,11 @@ function TeamDetails({
   return (
     <div className="grid md:grid-cols-2 gap-10">
       <div>
-        <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">
-          Über die Mannschaft
-        </h2>
+        <SectionHeading className="mb-4">Über die Mannschaft</SectionHeading>
         <p className="text-gray-500 leading-relaxed">{team.beschreibung}</p>
       </div>
       <div>
-        <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">
-          Trainingsdaten
-        </h2>
+        <SectionHeading className="mb-4">Trainingsdaten</SectionHeading>
         <div className="space-y-3">
           {halle && (
             <div className="flex gap-4 text-sm">
@@ -130,23 +128,9 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
   const halle: { name: string; adresse: string } | null =
     team.halle && typeof team.halle === 'object' ? (team.halle as Hallen) : null
 
-  const trainer: TrainerData[] = ((team.trainer as unknown[]) ?? [])
-    .filter((t) => typeof t === 'object' && t !== null)
-    .map((t) => {
-      const u = t as {
-        email?: string
-        name?: string
-        foto?: unknown
-        lizenz?: string
-        aktivSeit?: number
-      }
-      return {
-        name: u.name ?? u.email ?? '–',
-        fotoUrl: resolveMediaUrl(u.foto),
-        lizenz: u.lizenz,
-        aktivSeit: u.aktivSeit,
-      }
-    })
+  const trainer: TrainerData[] = filterRelations((team.trainer as unknown[]) ?? []).map(
+    mapUserToTrainerData,
+  )
 
   // Spielplan kommt später per SAMS API
   const spielplan: {
@@ -190,9 +174,7 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
         <TeamDetails team={team} halle={halle} />
         {trainer.length > 0 && (
           <div>
-            <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-6">
-              Trainerstab
-            </h2>
+            <SectionHeading>Trainerstab</SectionHeading>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {trainer.map((t) => (
                 <TrainerCard key={t.name} trainer={t} />

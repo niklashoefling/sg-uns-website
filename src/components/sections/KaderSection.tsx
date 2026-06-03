@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import PlayerCard from '@/components/cards/PlayerCard'
 import type { SpielerData } from '@/components/cards/PlayerCard'
+import SectionHeading from '@/components/ui/SectionHeading'
 
 const POSITION_ORDER = ['Zuspiel', 'Diagonal', 'Außenangriff', 'Mittelblock', 'Universal', 'Libero']
 
@@ -20,9 +21,7 @@ export default function KaderSection({ spieler }: { spieler: SpielerData[] }) {
         {groups.map(({ position, players }) => (
           <Fragment key={position}>
             <div className="col-span-full mt-4 first:mt-0">
-              <h3 className="text-xs font-semibold uppercase tracking-widest text-primary">
-                {position}
-              </h3>
+              <SectionHeading as="h3">{position}</SectionHeading>
             </div>
             {players.map((s) => (
               <PlayerCard key={`${s.name}-${s.nummer}`} spieler={s} />

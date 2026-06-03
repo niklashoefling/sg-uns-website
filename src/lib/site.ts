@@ -11,6 +11,16 @@ export const footerLinks = [
   { href: '/hallen', label: 'Hallen' },
 ]
 
+export const WOCHENTAGE = [
+  'Montag',
+  'Dienstag',
+  'Mittwoch',
+  'Donnerstag',
+  'Freitag',
+  'Samstag',
+  'Sonntag',
+]
+
 export const stammvereine = [
   {
     name: 'TV Undenheim',

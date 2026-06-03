@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { FormInput, FormSelect, FormTextarea } from '@/components/ui/FormFields'
 
 type FormState = 'idle' | 'loading' | 'success' | 'error'
 
@@ -83,68 +84,22 @@ export default function ContactForm({ anliegen }: Props) {
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="grid sm:grid-cols-2 gap-5">
-          <div>
-            <label className="block text-sm font-semibold text-secondary mb-1.5">Name</label>
-            <input
-              type="text"
-              name="name"
-              required
-              className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-              placeholder="Max Mustermann"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-secondary mb-1.5">E-Mail</label>
-            <input
-              type="email"
-              name="email"
-              required
-              className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-              placeholder="max@beispiel.de"
-            />
-          </div>
+          <FormInput label="Name" type="text" name="name" required placeholder="Max Mustermann" />
+          <FormInput label="E-Mail" type="email" name="email" required placeholder="max@beispiel.de" />
         </div>
 
-        <div>
-          <label className="block text-sm font-semibold text-secondary mb-1.5">Anliegen</label>
-          <select
-            name="anliegen"
-            required
-            defaultValue=""
-            className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-white"
-          >
-            <option value="" disabled>
-              Bitte wählen…
-            </option>
-            {anliegen.map((a) => (
-              <option key={a.value} value={a.value}>
-                {a.label}
-              </option>
-            ))}
-          </select>
-        </div>
+        <FormSelect
+          label="Anliegen"
+          name="anliegen"
+          required
+          defaultValue=""
+          options={anliegen}
+          placeholder="Bitte wählen…"
+        />
 
-        <div>
-          <label className="block text-sm font-semibold text-secondary mb-1.5">Betreff</label>
-          <input
-            type="text"
-            name="betreff"
-            required
-            className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-            placeholder="Ich möchte mitspielen"
-          />
-        </div>
+        <FormInput label="Betreff" type="text" name="betreff" required placeholder="Ich möchte mitspielen" />
 
-        <div>
-          <label className="block text-sm font-semibold text-secondary mb-1.5">Nachricht</label>
-          <textarea
-            name="nachricht"
-            required
-            rows={6}
-            className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors resize-none"
-            placeholder="Deine Nachricht…"
-          />
-        </div>
+        <FormTextarea label="Nachricht" name="nachricht" required rows={6} placeholder="Deine Nachricht…" />
 
         <button
           type="submit"

@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Metadata } from 'next'
-import type { Media } from '@/payload-types'
+import { resolveMediaUrl } from '@/lib/media'
 import RichTextRenderer from '@/components/ui/RichTextRenderer'
 import { formatDatum, lexicalToPlainText } from '@/lib/utils'
 import BackButton from '@/components/ui/BackButton'
@@ -45,8 +45,7 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
   if (docs.length === 0) notFound()
 
   const artikel = docs[0]
-  const bildUrl =
-    artikel.bild && typeof artikel.bild === 'object' ? ((artikel.bild as Media).url ?? null) : null
+  const bildUrl = resolveMediaUrl(artikel.bild)
 
   return (
     <div className="min-h-screen bg-white">

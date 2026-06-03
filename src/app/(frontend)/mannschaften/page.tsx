@@ -2,9 +2,12 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import PageHeader from '@/components/layout/PageHeader'
 import TeamCard from '@/components/cards/TeamCard'
+import SectionHeading from '@/components/ui/SectionHeading'
 import type { Mannschaft } from '@/lib/mannschaften'
 import type { Hallen } from '@/payload-types'
 import { resolveMediaUrl } from '@/lib/media'
+import { filterRelations } from '@/lib/utils'
+import { WOCHENTAGE } from '@/lib/site'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,8 +15,6 @@ export const metadata = {
   title: 'Mannschaften | SG U.N.S. Rheinhessen',
   description: 'Alle Herrenmannschaften der SG U.N.S. Rheinhessen – 1., 2. und 3. Herren.',
 }
-
-const WOCHENTAGE = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag']
 
 type TrainingsGruppe = {
   mannschaft: string
@@ -36,9 +37,7 @@ export default async function MannschaftenPage() {
       name: m.name,
       liga: m.liga,
       teamfoto: resolveMediaUrl(m.teamfoto) ?? undefined,
-      trainer: ((m.trainer as unknown[]) ?? [])
-        .filter((t) => typeof t === 'object' && t !== null)
-        .map((t) => {
+      trainer: filterRelations((m.trainer as unknown[]) ?? []).map((t) => {
           const u = t as { email?: string; name?: string }
           return { name: u.name ?? u.email ?? '–', email: u.email }
         }),
@@ -81,9 +80,7 @@ export default async function MannschaftenPage() {
         </div>
 
         <div>
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-6">
-            Trainingszeiten
-          </h2>
+          <SectionHeading>Trainingszeiten</SectionHeading>
 
           <div className="space-y-4">
             {trainingsgruppen.map((gruppe) => (

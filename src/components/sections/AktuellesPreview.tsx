@@ -3,6 +3,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import ArtikelCard from '@/components/cards/ArtikelCard'
 import type { ArtikelData } from '@/components/cards/ArtikelCard'
+import SectionHeading from '@/components/ui/SectionHeading'
 
 export default async function AktuellesPreview() {
   const payload = await getPayload({ config })
@@ -22,9 +23,7 @@ export default async function AktuellesPreview() {
       <div className="max-w-6xl mx-auto">
         <div className="flex items-end justify-between mb-12">
           <div>
-            <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">
-              News
-            </span>
+            <SectionHeading as="span" className="mb-3 block">News</SectionHeading>
             <h2 className="text-4xl font-bold text-secondary leading-tight">Aktuelles</h2>
           </div>
           <Link

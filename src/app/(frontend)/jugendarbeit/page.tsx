@@ -1,4 +1,5 @@
 import PageHeader from '@/components/layout/PageHeader'
+import SectionHeading from '@/components/ui/SectionHeading'
 
 export const metadata = {
   title: 'Jugendarbeit | SG U.N.S. Rheinhessen',
@@ -18,9 +19,7 @@ export default function JugendarbeitPage() {
 
       <div className="max-w-4xl mx-auto px-6 py-16 space-y-12">
         <div>
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">
-            Tradition & Erfolge
-          </h2>
+          <SectionHeading className="mb-4">Tradition & Erfolge</SectionHeading>
           <div className="space-y-4 text-gray-500 leading-relaxed">
             <p>
               Die erfolgreiche Jugendarbeit dieser Vereine ist regional und überregional anerkannt.
@@ -40,9 +39,7 @@ export default function JugendarbeitPage() {
         </div>
 
         <div className="border-t border-gray-100 pt-12">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">
-            Aktuell & Ziele
-          </h2>
+          <SectionHeading className="mb-4">Aktuell & Ziele</SectionHeading>
           <div className="space-y-4 text-gray-500 leading-relaxed">
             <p>
               Die Jungs der SG treten im Jugendbereich in diesem Jahr auf den Kleinfeldern (U12 –
@@ -62,9 +59,7 @@ export default function JugendarbeitPage() {
         </div>
 
         <div className="border-t border-gray-100 pt-12">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">
-            Die Spielgemeinschaft
-          </h2>
+          <SectionHeading className="mb-4">Die Spielgemeinschaft</SectionHeading>
           <div className="space-y-4 text-gray-500 leading-relaxed">
             <p>
               Da schon immer auch Undenheimer Jungs an den Erfolgen des SCS beteiligt waren, lag es

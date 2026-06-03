@@ -24,3 +24,26 @@ export function lexicalToPlainText(inhalt: unknown): string {
   if (!root) return ''
   return extractText(root).replace(/\s+/g, ' ').trim()
 }
+
+import type { TrainerData } from '@/components/cards/TrainerCard'
+import { resolveMediaUrl } from '@/lib/media'
+
+export function mapUserToTrainerData(user: unknown): TrainerData {
+  const u = user as {
+    email?: string
+    name?: string
+    foto?: unknown
+    lizenz?: string
+    aktivSeit?: number
+  }
+  return {
+    name: u.name ?? u.email ?? '–',
+    fotoUrl: resolveMediaUrl(u.foto),
+    lizenz: u.lizenz,
+    aktivSeit: u.aktivSeit,
+  }
+}
+
+export function filterRelations(relations: unknown[]): unknown[] {
+  return relations.filter((r) => typeof r === 'object' && r !== null)
+}
