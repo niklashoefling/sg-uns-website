@@ -151,6 +151,10 @@ export interface User {
    * Jahr seit dem die Person als Trainer aktiv ist, z.B. 2018
    */
   aktivSeit?: number | null;
+  /**
+   * z.B. "Deutschland"
+   */
+  nationalitaet?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -408,6 +412,7 @@ export interface UsersSelect<T extends boolean = true> {
   foto?: T;
   lizenz?: T;
   aktivSeit?: T;
+  nationalitaet?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
