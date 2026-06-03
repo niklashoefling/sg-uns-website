@@ -121,19 +121,15 @@ export default function Navbar() {
           {navLinks.map((link) =>
             link.children ? (
               <div key={link.href}>
-                <a
-                  href={link.href}
-                  className="text-white/85 hover:text-white px-4 py-3 rounded text-base font-medium transition-colors block"
-                  onClick={() => setMenuOpen(false)}
-                >
+                <span className="text-white/85 px-4 py-3 block text-base font-medium">
                   {link.label}
-                </a>
+                </span>
                 <div className="pl-4 flex flex-col gap-0.5">
-                  {link.children.slice(1).map((child) => (
+                  {link.children.map((child) => (
                     <a
                       key={child.href}
                       href={child.href}
-                      className="text-white/60 hover:text-white/90 px-4 py-2 rounded text-sm font-medium transition-colors"
+                      className="text-white/85 hover:text-white px-4 py-2 rounded text-base font-medium transition-colors"
                       onClick={() => setMenuOpen(false)}
                     >
                       {child.label}
