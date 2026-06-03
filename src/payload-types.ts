@@ -140,7 +140,7 @@ export interface User {
   name?: string | null;
   foto?: (number | null) | Media;
   /**
-   * z.B. "B-Lizenz"
+   * z.B. "B-Lizenz DVV"
    */
   lizenz?: string | null;
   /**
@@ -182,27 +182,11 @@ export interface Mannschaften {
   liga: string;
   beschreibung: string;
   /**
-   * Meisterschaften, Aufstiege, besondere Saisons etc.
-   */
-  erfolge?:
-    | {
-        /**
-         * z.B. "Meister Verbandsliga 2023/24"
-         */
-        titel: string;
-        /**
-         * z.B. "2023/24"
-         */
-        saison?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
    * Nur User mit Rolle "Trainer" werden angezeigt
    */
   trainer?: (number | User)[] | null;
   /**
-   * Kontaktadresse der Mannschaft, z.B. "1herren@sg-uns.de"
+   * Kontaktadresse der Mannschaft, z.B. "h1@sgunsrheinhessen.de"
    */
   email?: string | null;
   /**
@@ -468,13 +452,6 @@ export interface MannschaftenSelect<T extends boolean = true> {
   name?: T;
   liga?: T;
   beschreibung?: T;
-  erfolge?:
-    | T
-    | {
-        titel?: T;
-        saison?: T;
-        id?: T;
-      };
   trainer?: T;
   email?: T;
   halle?: T;

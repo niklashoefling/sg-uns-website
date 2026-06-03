@@ -200,22 +200,6 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
             </div>
           </div>
         )}
-        {(team.erfolge ?? []).length > 0 && (
-          <div>
-            <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">
-              Erfolge
-            </h2>
-            <ul className="space-y-2">
-              {(team.erfolge ?? []).map((e, i) => (
-                <li key={i} className="flex items-center gap-3 text-sm">
-                  <span className="text-primary">🏆</span>
-                  <span className="text-secondary font-medium">{e.titel}</span>
-                  {e.saison && <span className="text-gray-400">{e.saison}</span>}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
         {spieler.length > 0 && <KaderSection spieler={spieler} />}
         {spielplan.length > 0 && <SpielplanSection spielplan={spielplan} />}
         {spielplan.length > 0 && <LigaTabelle tabelle={null} />}
