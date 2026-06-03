@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { footerLinks, stammvereine } from '@/lib/site'
+import { navLinks, stammvereine } from '@/lib/site'
 
 export default function Footer() {
   return (
@@ -43,11 +43,27 @@ export default function Footer() {
               Navigation
             </h3>
             <ul className="space-y-2">
-              {footerLinks.map((link) => (
+              {navLinks.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} className="text-sm hover:text-white transition-colors">
-                    {link.label}
-                  </a>
+                  {link.children ? (
+                    <span className="text-sm cursor-default">{link.label}</span>
+                  ) : (
+                    <a href={link.href} className="text-sm hover:text-white transition-colors">
+                      {link.label}
+                    </a>
+                  )}
+                  {link.children && (
+                    <ul className="mt-1.5 space-y-1.5 pl-3 border-l border-white/10">
+                      {link.children.map((child) => (
+                        <li key={child.href} className="flex items-center gap-1.5">
+                          <span className="text-white/30 text-sm">›</span>
+                          <a href={child.href} className="text-sm text-white/60 hover:text-white transition-colors">
+                            {child.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ul>

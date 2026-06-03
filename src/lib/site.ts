@@ -1,14 +1,16 @@
 export const navLinks = [
   { href: '/#ueber-uns', label: 'Über U.N.S.' },
-  { href: '/mannschaften', label: 'Mannschaften' },
+  {
+    href: '/mannschaften',
+    label: 'Verein',
+    children: [
+      { href: '/mannschaften', label: 'Alle Mannschaften' },
+      { href: '/trainer', label: 'Trainerstab' },
+      { href: '/hallen', label: 'Hallenverzeichnis' },
+    ],
+  },
   { href: '/jugendarbeit', label: 'Jugendarbeit' },
   { href: '/aktuelles', label: 'Aktuelles' },
-]
-
-export const footerLinks = [
-  ...navLinks,
-  { href: '/trainer', label: 'Trainerstab' },
-  { href: '/hallen', label: 'Hallen' },
 ]
 
 export const WOCHENTAGE = [

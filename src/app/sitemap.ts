@@ -8,6 +8,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE_URL, priority: 1.0 },
     { url: `${BASE_URL}/mannschaften`, priority: 0.9 },
+    { url: `${BASE_URL}/trainer`, priority: 0.7 },
+    { url: `${BASE_URL}/hallen`, priority: 0.6 },
     { url: `${BASE_URL}/aktuelles`, priority: 0.9 },
     { url: `${BASE_URL}/jugendarbeit`, priority: 0.7 },
     { url: `${BASE_URL}/kontakt`, priority: 0.6 },
