@@ -45,6 +45,15 @@ Name, Position, Trikotnummer und Foto sind personenbezogene Daten — Spieler si
 
 ---
 
+## Offene TODOs
+
+### E-Mail-Konfiguration (`src/app/api/kontakt/route.ts`)
+- **`FALLBACK_EMAIL`** — Empfänger-Adresse für allgemeine Kontaktanfragen anpassen (aktuell `hoefling.niklas@gmx.de`)
+- **`from`** — Absender-Adresse durch eine verifizierte Resend-Domain ersetzen (aktuell `onboarding@resend.dev`)
+- E-Mail-Adresse pro Mannschaft direkt im Payload Admin beim jeweiligen Mannschafts-Eintrag pflegen
+
+---
+
 ## Geplante Features / Backlog
 
 ### SAMS API – Tabellen & Spielpläne
