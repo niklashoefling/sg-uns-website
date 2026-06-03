@@ -149,7 +149,7 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
       <div className="bg-secondary pt-32 pb-32 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="mb-8">
-            <BackButton href="/mannschaften" label="Alle Mannschaften" variant="dark" />
+            <BackButton href="/mannschaften" label="Zurück" variant="dark" />
           </div>
           <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">
             {team.liga}

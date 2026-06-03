@@ -52,7 +52,7 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
       <div className="bg-secondary pt-32 pb-16 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
-            <BackButton href="/aktuelles" label="Alle Beiträge" variant="dark" />
+            <BackButton href="/aktuelles" label="Zurück" variant="dark" />
           </div>
           <div className="flex items-center gap-3 mb-4">
             <span className="bg-primary/20 text-primary text-xs font-semibold px-2.5 py-0.5 rounded-full">
