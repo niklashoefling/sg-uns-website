@@ -1,13 +1,13 @@
 /* ─── CSS Variablen ───────────────────────────────── */
 
-[data-theme="light"],
+[data-theme='light'],
 :root {
   --theme-bg: #f4f6f9;
   --theme-input-bg: #ffffff;
   --theme-text: #1e3a5f;
   --theme-border-color: #dde2ec;
-  --theme-elevation-0:   #ffffff;
-  --theme-elevation-50:  #f4f6f9;
+  --theme-elevation-0: #ffffff;
+  --theme-elevation-50: #f4f6f9;
   --theme-elevation-100: #eef0f5;
   --theme-elevation-150: #e8ebf2;
   --theme-elevation-200: #dde2ec;
@@ -138,7 +138,7 @@
 }
 
 .btn.btn--style-primary,
-button[type="submit"].btn,
+button[type='submit'].btn,
 .btn--style-primary {
   background-color: #e84e0f !important;
   border-color: #e84e0f !important;
@@ -146,7 +146,7 @@ button[type="submit"].btn,
 }
 
 .btn.btn--style-primary:hover,
-button[type="submit"].btn:hover {
+button[type='submit'].btn:hover {
   background-color: #c94009 !important;
   border-color: #c94009 !important;
 }

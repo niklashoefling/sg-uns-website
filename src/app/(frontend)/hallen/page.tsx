@@ -32,12 +32,7 @@ export default async function HallenPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <PageHeader
-        eyebrow="SG U.N.S. Rheinhessen"
-        title="Hallen"
-        backHref="/"
-        backLabel="Zurück"
-      />
+      <PageHeader eyebrow="SG U.N.S. Rheinhessen" title="Hallen" backHref="/" backLabel="Zurück" />
 
       <div className="max-w-6xl mx-auto px-6 py-16">
         {hallen.length === 0 && (

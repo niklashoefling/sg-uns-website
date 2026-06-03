@@ -20,12 +20,7 @@ export default async function KontaktPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <PageHeader
-        eyebrow="SG U.N.S. Rheinhessen"
-        title="Kontakt"
-        backHref="/"
-        backLabel="Zurück"
-      />
+      <PageHeader eyebrow="SG U.N.S. Rheinhessen" title="Kontakt" backHref="/" backLabel="Zurück" />
 
       <div className="max-w-2xl mx-auto px-6 py-16">
         <ContactForm anliegen={anliegen} />

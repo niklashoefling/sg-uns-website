@@ -140,3 +140,4 @@ Vorschläge zu thematisch verwandten Artikeln am Ende einer Artikel-Detailseite.
 - Bessere Variante: Artikel mit gemeinsamen Tags filtern (erfordert `tags`-Feld in der `Artikel` Collection)
 - Umsetzung als eigene `AehnlicheArtikel`-Komponente analog zu `ArtikelCard`
 
+```

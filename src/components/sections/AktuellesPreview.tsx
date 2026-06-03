@@ -23,7 +23,9 @@ export default async function AktuellesPreview() {
       <div className="max-w-6xl mx-auto">
         <div className="flex items-end justify-between mb-12">
           <div>
-            <SectionHeading as="span" className="mb-3 block">News</SectionHeading>
+            <SectionHeading as="span" className="mb-3 block">
+              News
+            </SectionHeading>
             <h2 className="text-4xl font-bold text-secondary leading-tight">Aktuelles</h2>
           </div>
           <Link

@@ -8,7 +8,9 @@ export default function UeberUnsSection() {
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
-            <SectionHeading as="span" className="mb-3 block">Über U.N.S.</SectionHeading>
+            <SectionHeading as="span" className="mb-3 block">
+              Über U.N.S.
+            </SectionHeading>
             <h2 className="text-4xl font-bold text-secondary leading-tight mb-6">
               Volleyball in Rheinhessen seit Jahrzehnten
             </h2>

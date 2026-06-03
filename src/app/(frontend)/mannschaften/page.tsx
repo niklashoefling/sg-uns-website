@@ -38,9 +38,9 @@ export default async function MannschaftenPage() {
       liga: m.liga,
       teamfoto: resolveMediaUrl(m.teamfoto) ?? undefined,
       trainer: filterRelations((m.trainer as unknown[]) ?? []).map((t) => {
-          const u = t as { email?: string; name?: string }
-          return { name: u.name ?? u.email ?? '–', email: u.email }
-        }),
+        const u = t as { email?: string; name?: string }
+        return { name: u.name ?? u.email ?? '–', email: u.email }
+      }),
       training: m.training ?? [],
       halle: halle?.name ?? '',
       halleAdresse: halle?.adresse ?? '',

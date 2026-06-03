@@ -85,7 +85,13 @@ export default function ContactForm({ anliegen }: Props) {
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="grid sm:grid-cols-2 gap-5">
           <FormInput label="Name" type="text" name="name" required placeholder="Max Mustermann" />
-          <FormInput label="E-Mail" type="email" name="email" required placeholder="max@beispiel.de" />
+          <FormInput
+            label="E-Mail"
+            type="email"
+            name="email"
+            required
+            placeholder="max@beispiel.de"
+          />
         </div>
 
         <FormSelect
@@ -97,9 +103,21 @@ export default function ContactForm({ anliegen }: Props) {
           placeholder="Bitte wählen…"
         />
 
-        <FormInput label="Betreff" type="text" name="betreff" required placeholder="Ich möchte mitspielen" />
+        <FormInput
+          label="Betreff"
+          type="text"
+          name="betreff"
+          required
+          placeholder="Ich möchte mitspielen"
+        />
 
-        <FormTextarea label="Nachricht" name="nachricht" required rows={6} placeholder="Deine Nachricht…" />
+        <FormTextarea
+          label="Nachricht"
+          name="nachricht"
+          required
+          rows={6}
+          placeholder="Deine Nachricht…"
+        />
 
         <button
           type="submit"
