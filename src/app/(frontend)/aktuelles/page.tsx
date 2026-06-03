@@ -34,7 +34,7 @@ export default async function AktuellesPage() {
         <div className="grid md:grid-cols-3 gap-6">
           {artikel.map((a, i) => (
             <div key={a.id} className={i === 0 ? 'md:col-span-3' : ''}>
-              <ArtikelCard artikel={a} featured={i === 0} />
+              <ArtikelCard artikel={a} featured={i === 0} priority={i === 0} />
             </div>
           ))}
         </div>

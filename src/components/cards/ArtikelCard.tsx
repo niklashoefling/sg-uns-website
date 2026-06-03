@@ -19,12 +19,14 @@ type Props = {
   artikel: ArtikelData
   headingTag?: 'h2' | 'h3'
   featured?: boolean
+  priority?: boolean
 }
 
 export default function ArtikelCard({
   artikel,
   headingTag: Heading = 'h2',
   featured = false,
+  priority = false,
 }: Props) {
   const bildUrl = resolveMediaUrl(artikel.bild)
   const text = lexicalToPlainText(artikel.inhalt)
@@ -37,7 +39,14 @@ export default function ArtikelCard({
       >
         <div className="md:w-1/2 h-56 md:h-auto bg-secondary/10 relative shrink-0">
           {bildUrl ? (
-            <Image src={bildUrl} alt={artikel.titel} fill className="object-cover" />
+            <Image
+              src={bildUrl}
+              alt={artikel.titel}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority={priority}
+              className="object-cover"
+            />
           ) : (
             <div className="w-full h-full bg-secondary relative">
               <ImagePlaceholder emoji="🏐" />
@@ -65,7 +74,14 @@ export default function ArtikelCard({
     >
       <div className="h-44 bg-secondary/10 relative">
         {bildUrl ? (
-          <Image src={bildUrl} alt={artikel.titel} fill className="object-cover" />
+          <Image
+            src={bildUrl}
+            alt={artikel.titel}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            priority={priority}
+            className="object-cover"
+          />
         ) : (
           <div className="w-full h-full bg-secondary relative">
             <ImagePlaceholder emoji="🏐" />
