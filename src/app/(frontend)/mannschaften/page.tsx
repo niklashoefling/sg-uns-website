@@ -70,7 +70,7 @@ export default async function MannschaftenPage() {
         eyebrow="SG U.N.S. Rheinhessen"
         title="Mannschaften"
         backHref="/"
-        backLabel="Startseite"
+        backLabel="Zurück"
       />
 
       <div className="max-w-6xl mx-auto px-6 py-16 space-y-16">

@@ -33,7 +33,7 @@ export default async function TrainerPage() {
         eyebrow="SG U.N.S. Rheinhessen"
         title="Trainerstab"
         backHref="/"
-        backLabel="Startseite"
+        backLabel="Zurück"
       />
 
       <div className="max-w-6xl mx-auto px-6 py-16">

@@ -8,7 +8,7 @@ export const metadata = {
 export default function ImpressumPage() {
   return (
     <div className="min-h-screen bg-white">
-      <PageHeader title="Impressum" />
+      <PageHeader title="Impressum" backHref="/" backLabel="Zurück" />
       <div className="max-w-4xl mx-auto px-6 py-16">
         <p className="text-gray-400 text-sm">Wird in Kürze ergänzt.</p>
       </div>

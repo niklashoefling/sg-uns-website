@@ -36,7 +36,7 @@ export default async function HallenPage() {
         eyebrow="SG U.N.S. Rheinhessen"
         title="Hallen"
         backHref="/"
-        backLabel="Startseite"
+        backLabel="Zurück"
       />
 
       <div className="max-w-6xl mx-auto px-6 py-16">

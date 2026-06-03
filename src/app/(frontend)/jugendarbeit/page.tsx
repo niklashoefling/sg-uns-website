@@ -13,7 +13,7 @@ export default function JugendarbeitPage() {
         eyebrow="SG U.N.S. Rheinhessen"
         title="Jugendarbeit"
         backHref="/"
-        backLabel="Startseite"
+        backLabel="Zurück"
       />
 
       <div className="max-w-4xl mx-auto px-6 py-16 space-y-12">
