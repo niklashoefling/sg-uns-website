@@ -7,7 +7,7 @@ Next.js 16 + Payload CMS 3 Vereinswebseite für die SG U.N.S. Rheinhessen.
 ```bash
 npm install
 npm run dev
-``
+```
 
 Admin-Panel: `http://localhost:3000/admin`
 
@@ -61,27 +61,15 @@ Die Ligatabellen und Spielpläne sollen langfristig automatisch aus der SAMS-Dat
 - Auf der Mannschaftsdetailseite oder einer eigenen Terminseite einbinden
 - Alternativ: iCal-Feed per API auslesen für natives Rendering
 
-### Kontaktformular – E-Mail-Versand
-Aktuell zeigt das Formular nur eine Erfolgsmeldung ohne echten Versand.
-- Empfehlung: Resend (resend.com) – einfaches Setup, großzügiges Gratis-Kontingent
-- Alternative: Nodemailer mit SMTP
-- API-Route in `src/app/api/kontakt/route.ts` anlegen
-- Formular auf `fetch('/api/kontakt', ...)` umstellen
-
-### Impressum & Datenschutz
-Gesetzlich Pflicht vor dem Go-Live.
-- Seiten `/impressum` und `/datenschutz` sind angelegt (Platzhalter)
-- Inhalt muss noch eingetragen werden
-- Datenschutzerklärung muss auf den eingesetzten Cookie/Tracking-Stand passen
-- Aktuell kein Tracking → einfache Erklärung reicht
+### Impressum & Datenschutz *(Inhalt ausstehend)*
+Seiten `/impressum` und `/datenschutz` sind technisch angelegt — Inhalt muss noch eingetragen werden.
 
 **Impressum — Besonderheit Spielgemeinschaft:**
 Die SG ist kein eigenständiger Verein und hat keine eigene Rechtspersönlichkeit. Deshalb:
 - Einen der drei Stammvereine als **verantwortlichen Rechtsträger** festlegen (derjenige, der die Website offiziell betreibt)
 - Dessen Daten ins Impressum: vollständiger Vereinsname, Postadresse, Vorstand (Name), Vereinsregister-Nr. + zuständiges Amtsgericht, E-Mail, Telefon
 - „Inhaltlich verantwortlich" (§ 18 Abs. 2 MStV): konkrete Person, meist der 1. Vorsitzende des betreibenden Vereins
-- Die anderen beiden Stammvereine können zusätzlich genannt werden, ist aber nicht Pflicht
-- Empfehlung: Impressum-Generator von eRecht24 nutzen (kostenlose Basisversion reicht), betreibenden Stammverein eintragen, Text direkt im Payload Admin unter `/impressum` eintragen
+- Empfehlung: Impressum-Generator von eRecht24 nutzen, Text direkt im Payload Admin unter `/impressum` eintragen
 
 ### Sponsoren
 Sponsoren-Sektion auf der Startseite einbauen sobald Logos und URLs vorliegen.
@@ -139,5 +127,3 @@ Vorschläge zu thematisch verwandten Artikeln am Ende einer Artikel-Detailseite.
 - Einfachste Variante: Die 3 neuesten anderen Artikel anzeigen (nach `publishedDate` sortiert, aktuellen Artikel ausschließen)
 - Bessere Variante: Artikel mit gemeinsamen Tags filtern (erfordert `tags`-Feld in der `Artikel` Collection)
 - Umsetzung als eigene `AehnlicheArtikel`-Komponente analog zu `ArtikelCard`
-
-```
