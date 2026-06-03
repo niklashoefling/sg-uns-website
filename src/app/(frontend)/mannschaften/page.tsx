@@ -84,7 +84,39 @@ export default async function MannschaftenPage() {
           <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-6">
             Trainingszeiten
           </h2>
-          <div className="border border-gray-100 rounded-xl overflow-hidden">
+
+          {/* Mobile: stacked cards */}
+          <div className="sm:hidden space-y-4">
+            {trainingsgruppen.map((gruppe) => (
+              <div key={gruppe.slug} className="border border-gray-100 rounded-xl overflow-hidden">
+                <div className="bg-gray-50 px-4 py-2">
+                  <a
+                    href={`/mannschaften/${gruppe.slug}`}
+                    className="text-sm font-semibold text-secondary hover:text-primary transition-colors"
+                  >
+                    {gruppe.mannschaft}
+                  </a>
+                </div>
+                <div className="divide-y divide-gray-100">
+                  {gruppe.zeilen.map((z, zi) => (
+                    <div key={zi} className="px-4 py-3 text-sm">
+                      <div className="font-medium text-secondary">
+                        {z.tag} · {z.uhrzeit}
+                      </div>
+                      <div className="text-gray-500 mt-0.5">
+                        <a href="/hallen" className="hover:text-primary transition-colors">
+                          {z.halle}
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop: table */}
+          <div className="hidden sm:block border border-gray-100 rounded-xl overflow-hidden">
             <table className="w-full text-sm">
               <thead className="bg-gray-50 text-left">
                 <tr>

@@ -70,7 +70,7 @@ export default function Navbar() {
       </nav>
 
       {menuOpen && (
-        <div className="md:hidden bg-secondary-dark px-6 pb-6 flex flex-col gap-1">
+        <div className="md:hidden bg-secondary px-6 pb-6 flex flex-col gap-1">
           {navLinks.map((link) => (
             <a
               key={link.href}
