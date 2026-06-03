@@ -20,6 +20,7 @@ type Props = {
   headingTag?: 'h2' | 'h3'
   featured?: boolean
   priority?: boolean
+  className?: string
 }
 
 export default function ArtikelCard({
@@ -27,6 +28,7 @@ export default function ArtikelCard({
   headingTag: Heading = 'h2',
   featured = false,
   priority = false,
+  className = '',
 }: Props) {
   const bildUrl = resolveMediaUrl(artikel.bild)
   const text = lexicalToPlainText(artikel.inhalt)
@@ -35,7 +37,7 @@ export default function ArtikelCard({
     return (
       <Link
         href={`/aktuelles/${artikel.slug}`}
-        className="group border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition-shadow md:flex"
+        className={`group border border-gray-100 rounded-xl overflow-hidden hover:border-primary/30 hover:shadow-md transition-all md:flex ${className}`}
       >
         <div className="md:w-1/2 aspect-video md:aspect-auto md:h-auto bg-secondary/10 relative shrink-0">
           {bildUrl ? (
@@ -70,9 +72,9 @@ export default function ArtikelCard({
   return (
     <Link
       href={`/aktuelles/${artikel.slug}`}
-      className="group border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition-shadow"
+      className={`group border border-gray-100 rounded-xl overflow-hidden hover:border-primary/30 hover:shadow-md transition-all ${className}`}
     >
-      <div className="aspect-[4/3] bg-secondary/10 relative">
+      <div className="aspect-4/3 bg-secondary/10 relative">
         {bildUrl ? (
           <Image
             src={bildUrl}

@@ -83,12 +83,6 @@ E-Mail-Newsletter für Vereinsnachrichten.
 - Anmeldeformular auf der Webseite einbinden
 - Newsletter werden direkt im jeweiligen Tool erstellt, kein Code nötig
 
-### Bildergalerie
-Fotos von Spielen, Events und Mannschaften auf der Website präsentieren.
-- Eigene `Galerien` Collection in Payload anlegen mit: Titel, Datum, Mannschaft (Relationship), Bilder (Array von `Media`-Relationships)
-- Galerie-Übersichtsseite unter `/galerie` und Detailseite unter `/galerie/[slug]`
-- Optional: Galerie-Vorschau auf der Startseite oder Mannschaftsdetailseite einbinden
-
 ### Cookie-Banner
 Rechtlicher Hinweis zum Datenschutz vor dem Go-Live.
 - Aktuell kein Tracking → einfacher Hinweis-Banner ohne Consent-Management ausreichend
