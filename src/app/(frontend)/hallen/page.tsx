@@ -4,7 +4,6 @@ import PageHeader from '@/components/layout/PageHeader'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import { resolveMediaUrl } from '@/lib/media'
-
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
@@ -41,46 +40,56 @@ export default async function HallenPage() {
         <div className="grid md:grid-cols-2 gap-6">
           {hallen.map((halle) => {
             const fotoUrl = resolveMediaUrl(halle.foto)
-            const mapsUrl = `https://maps.google.com/maps?q=${encodeURIComponent(halle.adresse)}&output=embed`
+            const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(halle.adresse)}`
             const teams = mannschaftenByHalle[String(halle.id)] ?? []
             return (
               <div key={halle.id} className="border border-gray-100 rounded-xl overflow-hidden">
-                <div className="flex h-56">
-                  {fotoUrl && (
-                    <>
-                      <div className="w-1/2 shrink-0 relative">
-                        <Image
-                          src={fotoUrl}
-                          alt={halle.name}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 768px) 50vw, 300px"
-                        />
-                      </div>
-                      <div className="w-px bg-gray-100 shrink-0" />
-                    </>
-                  )}
-                  <div className={fotoUrl ? 'w-1/2' : 'w-full'}>
-                    <iframe
-                      src={mapsUrl}
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title={`Karte: ${halle.name}`}
+                {fotoUrl && (
+                  <div className="relative h-48 w-full">
+                    <Image
+                      src={fotoUrl}
+                      alt={halle.name}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   </div>
-                </div>
+                )}
                 <div className="p-5">
                   <h2 className="text-base font-bold text-secondary mb-0.5">{halle.name}</h2>
                   <p className="text-sm text-gray-500">{halle.adresse}</p>
                   {halle.beschreibung && (
                     <p className="text-xs text-gray-400 mt-1">{halle.beschreibung}</p>
                   )}
+                  <a
+                    href={mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 mt-3 text-xs font-medium text-primary hover:underline transition-colors"
+                  >
+                    <svg
+                      className="w-3.5 h-3.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                    In Google Maps öffnen
+                  </a>
                   {teams.length > 0 && (
                     <div className="mt-3 flex flex-wrap gap-2">
+                      {' '}
                       {teams.map((t) => (
                         <a
                           key={t.slug}
