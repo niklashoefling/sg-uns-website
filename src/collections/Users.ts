@@ -49,7 +49,6 @@ export const Users: CollectionConfig = {
       type: 'text',
       admin: {
         description: 'Vollständiger Name, z.B. "Max Mustermann"',
-        condition: (data) => data.rolle === 'trainer',
       },
     },
     {
