@@ -10,6 +10,7 @@ import { Media } from './collections/Media'
 import { Mannschaften } from './collections/Mannschaften'
 import { Artikel } from './collections/Artikel'
 import { Hallen } from './collections/Hallen'
+import { Jugendarbeit } from './globals/Jugendarbeit'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -34,6 +35,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Mannschaften, Artikel, Hallen],
+  globals: [Jugendarbeit],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
