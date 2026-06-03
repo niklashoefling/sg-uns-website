@@ -138,14 +138,12 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
         name?: string
         foto?: unknown
         lizenz?: string
-        kurzvorstellung?: string
         aktivSeit?: number
       }
       return {
         name: u.name ?? u.email ?? '–',
         fotoUrl: resolveMediaUrl(u.foto),
         lizenz: u.lizenz,
-        kurzvorstellung: u.kurzvorstellung,
         aktivSeit: u.aktivSeit,
       }
     })

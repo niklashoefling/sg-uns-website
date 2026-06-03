@@ -140,13 +140,9 @@ export interface User {
   name?: string | null;
   foto?: (number | null) | Media;
   /**
-   * z.B. "B-Lizenz DVV"
+   * z.B. "B-Lizenz"
    */
   lizenz?: string | null;
-  /**
-   * Kurze Vorstellung (2–3 Sätze)
-   */
-  kurzvorstellung?: string | null;
   /**
    * Jahr seit dem die Person als Trainer aktiv ist, z.B. 2018
    */
@@ -427,7 +423,6 @@ export interface UsersSelect<T extends boolean = true> {
   name?: T;
   foto?: T;
   lizenz?: T;
-  kurzvorstellung?: T;
   aktivSeit?: T;
   updatedAt?: T;
   createdAt?: T;

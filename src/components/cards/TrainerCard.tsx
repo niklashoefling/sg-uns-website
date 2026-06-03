@@ -6,7 +6,6 @@ export type TrainerData = {
   name: string
   fotoUrl?: string | null
   lizenz?: string | null
-  kurzvorstellung?: string | null
   aktivSeit?: number | null
 }
 
@@ -33,11 +32,6 @@ export default function TrainerCard({ trainer }: { trainer: TrainerData }) {
         <p className="font-bold text-secondary text-sm mb-0.5">{trainer.name}</p>
         {trainer.lizenz && (
           <p className="text-xs text-primary font-medium mb-2">{trainer.lizenz}</p>
-        )}
-        {trainer.kurzvorstellung && (
-          <p className="text-xs text-gray-500 leading-relaxed line-clamp-3">
-            {trainer.kurzvorstellung}
-          </p>
         )}
         {trainer.aktivSeit && (
           <div className="mt-3 border-t border-gray-50 pt-3">

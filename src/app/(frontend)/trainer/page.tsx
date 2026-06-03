@@ -24,7 +24,6 @@ export default async function TrainerPage() {
     name: (u as any).name ?? u.email ?? '–',
     fotoUrl: resolveMediaUrl((u as any).foto),
     lizenz: (u as any).lizenz,
-    kurzvorstellung: (u as any).kurzvorstellung,
     aktivSeit: (u as any).aktivSeit,
   }))
 

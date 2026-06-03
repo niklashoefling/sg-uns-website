@@ -68,14 +68,6 @@ export const Users: CollectionConfig = {
       },
     },
     {
-      name: 'kurzvorstellung',
-      type: 'textarea',
-      admin: {
-        description: 'Kurze Vorstellung (2–3 Sätze)',
-        condition: (data) => data.rolle === 'trainer',
-      },
-    },
-    {
       name: 'aktivSeit',
       type: 'number',
       admin: {
