@@ -8,7 +8,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_50%,rgba(249,115,22,0.10),transparent_55%)] pointer-events-none" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 pt-28 pb-24 w-full">
-        <h1 className="text-6xl md:text-8xl font-bold text-white leading-[1.05] mb-6">
+        <h1 className="text-5xl md:text-8xl font-bold text-white leading-[1.05] mb-6">
           SG U.N.S.
           <br />
           <span className="text-primary">Rheinhessen</span>
@@ -19,7 +19,7 @@ export default function HeroSection() {
           Volleyball in Rheinhessen.
         </p>
 
-        <div className="flex gap-4 flex-wrap">
+        <div className="flex gap-4 flex-wrap sm:flex-nowrap">
           <a
             href="/mannschaften"
             className="bg-primary hover:bg-primary-dark text-white font-semibold px-7 py-3 rounded-lg transition-colors"
