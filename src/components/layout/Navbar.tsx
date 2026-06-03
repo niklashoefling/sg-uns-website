@@ -2,20 +2,14 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
-import { usePathname } from 'next/navigation'
+import { useState, useEffect, useRef } from 'react'
 import { navLinks } from '@/lib/site'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
-  const pathname = usePathname()
-
-  useEffect(() => {
-    setOpenDropdown(null)
-    setMenuOpen(false)
-  }, [pathname])
+  const dropdownRefs = useRef<Map<string, HTMLLIElement>>(new Map())
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -29,14 +23,23 @@ export default function Navbar() {
     return () => window.removeEventListener('popstate', onPopState)
   }, [])
 
+  useEffect(() => {
+    if (!openDropdown) return
+    const el = dropdownRefs.current.get(openDropdown)
+    const handler = (e: MouseEvent) => {
+      if (el && !el.contains(e.target as Node)) {
+        setOpenDropdown(null)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [openDropdown])
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 bg-secondary transition-shadow ${scrolled ? 'shadow-lg' : ''}`}
     >
-      {openDropdown && <div className="fixed inset-0 z-40" onClick={() => setOpenDropdown(null)} />}
-
       <nav className="max-w-6xl mx-auto px-6 h-17 flex items-center justify-between">
-        {' '}
         <Link href="/" className="flex items-center overflow-hidden h-14">
           <Image
             src="/vereine/sguns_volleys.png"
@@ -47,10 +50,18 @@ export default function Navbar() {
             priority
           />
         </Link>
-        <ul className="hidden md:flex items-center gap-2 list-none relative z-50">
+
+        <ul className="hidden md:flex items-center gap-2 list-none">
           {navLinks.map((link) =>
             link.children ? (
-              <li key={link.href} className="relative">
+              <li
+                key={link.href}
+                className="relative"
+                ref={(el) => {
+                  if (el) dropdownRefs.current.set(link.href, el)
+                  else dropdownRefs.current.delete(link.href)
+                }}
+              >
                 <button
                   type="button"
                   onClick={() => setOpenDropdown(openDropdown === link.href ? null : link.href)}
@@ -73,6 +84,7 @@ export default function Navbar() {
                       <Link
                         key={child.href}
                         href={child.href}
+                        onClick={() => setOpenDropdown(null)}
                         className="block px-4 py-2.5 text-sm text-secondary hover:bg-gray-50 hover:text-primary transition-colors"
                       >
                         {child.label}
@@ -101,6 +113,7 @@ export default function Navbar() {
             </Link>
           </li>
         </ul>
+
         <button
           type="button"
           className="md:hidden flex flex-col gap-1.5 p-1 bg-transparent border-none cursor-pointer"

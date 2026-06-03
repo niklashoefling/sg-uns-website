@@ -1,13 +1,25 @@
+import { getPayload } from 'payload'
+import config from '@payload-config'
 import HeroSection from '@/components/sections/HeroSection'
 import UeberUnsSection from '@/components/sections/UeberUnsSection'
 import AktuellesPreview from '@/components/sections/AktuellesPreview'
+import { resolveMediaUrl } from '@/lib/media'
 
 export const dynamic = 'force-dynamic'
 
-export default function HomePage() {
+export default async function HomePage() {
+  const payload = await getPayload({ config })
+  const { docs } = await payload.find({
+    collection: 'mannschaften',
+    sort: 'name',
+    limit: 1,
+    depth: 1,
+  })
+  const heroBildUrl = resolveMediaUrl(docs[0]?.teamfoto) ?? null
+
   return (
     <>
-      <HeroSection />
+      <HeroSection heroBildUrl={heroBildUrl} />
       <div id="ueber-uns" className="pt-16 -mt-16">
         <UeberUnsSection />
       </div>

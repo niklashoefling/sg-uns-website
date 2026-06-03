@@ -1,11 +1,21 @@
-export default function HeroSection() {
+import Image from 'next/image'
+
+export default function HeroSection({ heroBildUrl }: { heroBildUrl?: string | null }) {
   return (
     <section className="relative min-h-screen flex items-center bg-linear-to-br from-secondary via-[#2a527a] to-[#1a3050] overflow-hidden">
-      <div className="absolute right-0 bottom-0 text-[28rem] leading-none opacity-[0.04] select-none pointer-events-none translate-y-16">
-        🏐
-      </div>
+      {heroBildUrl && (
+        <Image
+          src={heroBildUrl}
+          alt="SG U.N.S. Rheinhessen"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+      )}
 
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_50%,rgba(249,115,22,0.10),transparent_55%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-secondary/70 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_50%,rgba(249,115,22,0.15),transparent_55%)] pointer-events-none" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 pt-28 pb-24 w-full">
         <h1 className="text-5xl md:text-8xl font-bold text-white leading-[1.05] mb-6">

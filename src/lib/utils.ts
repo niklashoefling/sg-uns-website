@@ -1,3 +1,6 @@
+import type { TrainerData } from '@/components/cards/TrainerCard'
+import { resolveMediaUrl } from '@/lib/media'
+
 export function formatDatum(datum: string) {
   return new Date(datum).toLocaleDateString('de-DE', {
     day: 'numeric',
@@ -24,9 +27,6 @@ export function lexicalToPlainText(inhalt: unknown): string {
   if (!root) return ''
   return extractText(root).replace(/\s+/g, ' ').trim()
 }
-
-import type { TrainerData } from '@/components/cards/TrainerCard'
-import { resolveMediaUrl } from '@/lib/media'
 
 export function mapUserToTrainerData(user: unknown): TrainerData {
   const u = user as {
