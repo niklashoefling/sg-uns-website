@@ -93,8 +93,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    jugendarbeit: Jugendarbeit;
+  };
+  globalsSelect: {
+    jugendarbeit: JugendarbeitSelect<false> | JugendarbeitSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -540,6 +544,57 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * Inhalt der Jugendarbeit-Seite
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jugendarbeit".
+ */
+export interface Jugendarbeit {
+  id: number;
+  /**
+   * Textabschnitte der Jugendarbeit-Seite (Reihenfolge per Drag & Drop änderbar)
+   */
+  abschnitte?:
+    | {
+        titel: string;
+        inhalt: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jugendarbeit_select".
+ */
+export interface JugendarbeitSelect<T extends boolean = true> {
+  abschnitte?:
+    | T
+    | {
+        titel?: T;
+        inhalt?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

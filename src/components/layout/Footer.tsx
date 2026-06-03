@@ -57,7 +57,10 @@ export default function Footer() {
                       {link.children.map((child) => (
                         <li key={child.href} className="flex items-center gap-1.5">
                           <span className="text-white/30 text-sm">›</span>
-                          <a href={child.href} className="text-sm text-white/60 hover:text-white transition-colors">
+                          <a
+                            href={child.href}
+                            className="text-sm text-white/60 hover:text-white transition-colors"
+                          >
                             {child.label}
                           </a>
                         </li>
