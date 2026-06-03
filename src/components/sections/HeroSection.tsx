@@ -1,7 +1,7 @@
 export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center bg-linear-to-br from-secondary via-[#2a527a] to-[#1a3050] overflow-hidden">
-      <div className="absolute right-0 bottom-0 text-[28rem] leading-none opacity-[0.04] select-none pointer-events-none translate-x-16 translate-y-16">
+      <div className="absolute right-0 bottom-0 text-[28rem] leading-none opacity-[0.04] select-none pointer-events-none translate-y-16">
         🏐
       </div>
 
