@@ -35,7 +35,6 @@ export default async function MannschaftenPage() {
       slug: m.slug,
       name: m.name,
       liga: m.liga,
-      saison: m.saison,
       teamfoto: resolveMediaUrl(m.teamfoto) ?? undefined,
       trainer: ((m.trainer as unknown[]) ?? [])
         .filter((t) => typeof t === 'object' && t !== null)

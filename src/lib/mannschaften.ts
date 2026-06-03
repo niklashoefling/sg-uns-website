@@ -28,7 +28,6 @@ export type Mannschaft = {
   slug: string
   name: string
   liga: string
-  saison: string
   teamfoto?: string
   trainer: { name: string; email?: string }[]
   training: { tag: string; uhrzeit: string }[]

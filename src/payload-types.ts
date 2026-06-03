@@ -184,11 +184,23 @@ export interface Mannschaften {
   slug: string;
   name: string;
   liga: string;
-  /**
-   * z.B. "2025/26"
-   */
-  saison: string;
   beschreibung: string;
+  /**
+   * Meisterschaften, Aufstiege, besondere Saisons etc.
+   */
+  erfolge?:
+    | {
+        /**
+         * z.B. "Meister Verbandsliga 2023/24"
+         */
+        titel: string;
+        /**
+         * z.B. "2023/24"
+         */
+        saison?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   /**
    * Nur User mit Rolle "Trainer" werden angezeigt
    */
@@ -460,8 +472,14 @@ export interface MannschaftenSelect<T extends boolean = true> {
   slug?: T;
   name?: T;
   liga?: T;
-  saison?: T;
   beschreibung?: T;
+  erfolge?:
+    | T
+    | {
+        titel?: T;
+        saison?: T;
+        id?: T;
+      };
   trainer?: T;
   email?: T;
   halle?: T;

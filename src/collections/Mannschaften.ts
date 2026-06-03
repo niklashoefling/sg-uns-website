@@ -50,17 +50,29 @@ export const Mannschaften: CollectionConfig = {
       required: true,
     },
     {
-      name: 'saison',
-      type: 'text',
-      required: true,
-      admin: {
-        description: 'z.B. "2025/26"',
-      },
-    },
-    {
       name: 'beschreibung',
       type: 'textarea',
       required: true,
+    },
+    {
+      name: 'erfolge',
+      type: 'array',
+      admin: {
+        description: 'Meisterschaften, Aufstiege, besondere Saisons etc.',
+      },
+      fields: [
+        {
+          name: 'titel',
+          type: 'text',
+          required: true,
+          admin: { description: 'z.B. "Meister Verbandsliga 2023/24"' },
+        },
+        {
+          name: 'saison',
+          type: 'text',
+          admin: { description: 'z.B. "2023/24"' },
+        },
+      ],
     },
     {
       name: 'trainer',
