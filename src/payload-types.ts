@@ -129,7 +129,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
-  rolle: 'admin' | 'trainer';
+  rolle: 'admin' | 'trainer' | 'redakteur';
   /**
    * Nur bei Rolle "Trainer" relevant
    */

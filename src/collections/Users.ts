@@ -12,8 +12,7 @@ export const Users: CollectionConfig = {
     create: ({ req }) => isAdmin(req.user),
     update: ({ req }) => {
       if (isAdmin(req.user)) return true
-      // Trainer darf nur sich selbst bearbeiten
-      if (req.user?.rolle === 'trainer') {
+      if (req.user?.rolle === 'trainer' || req.user?.rolle === 'redakteur') {
         return { id: { equals: req.user.id } }
       }
       return false
@@ -33,6 +32,7 @@ export const Users: CollectionConfig = {
       options: [
         { label: 'Admin', value: 'admin' },
         { label: 'Trainer', value: 'trainer' },
+        { label: 'Redakteur', value: 'redakteur' },
       ],
     },
     {

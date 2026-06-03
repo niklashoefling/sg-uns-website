@@ -17,14 +17,14 @@ export const Artikel: CollectionConfig = {
     create: ({ req }) => !!req.user,
     update: ({ req }) => {
       if (isAdmin(req.user)) return true
-      if (req.user?.rolle === 'trainer') {
+      if (req.user?.rolle === 'trainer' || req.user?.rolle === 'redakteur') {
         return { autor: { equals: req.user.id } }
       }
       return false
     },
     delete: ({ req }) => {
       if (isAdmin(req.user)) return true
-      if (req.user?.rolle === 'trainer') {
+      if (req.user?.rolle === 'trainer' || req.user?.rolle === 'redakteur') {
         return { autor: { equals: req.user.id } }
       }
       return false

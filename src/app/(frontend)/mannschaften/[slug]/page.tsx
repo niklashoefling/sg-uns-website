@@ -80,7 +80,7 @@ function TeamDetails({
       </div>
       <div>
         <h2 className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">
-          Details
+          Trainingsdaten
         </h2>
         <div className="space-y-3">
           {halle && (
