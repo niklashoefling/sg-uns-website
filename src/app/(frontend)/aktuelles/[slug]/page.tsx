@@ -86,6 +86,24 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
             artikel.inhalt as { root: Parameters<typeof RichTextRenderer>[0]['content']['root'] }
           }
         />
+
+        <div className="mt-12 pt-6 border-t border-gray-200 flex justify-end">
+          <div className="text-right text-sm text-gray-400 space-y-1">
+            {artikel.autor && typeof artikel.autor === 'object' && artikel.autor.name && (
+              <p>
+                <span className="font-medium text-gray-500">Autor:</span> {artikel.autor.name}
+              </p>
+            )}
+            <p>
+              <span className="font-medium text-gray-500">Zuletzt bearbeitet:</span>{' '}
+              {new Date(artikel.updatedAt).toLocaleDateString('de-DE', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+              })}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   )
