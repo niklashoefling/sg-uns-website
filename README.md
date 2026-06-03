@@ -13,43 +13,84 @@ Admin-Panel: `http://localhost:3000/admin`
 
 ## DSGVO & Datenschutz
 
-### Neon (Datenbank)
-Neon ist bei Auswahl der Region Frankfurt (`eu-central-1`, AWS) DSGVO-konform einsetzbar — Daten verlassen die EU nicht.
+### Was in die Datenschutzerklärung muss
 
-**Pflichten:**
-- DPA (Auftragsverarbeitungsvertrag) in den Neon Account-Einstellungen unter „Legal" online unterzeichnen
-- Neon als Auftragsverarbeiter in der Datenschutzerklärung nennen (Name, Zweck, Sitz)
+#### 1. Hosting — Vercel
+- Anbieter: Vercel Inc., USA
+- Serverstandort: Frankfurt (EU) eingestellt
+- Zweck: Bereitstellung der Website
+- DPA mit Vercel abschließen (Vercel Account → Settings → Legal)
+- Hinweis auf Drittlandtransfer in die USA + Standardvertragsklauseln (SCCs) als Schutzmaßnahme nennen
 
-**Vercel Analytics:**
-Bereits eingebunden (`@vercel/analytics` in `layout.tsx`). Wird automatisch aktiv sobald die Website auf Vercel deployed ist — kein weiteres Setup nötig.
-- Cookielos, keine personenbezogenen Daten → trotzdem in der Datenschutzerklärung erwähnen
-- Dashboard: Vercel Projektseite → „Analytics"
+#### 2. Datenbank — Neon
+- Anbieter: Neon Inc., USA
+- Serverstandort: Frankfurt (`eu-central-1`, AWS)
+- Zweck: Speicherung von Vereinsinhalten und Admin-Zugängen
+- DPA in den Neon Account-Einstellungen unter „Legal" unterzeichnen
+- Hinweis auf Drittlandtransfer + SCCs nennen
 
+#### 3. Kontaktformular
+- Erhobene Daten: Name, E-Mail-Adresse, Nachricht
+- Zweck: Bearbeitung der Kontaktanfrage
+- Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen) oder lit. f (berechtigtes Interesse)
+- Speicherung: Daten werden **nicht in der Datenbank gespeichert**, sondern ausschließlich per E-Mail weitergeleitet
+- E-Mail-Versand über Strato SMTP (`no-reply@sgunsrheinhessen.de`) — deutsches Unternehmen, kein Drittlandtransfer
+- Löschung: E-Mails nach Bearbeitung der Anfrage löschen
+
+#### 4. Spielerdaten (Kader)
+- Erhobene Daten: Name, Position, Trikotnummer, Foto
+- Rechtsgrundlage:
+  - Name, Position, Trikotnummer: berechtigtes Interesse des Vereins (Art. 6 Abs. 1 lit. f DSGVO)
+  - **Fotos: explizite schriftliche Einwilligung** jedes Spielers (Art. 6 Abs. 1 lit. a DSGVO)
+- Widerspruchsrecht: Spieler können Löschung verlangen — Datensatz dann aus Payload entfernen
+- Spieler vor Veröffentlichung schriftlich informieren (z.B. per Einwilligungserklärung beim Vereinseintritt)
+
+#### 5. Vercel Analytics
+- Anbieter: Vercel Inc., USA (gleicher Hinweis wie Hosting)
+- Cookielos, keine personenbezogenen Daten, keine Weitergabe an Dritte
+- Zweck: Anonyme Reichweitenmessung
+- Trotzdem in der Datenschutzerklärung erwähnen
+
+---
+
+### Technische Pflichten (Setup)
+
+- Vercel DPA abschließen: Vercel Account → Settings → Legal
+- Neon DPA abschließen: Neon Account → Settings → Legal
+- Strato SMTP einrichten (siehe TODO unten) — ersetzt Resend
+- Cookie-Banner vor Go-Live einbauen (siehe Backlog)
+- Datenschutzerklärung und Impressum unter `/datenschutz` und `/impressum` befüllen
+
+### Hinweise
 
 - Payload-Admin-User (E-Mail, Passwort-Hash) — ausschließlich eigene Vereinsmitglieder, unkritisch
 - Vereinsinhalte (Artikel, Mannschaften, Spielpläne) sind keine personenbezogenen Daten
-
-**Achtung bei Kontaktformular:** Sobald Nachrichten von Außenstehenden gespeichert werden, müssen diese entweder nur kurz vorgehalten oder gar nicht persistiert werden (direkt per E-Mail weiterleiten, nicht in DB speichern).
-
-### Spielerdaten (Kader)
-Name, Position, Trikotnummer und Foto sind personenbezogene Daten — Spieler sind natürliche Personen.
-
-**Rechtsgrundlage:**
-- Name, Position, Trikotnummer: berechtigtes Interesse des Vereins (Art. 6 Abs. 1 lit. f DSGVO) ist für vereinstypische Veröffentlichungen ausreichend
-- **Fotos: explizite schriftliche Einwilligung** jedes Spielers erforderlich (Art. 6 Abs. 1 lit. a DSGVO)
-
-**Pflichten:**
-- Spieler schriftlich informieren, was gespeichert und veröffentlicht wird (z.B. per Einwilligungserklärung beim Vereinseintritt)
-- Widerspruchsrecht umsetzen — wenn ein Spieler nicht auf der Website erscheinen will, Datensatz löschen
-- Datenschutzerklärung um Abschnitt „Vereinsmitglieder / Kader" ergänzen
+- Kontaktformular-Nachrichten **nicht** in der Datenbank speichern — nur per E-Mail weiterleiten
 
 ---
 
 ## Offene TODOs
 
 ### E-Mail-Konfiguration (`src/app/api/kontakt/route.ts`)
+Aktuell läuft der E-Mail-Versand über Resend (kostenlose Version). Das ist **nicht DSGVO-konform** (DPA nur in kostenpflichtigen Plänen). Geplanter Wechsel auf **Nodemailer + Strato SMTP**:
+
+**Was zu tun ist (sobald Strato-Zugang vorhanden):**
+1. Postfach `no-reply@sgunsrheinhessen.de` bei Strato anlegen
+2. Strato SMTP-Zugangsdaten als Umgebungsvariablen eintragen:
+   - `SMTP_HOST` → `smtp.strato.de`
+   - `SMTP_USER` → `no-reply@sgunsrheinhessen.de`
+   - `SMTP_PASS` → Passwort des Postfachs
+3. `resend` durch `nodemailer` ersetzen (`npm remove resend && npm install nodemailer`)
+4. `route.ts` umbauen: `from: no-reply@sgunsrheinhessen.de`, `replyTo` bleibt die E-Mail aus dem Formular
+5. `RESEND_API_KEY` aus den Umgebungsvariablen entfernen
+
+**Warum Nodemailer + Strato:**
+- Strato ist ein deutsches Unternehmen → DSGVO-konform ohne DPA nötig
+- Kein Drittanbieter, E-Mail läuft direkt über die eigene Domain
+- Kostenlos (im Strato-Hosting enthalten)
+
+**Weitere offene Punkte:**
 - **`FALLBACK_EMAIL`** — Empfänger-Adresse für allgemeine Kontaktanfragen anpassen (aktuell `hoefling.niklas@gmx.de`)
-- **`from`** — Absender-Adresse durch eine verifizierte Resend-Domain ersetzen (aktuell `onboarding@resend.dev`)
 - E-Mail-Adresse pro Mannschaft direkt im Payload Admin beim jeweiligen Mannschafts-Eintrag pflegen
 
 ---
