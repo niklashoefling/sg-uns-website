@@ -5,11 +5,11 @@ export const navLinks = [
     label: 'Verein',
     children: [
       { href: '/mannschaften', label: 'Alle Mannschaften' },
+      { href: '/jugendarbeit', label: 'Jugendarbeit' },
       { href: '/trainer', label: 'Trainerstab' },
       { href: '/hallen', label: 'Hallenverzeichnis' },
     ],
   },
-  { href: '/jugendarbeit', label: 'Jugendarbeit' },
   { href: '/aktuelles', label: 'Aktuelles' },
 ]
 
