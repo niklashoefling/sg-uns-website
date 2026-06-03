@@ -73,14 +73,16 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
   }
 
   if (node.type === 'link') {
-    const href = typeof node.url === 'string' ? node.url : '#'
+    const fields = node.fields as { url?: string; newTab?: boolean } | undefined
+    const href = fields?.url ?? (typeof node.url === 'string' ? node.url : '#')
+    const newTab = fields?.newTab ?? true
     return (
       <a
         key={index}
         href={href}
         className="text-primary hover:underline"
-        target="_blank"
-        rel="noopener noreferrer"
+        target={newTab ? '_blank' : undefined}
+        rel={newTab ? 'noopener noreferrer' : undefined}
       >
         {node.children?.map((c, i) => renderNode(c, i))}
       </a>
