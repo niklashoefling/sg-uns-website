@@ -15,7 +15,7 @@ export default function TrainerCard({ trainer }: { trainer: TrainerData }) {
       href="/trainer"
       className="border border-gray-100 rounded-xl overflow-hidden hover:shadow-md hover:border-primary/30 transition-all block"
     >
-      <div className="relative aspect-[3/4] bg-secondary/10">
+      <div className="relative aspect-square bg-secondary/10">
         {trainer.fotoUrl ? (
           <Image
             src={trainer.fotoUrl}
