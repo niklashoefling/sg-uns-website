@@ -35,12 +35,14 @@ export function mapUserToTrainerData(user: unknown): TrainerData {
     foto?: unknown
     lizenz?: string
     aktivSeit?: number
+    nationalitaet?: string
   }
   return {
     name: u.name ?? u.email ?? '–',
     fotoUrl: resolveMediaUrl(u.foto),
     lizenz: u.lizenz,
     aktivSeit: u.aktivSeit,
+    nationalitaet: u.nationalitaet,
   }
 }
 

@@ -1,14 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { navLinks } from '@/lib/site'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
-  const dropdownRef = useRef<HTMLLIElement>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -16,20 +15,12 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  useEffect(() => {
-    const onClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setOpenDropdown(null)
-      }
-    }
-    document.addEventListener('mousedown', onClickOutside)
-    return () => document.removeEventListener('mousedown', onClickOutside)
-  }, [])
-
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 bg-secondary transition-shadow ${scrolled ? 'shadow-lg' : ''}`}
     >
+      {openDropdown && <div className="fixed inset-0 z-40" onClick={() => setOpenDropdown(null)} />}
+
       <nav className="max-w-6xl mx-auto px-6 h-17 flex items-center justify-between">
         <a href="/" className="flex items-center overflow-hidden h-14">
           <Image
@@ -42,10 +33,10 @@ export default function Navbar() {
           />
         </a>
 
-        <ul className="hidden md:flex items-center gap-2 list-none">
+        <ul className="hidden md:flex items-center gap-2 list-none relative z-50">
           {navLinks.map((link) =>
             link.children ? (
-              <li key={link.href} className="relative" ref={dropdownRef}>
+              <li key={link.href} className="relative">
                 <button
                   type="button"
                   onClick={() => setOpenDropdown(openDropdown === link.href ? null : link.href)}

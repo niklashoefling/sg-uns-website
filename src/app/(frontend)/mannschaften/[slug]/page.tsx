@@ -84,7 +84,10 @@ function TeamDetails({
           {halle && (
             <div className="flex gap-4 text-sm">
               <span className="w-24 shrink-0 font-semibold text-secondary">Halle</span>
-              <Link href="/hallen" className="text-gray-500 hover:text-primary transition-colors">
+              <Link
+                href="/hallen"
+                className="text-gray-500 underline hover:text-primary transition-colors"
+              >
                 {halle.name}
               </Link>
             </div>

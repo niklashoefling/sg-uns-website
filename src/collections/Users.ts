@@ -75,6 +75,14 @@ export const Users: CollectionConfig = {
         condition: (data) => data.rolle === 'trainer',
       },
     },
+    {
+      name: 'nationalitaet',
+      type: 'text',
+      admin: {
+        description: 'z.B. "Deutschland"',
+        condition: (data) => data.rolle === 'trainer',
+      },
+    },
   ],
 }
 

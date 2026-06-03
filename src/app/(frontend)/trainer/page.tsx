@@ -37,7 +37,7 @@ export default async function TrainerPage() {
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
             {trainer.map((t) => (
-              <TrainerCard key={t.name} trainer={t} />
+              <TrainerCard key={t.name} trainer={t} clickable={false} />
             ))}
           </div>
         )}

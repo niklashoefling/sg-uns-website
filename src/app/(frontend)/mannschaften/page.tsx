@@ -100,7 +100,10 @@ export default async function MannschaftenPage() {
                         {z.tag} · {z.uhrzeit}
                       </div>
                       <div className="text-gray-500 mt-0.5">
-                        <a href="/hallen" className="hover:text-primary transition-colors">
+                        <a
+                          href="/hallen"
+                          className="underline hover:text-primary transition-colors"
+                        >
                           {z.halle}
                         </a>
                       </div>
