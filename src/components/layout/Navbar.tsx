@@ -1,18 +1,32 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { navLinks } from '@/lib/site'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const pathname = usePathname()
+
+  useEffect(() => {
+    setOpenDropdown(null)
+    setMenuOpen(false)
+  }, [pathname])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const onPopState = () => setOpenDropdown(null)
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
   }, [])
 
   return (
@@ -22,7 +36,8 @@ export default function Navbar() {
       {openDropdown && <div className="fixed inset-0 z-40" onClick={() => setOpenDropdown(null)} />}
 
       <nav className="max-w-6xl mx-auto px-6 h-17 flex items-center justify-between">
-        <a href="/" className="flex items-center overflow-hidden h-14">
+        {' '}
+        <Link href="/" className="flex items-center overflow-hidden h-14">
           <Image
             src="/vereine/sguns_volleys.png"
             alt="SG U.N.S. Rheinhessen Volleys"
@@ -31,8 +46,7 @@ export default function Navbar() {
             className="brightness-0 invert w-44 h-auto mt-2"
             priority
           />
-        </a>
-
+        </Link>
         <ul className="hidden md:flex items-center gap-2 list-none relative z-50">
           {navLinks.map((link) =>
             link.children ? (
@@ -56,39 +70,37 @@ export default function Navbar() {
                 {openDropdown === link.href && (
                   <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-100 py-1 min-w-44 z-50">
                     {link.children.map((child) => (
-                      <a
+                      <Link
                         key={child.href}
                         href={child.href}
-                        onClick={() => setOpenDropdown(null)}
                         className="block px-4 py-2.5 text-sm text-secondary hover:bg-gray-50 hover:text-primary transition-colors"
                       >
                         {child.label}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 )}
               </li>
             ) : (
               <li key={link.href}>
-                <a
+                <Link
                   href={link.href}
                   className="text-white/85 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded text-sm font-medium transition-colors"
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ),
           )}
           <li>
-            <a
+            <Link
               href="/kontakt"
               className="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors"
             >
               Mitmachen
-            </a>
+            </Link>
           </li>
         </ul>
-
         <button
           type="button"
           className="md:hidden flex flex-col gap-1.5 p-1 bg-transparent border-none cursor-pointer"
@@ -117,35 +129,32 @@ export default function Navbar() {
                 </span>
                 <div className="pl-4 flex flex-col gap-0.5">
                   {link.children.map((child) => (
-                    <a
+                    <Link
                       key={child.href}
                       href={child.href}
                       className="text-white/85 hover:text-white px-4 py-2 rounded text-base font-medium transition-colors"
-                      onClick={() => setMenuOpen(false)}
                     >
                       {child.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
             ) : (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className="text-white/85 hover:text-white px-4 py-3 rounded text-base font-medium transition-colors"
-                onClick={() => setMenuOpen(false)}
               >
                 {link.label}
-              </a>
+              </Link>
             ),
           )}
-          <a
+          <Link
             href="/kontakt"
             className="bg-primary hover:bg-primary-dark text-white px-4 py-3 rounded-md text-base font-semibold text-center mt-2 transition-colors"
-            onClick={() => setMenuOpen(false)}
           >
             Mitmachen
-          </a>
+          </Link>
         </div>
       )}
     </header>
