@@ -37,7 +37,7 @@ export default function ArtikelCard({
         href={`/aktuelles/${artikel.slug}`}
         className="group border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition-shadow md:flex"
       >
-        <div className="md:w-1/2 h-56 md:h-auto bg-secondary/10 relative shrink-0">
+        <div className="md:w-1/2 aspect-video md:aspect-auto md:h-auto bg-secondary/10 relative shrink-0">
           {bildUrl ? (
             <Image
               src={bildUrl}
@@ -72,7 +72,7 @@ export default function ArtikelCard({
       href={`/aktuelles/${artikel.slug}`}
       className="group border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition-shadow"
     >
-      <div className="h-44 bg-secondary/10 relative">
+      <div className="aspect-[4/3] bg-secondary/10 relative">
         {bildUrl ? (
           <Image
             src={bildUrl}

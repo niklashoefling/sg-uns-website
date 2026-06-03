@@ -279,15 +279,11 @@ export interface Artikel {
   id: number;
   titel: string;
   /**
-   * URL-Bezeichner, z.B. "saisonauftakt-2025"
+   * Wird automatisch aus dem Titel generiert
    */
   slug: string;
   datum: string;
   kategorie: 'Spieltag' | 'Vereinsnews' | 'Jugend' | 'Sonstiges';
-  /**
-   * Kurze Vorschau für die Übersichtsseite (1–2 Sätze)
-   */
-  teaser: string;
   inhalt: {
     root: {
       type: string;
@@ -487,7 +483,6 @@ export interface ArtikelSelect<T extends boolean = true> {
   slug?: T;
   datum?: T;
   kategorie?: T;
-  teaser?: T;
   inhalt?: T;
   bild?: T;
   autor?: T;

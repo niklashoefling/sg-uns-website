@@ -14,12 +14,13 @@ export type SpielerData = {
 export default function PlayerCard({ spieler }: { spieler: SpielerData }) {
   return (
     <div className="border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
-      <div className="relative h-48 bg-secondary/10">
+      <div className="relative aspect-[3/4] bg-secondary/10">
         {spieler.fotoUrl ? (
           <Image
             src={spieler.fotoUrl}
             alt={spieler.name}
             fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             className="object-cover object-top"
           />
         ) : (

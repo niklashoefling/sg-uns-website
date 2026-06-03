@@ -84,7 +84,7 @@ function TeamDetails({
           {halle && (
             <div className="flex gap-4 text-sm">
               <span className="w-24 shrink-0 font-semibold text-secondary">Halle</span>
-              <Link href="/hallen" className="text-primary hover:underline">
+              <Link href="/hallen" className="text-gray-500 hover:text-primary transition-colors">
                 {halle.name}
               </Link>
             </div>
@@ -157,7 +157,7 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
 
       {teamfotoUrl && (
         <div className="max-w-6xl mx-auto px-6 -mt-16">
-          <div className="relative w-full h-56 md:h-72 rounded-xl overflow-hidden shadow-xl">
+          <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-xl">
             <Image
               src={teamfotoUrl}
               alt={`${team.name} Teamfoto`}

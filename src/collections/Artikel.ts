@@ -36,6 +36,14 @@ export const Artikel: CollectionConfig = {
         if (operation === 'create' && req.user) {
           data.autor = req.user.id
         }
+        if (data.titel) {
+          data.slug = data.titel
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-|-$/g, '')
+        }
         return data
       },
     ],
@@ -53,7 +61,8 @@ export const Artikel: CollectionConfig = {
       unique: true,
       index: true,
       admin: {
-        description: 'URL-Bezeichner, z.B. "saisonauftakt-2025"',
+        readOnly: true,
+        description: 'Wird automatisch aus dem Titel generiert',
       },
     },
     {
@@ -78,14 +87,6 @@ export const Artikel: CollectionConfig = {
         { label: 'Sonstiges', value: 'Sonstiges' },
       ],
       defaultValue: 'Vereinsnews',
-    },
-    {
-      name: 'teaser',
-      type: 'textarea',
-      required: true,
-      admin: {
-        description: 'Kurze Vorschau für die Übersichtsseite (1–2 Sätze)',
-      },
     },
     {
       name: 'inhalt',

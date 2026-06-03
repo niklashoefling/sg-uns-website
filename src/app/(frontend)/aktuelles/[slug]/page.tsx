@@ -68,9 +68,15 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
 
       {bildUrl && (
         <div className="max-w-4xl mx-auto px-6 py-8">
-          <div className="relative w-full h-64 md:h-96 rounded-xl overflow-hidden">
-            <Image src={bildUrl} alt={artikel.titel} fill className="object-cover" />
-          </div>
+          <Image
+            src={bildUrl}
+            alt={artikel.titel}
+            width={0}
+            height={0}
+            sizes="(max-width: 768px) 100vw, 896px"
+            priority
+            className="w-full h-auto rounded-xl"
+          />
         </div>
       )}
 
