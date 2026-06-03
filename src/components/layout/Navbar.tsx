@@ -145,6 +145,7 @@ export default function Navbar() {
                     <Link
                       key={child.href}
                       href={child.href}
+                      onClick={() => setMenuOpen(false)}
                       className="text-white/85 hover:text-white px-4 py-2 rounded text-base font-medium transition-colors"
                     >
                       {child.label}
@@ -156,6 +157,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={() => setMenuOpen(false)}
                 className="text-white/85 hover:text-white px-4 py-3 rounded text-base font-medium transition-colors"
               >
                 {link.label}
@@ -164,6 +166,7 @@ export default function Navbar() {
           )}
           <Link
             href="/kontakt"
+            onClick={() => setMenuOpen(false)}
             className="bg-primary hover:bg-primary-dark text-white px-4 py-3 rounded-md text-base font-semibold text-center mt-2 transition-colors"
           >
             Mitmachen
