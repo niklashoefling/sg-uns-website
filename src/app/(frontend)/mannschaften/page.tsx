@@ -85,8 +85,7 @@ export default async function MannschaftenPage() {
             Trainingszeiten
           </h2>
 
-          {/* Mobile: stacked cards */}
-          <div className="sm:hidden space-y-4">
+          <div className="space-y-4">
             {trainingsgruppen.map((gruppe) => (
               <div key={gruppe.slug} className="border border-gray-100 rounded-xl overflow-hidden">
                 <div className="bg-gray-50 px-4 py-2">
@@ -113,53 +112,6 @@ export default async function MannschaftenPage() {
                 </div>
               </div>
             ))}
-          </div>
-
-          {/* Desktop: table */}
-          <div className="hidden sm:block border border-gray-100 rounded-xl overflow-hidden">
-            <table className="w-full text-sm">
-              <thead className="bg-gray-50 text-left">
-                <tr>
-                  <th className="px-5 py-3 font-semibold text-secondary">Mannschaft</th>
-                  <th className="px-5 py-3 font-semibold text-secondary">Halle</th>
-                  <th className="px-5 py-3 font-semibold text-secondary">Tag</th>
-                  <th className="px-5 py-3 font-semibold text-secondary">Uhrzeit</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {trainingsgruppen.map((gruppe) =>
-                  gruppe.zeilen.map((z, zi) => {
-                    const halleWiederholt = zi > 0 && gruppe.zeilen[zi - 1].halle === z.halle
-                    return (
-                      <tr
-                        key={`${gruppe.slug}-${zi}`}
-                        className="hover:bg-gray-50 transition-colors"
-                      >
-                        <td className="px-5 py-3">
-                          {zi === 0 ? (
-                            <a
-                              href={`/mannschaften/${gruppe.slug}`}
-                              className="text-secondary font-medium hover:text-primary transition-colors"
-                            >
-                              {gruppe.mannschaft}
-                            </a>
-                          ) : null}
-                        </td>
-                        <td className="px-5 py-3 text-gray-500">
-                          {!halleWiederholt ? (
-                            <a href="/hallen" className="hover:text-primary transition-colors">
-                              {z.halle}
-                            </a>
-                          ) : null}
-                        </td>
-                        <td className="px-5 py-3 text-gray-500">{z.tag}</td>
-                        <td className="px-5 py-3 text-gray-500">{z.uhrzeit}</td>
-                      </tr>
-                    )
-                  }),
-                )}
-              </tbody>
-            </table>
           </div>
         </div>
       </div>
