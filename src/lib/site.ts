@@ -4,7 +4,7 @@ export const navLinks = [
     href: '/mannschaften',
     label: 'Verein',
     children: [
-      { href: '/mannschaften', label: 'Alle Mannschaften' },
+      { href: '/mannschaften', label: 'Mannschaften' },
       { href: '/jugendarbeit', label: 'Jugendarbeit' },
       { href: '/trainer', label: 'Trainerstab' },
       { href: '/hallen', label: 'Hallenverzeichnis' },
