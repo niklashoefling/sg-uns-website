@@ -73,7 +73,6 @@ Admin-Panel: [http://localhost:3000/admin](http://localhost:3000/admin)
 * Vercel DPA
 * Neon DPA
 * Strato SMTP Setup
-* Cookie Banner
 * Impressum (in Arbeit) + Datenschutz final
 * Sitemap + robots prüfen
 

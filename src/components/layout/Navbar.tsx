@@ -2,14 +2,28 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import { navLinks } from '@/lib/site'
 
 export default function Navbar() {
+  const router = useRouter()
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const dropdownRefs = useRef<Map<string, HTMLLIElement>>(new Map())
+
+  function closeAll() {
+    setMenuOpen(false)
+    setOpenDropdown(null)
+  }
+
+  function handleMobileNavClick(href: string) {
+    setMenuOpen(false)
+    // Kurze Verzögerung damit das Menü sich schließt bevor navigiert wird,
+    // sonst verschiebt die Layout-Änderung den Anchor-Scroll
+    setTimeout(() => router.push(href), 10)
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -40,7 +54,7 @@ export default function Navbar() {
       className={`fixed top-0 left-0 right-0 z-50 bg-secondary transition-shadow ${scrolled ? 'shadow-lg' : ''}`}
     >
       <nav className="max-w-6xl mx-auto px-6 h-17 flex items-center justify-between">
-        <Link href="/" className="flex items-center overflow-hidden h-14">
+        <Link href="/" className="flex items-center overflow-hidden h-14" onClick={closeAll}>
           <Image
             src="/vereine/sguns_volleys.png"
             alt="SG U.N.S. Rheinhessen Volleys"
@@ -142,35 +156,35 @@ export default function Navbar() {
                 </span>
                 <div className="pl-4 flex flex-col gap-0.5">
                   {link.children.map((child) => (
-                    <Link
+                    <button
                       key={child.href}
-                      href={child.href}
-                      onClick={() => setMenuOpen(false)}
-                      className="text-white/85 hover:text-white px-4 py-2 rounded text-base font-medium transition-colors"
+                      type="button"
+                      onClick={() => handleMobileNavClick(child.href)}
+                      className="text-white/85 hover:text-white px-4 py-2 rounded text-base font-medium transition-colors text-left bg-transparent border-none cursor-pointer"
                     >
                       {child.label}
-                    </Link>
+                    </button>
                   ))}
                 </div>
               </div>
             ) : (
-              <Link
+              <button
                 key={link.href}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="text-white/85 hover:text-white px-4 py-3 rounded text-base font-medium transition-colors"
+                type="button"
+                onClick={() => handleMobileNavClick(link.href)}
+                className="text-white/85 hover:text-white px-4 py-3 rounded text-base font-medium transition-colors text-left bg-transparent border-none cursor-pointer"
               >
                 {link.label}
-              </Link>
+              </button>
             ),
           )}
-          <Link
-            href="/kontakt"
-            onClick={() => setMenuOpen(false)}
-            className="bg-primary hover:bg-primary-dark text-white px-4 py-3 rounded-md text-base font-semibold text-center mt-2 transition-colors"
+          <button
+            type="button"
+            onClick={() => handleMobileNavClick('/kontakt')}
+            className="bg-primary hover:bg-primary-dark text-white px-4 py-3 rounded-md text-base font-semibold text-center mt-2 transition-colors border-none cursor-pointer"
           >
             Mitmachen
-          </Link>
+          </button>
         </div>
       )}
     </header>
