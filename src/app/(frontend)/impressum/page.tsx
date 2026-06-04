@@ -18,6 +18,7 @@ export default async function ImpressumPage() {
   const vereine = data.vereine ?? []
   const redaktionell = data.redaktionellVerantwortlicher
   const socialMedia = data.socialMedia ?? []
+  const kontaktEmail = data.kontaktEmail
 
   return (
     <div className="min-h-screen bg-white">
@@ -110,6 +111,26 @@ export default async function ImpressumPage() {
               <p>{redaktionell.name}</p>
               {redaktionell.adresse && <p>{redaktionell.adresse}</p>}
             </div>
+          ) : (
+            <p className="text-sm text-gray-400 italic">Wird in Kürze ergänzt.</p>
+          )}
+        </section>
+
+        <div className="border-t border-gray-100" />
+
+        <section className="space-y-3 bg-gray-50 rounded-xl px-6 py-6">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400">Kontakt</h2>
+          <p className="text-sm leading-relaxed text-gray-600">
+            Für Anfragen bezüglich dieser Webseite oder des Spielbetriebs der Spielgemeinschaft
+            nutzen Sie bitte die zentrale Kontaktadresse:
+          </p>
+          {kontaktEmail ? (
+            <a
+              href={`mailto:${kontaktEmail}`}
+              className="text-gray-500 underline hover:text-primary transition-colors"
+            >
+              {kontaktEmail}
+            </a>
           ) : (
             <p className="text-sm text-gray-400 italic">Wird in Kürze ergänzt.</p>
           )}

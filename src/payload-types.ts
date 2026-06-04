@@ -629,6 +629,10 @@ export interface Impressum {
     adresse?: string | null;
   };
   /**
+   * Erscheint ganz unten auf der Impressumsseite als zentraler Kontakthinweis für Webseitenbesucher.
+   */
+  kontaktEmail?: string | null;
+  /**
    * Profile, für die dieses Impressum gilt
    */
   socialMedia?:
@@ -685,6 +689,7 @@ export interface ImpressumSelect<T extends boolean = true> {
         name?: T;
         adresse?: T;
       };
+  kontaktEmail?: T;
   socialMedia?:
     | T
     | {

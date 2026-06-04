@@ -101,6 +101,15 @@ export const Impressum: GlobalConfig = {
       ],
     },
     {
+      name: 'kontaktEmail',
+      type: 'email',
+      label: 'Zentrale Kontaktadresse der SG',
+      admin: {
+        description:
+          'Erscheint ganz unten auf der Impressumsseite als zentraler Kontakthinweis für Webseitenbesucher.',
+      },
+    },
+    {
       name: 'socialMedia',
       type: 'array',
       label: 'Social-Media-Profile',
