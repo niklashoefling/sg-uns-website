@@ -16,19 +16,22 @@ export async function POST(req: Request) {
 
   const payload = await getPayload({ config })
 
-  const impressum = await payload.findGlobal({ slug: 'impressum' })
-  const fallbackEmail = impressum.kontaktEmail as string | undefined
+  const needsMannschaft = anliegen !== 'allgemein' && anliegen !== '-'
 
-  let to = fallbackEmail ?? ''
-  if (anliegen !== 'allgemein' && anliegen !== '-') {
-    const { docs } = await payload.find({
-      collection: 'mannschaften',
-      where: { slug: { equals: anliegen } },
-      limit: 1,
-    })
-    const mannschaftEmail = docs[0]?.email
-    if (mannschaftEmail) to = mannschaftEmail
-  }
+  const [impressum, mannschaftDocs] = await Promise.all([
+    payload.findGlobal({ slug: 'impressum' }),
+    needsMannschaft
+      ? payload.find({
+          collection: 'mannschaften',
+          where: { slug: { equals: anliegen } },
+          limit: 1,
+        })
+      : Promise.resolve(null),
+  ])
+
+  const fallbackEmail = impressum.kontaktEmail as string | undefined
+  const mannschaftEmail = mannschaftDocs?.docs[0]?.email
+  const to = mannschaftEmail ?? fallbackEmail ?? ''
 
   if (!to) {
     return NextResponse.json({ ok: false }, { status: 500 })

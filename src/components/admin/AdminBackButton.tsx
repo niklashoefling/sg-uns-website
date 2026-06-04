@@ -1,33 +1,12 @@
 'use client'
 
 import Link from 'next/link'
+import styles from './AdminBackButton.module.css'
 
 export default function AdminBackButton() {
   return (
-    <div style={{ padding: '8px 16px 0' }}>
-      <Link
-        href="/"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '8px 8px',
-          borderRadius: '4px',
-          fontSize: '13px',
-          fontWeight: 500,
-          color: 'rgba(255,255,255,0.6)',
-          textDecoration: 'none',
-          transition: 'color 0.15s, background 0.15s',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.color = '#ffffff'
-          e.currentTarget.style.background = 'rgba(255,255,255,0.08)'
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.color = 'rgba(255,255,255,0.6)'
-          e.currentTarget.style.background = 'transparent'
-        }}
-      >
+    <div className={styles.wrapper}>
+      <Link href="/" className={styles.link}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="13"
@@ -43,7 +22,7 @@ export default function AdminBackButton() {
         </svg>
         Zur Website
       </Link>
-      <div style={{ height: '1px', background: 'rgba(255,255,255,0.1)', margin: '8px 8px 0' }} />
+      <div className={styles.divider} />
     </div>
   )
 }

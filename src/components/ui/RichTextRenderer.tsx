@@ -9,19 +9,23 @@ type LexicalNode = {
   [k: string]: unknown
 }
 
+function nodeKey(node: LexicalNode, index: number): string {
+  return `${node.type}-${index}`
+}
+
 function renderNode(node: LexicalNode, index: number): React.ReactNode {
   if (node.type === 'text') {
     let content: React.ReactNode = node.text ?? ''
     const format = typeof node.format === 'number' ? node.format : 0
-    if (format & 1) content = <strong key={index}>{content}</strong>
-    if (format & 2) content = <em key={index}>{content}</em>
-    if (format & 8) content = <u key={index}>{content}</u>
+    if (format & 1) content = <strong key={nodeKey(node, index)}>{content}</strong>
+    if (format & 2) content = <em key={nodeKey(node, index)}>{content}</em>
+    if (format & 8) content = <u key={nodeKey(node, index)}>{content}</u>
     return content
   }
 
   if (node.type === 'paragraph') {
     return (
-      <p key={index} className="mb-4 text-gray-500 leading-relaxed">
+      <p key={nodeKey(node, index)} className="mb-4 text-gray-500 leading-relaxed">
         {node.children?.map((child, i) => renderNode(child, i))}
       </p>
     )
@@ -37,18 +41,18 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
     const className = classes[tag] ?? classes.h2
     if (tag === 'h2')
       return (
-        <h2 key={index} className={className}>
+        <h2 key={nodeKey(node, index)} className={className}>
           {node.children?.map((c, i) => renderNode(c, i))}
         </h2>
       )
     if (tag === 'h3')
       return (
-        <h3 key={index} className={className}>
+        <h3 key={nodeKey(node, index)} className={className}>
           {node.children?.map((c, i) => renderNode(c, i))}
         </h3>
       )
     return (
-      <h4 key={index} className={className}>
+      <h4 key={nodeKey(node, index)} className={className}>
         {node.children?.map((c, i) => renderNode(c, i))}
       </h4>
     )
@@ -57,16 +61,19 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
   if (node.type === 'list') {
     const isOrdered = node.listType === 'number'
     const items = node.children?.map((child, i) => (
-      <li key={i} className="mb-1">
+      <li key={`listitem-${i}`} className="mb-1">
         {child.children?.map((c, j) => renderNode(c, j))}
       </li>
     ))
     return isOrdered ? (
-      <ol key={index} className="list-decimal list-inside mb-4 text-gray-500 space-y-1">
+      <ol
+        key={nodeKey(node, index)}
+        className="list-decimal list-inside mb-4 text-gray-500 space-y-1"
+      >
         {items}
       </ol>
     ) : (
-      <ul key={index} className="list-disc list-inside mb-4 text-gray-500 space-y-1">
+      <ul key={nodeKey(node, index)} className="list-disc list-inside mb-4 text-gray-500 space-y-1">
         {items}
       </ul>
     )
@@ -78,7 +85,7 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
     const newTab = fields?.newTab ?? true
     return (
       <a
-        key={index}
+        key={nodeKey(node, index)}
         href={href}
         className="text-primary hover:underline"
         target={newTab ? '_blank' : undefined}
@@ -90,7 +97,7 @@ function renderNode(node: LexicalNode, index: number): React.ReactNode {
   }
 
   if (node.children) {
-    return <span key={index}>{node.children.map((c, i) => renderNode(c, i))}</span>
+    return <span key={nodeKey(node, index)}>{node.children.map((c, i) => renderNode(c, i))}</span>
   }
 
   return null

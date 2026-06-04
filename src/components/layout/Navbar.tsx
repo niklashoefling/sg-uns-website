@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState, useEffect, useRef, useSyncExternalStore } from 'react'
+import { useState, useEffect, useCallback, useRef, useSyncExternalStore } from 'react'
 import { navLinks } from '@/lib/site'
 
 function subscribeToScroll(callback: () => void) {
@@ -39,23 +39,26 @@ export default function Navbar() {
     setTimeout(() => router.push(href), 10)
   }
 
+  const handleDropdownToggle = (href: string) => {
+    setOpenDropdown((prev) => (prev === href ? null : href))
+  }
+
+  const handleDropdownClose = useCallback(() => setOpenDropdown(null), [])
+
   useEffect(() => {
-    const onPopState = () => setOpenDropdown(null)
-    window.addEventListener('popstate', onPopState)
-    return () => window.removeEventListener('popstate', onPopState)
-  }, [])
+    window.addEventListener('popstate', handleDropdownClose)
+    return () => window.removeEventListener('popstate', handleDropdownClose)
+  }, [handleDropdownClose])
 
   useEffect(() => {
     if (!openDropdown) return
     const el = getDropdownRefs().get(openDropdown)
     const handler = (e: MouseEvent) => {
-      if (el && !el.contains(e.target as Node)) {
-        setOpenDropdown(null)
-      }
+      if (el && !el.contains(e.target as Node)) handleDropdownClose()
     }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
-  }, [openDropdown])
+  }, [openDropdown, handleDropdownClose])
 
   return (
     <header
@@ -86,7 +89,7 @@ export default function Navbar() {
               >
                 <button
                   type="button"
-                  onClick={() => setOpenDropdown(openDropdown === link.href ? null : link.href)}
+                  onClick={() => handleDropdownToggle(link.href)}
                   className="flex items-center gap-1 text-white/85 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded text-sm font-medium transition-colors cursor-pointer bg-transparent border-none"
                 >
                   {link.label}
@@ -106,7 +109,7 @@ export default function Navbar() {
                       <Link
                         key={child.href}
                         href={child.href}
-                        onClick={() => setOpenDropdown(null)}
+                        onClick={handleDropdownClose}
                         className="block px-4 py-2.5 text-sm text-secondary hover:bg-gray-50 hover:text-primary transition-colors"
                       >
                         {child.label}

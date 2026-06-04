@@ -105,7 +105,9 @@ export default function Footer() {
         </div>
 
         <div className="pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
-          <p className="text-xs" suppressHydrationWarning>© {new Date().getFullYear()} SG U.N.S. Rheinhessen Volleys</p>
+          <p className="text-xs" suppressHydrationWarning>
+            © {new Date().getFullYear()} SG U.N.S. Rheinhessen Volleys
+          </p>
           <div className="flex gap-5">
             <Link href="/impressum" className="text-xs hover:text-white transition-colors">
               Impressum

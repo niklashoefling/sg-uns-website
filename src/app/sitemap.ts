@@ -23,13 +23,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const payload = await getPayload({ config })
 
-    const { docs: teams } = await payload.find({ collection: 'mannschaften', limit: 100, depth: 0 })
+    const [{ docs: teams }, { docs: artikel }] = await Promise.all([
+      payload.find({ collection: 'mannschaften', limit: 100, depth: 0 }),
+      payload.find({ collection: 'artikel', limit: 100, depth: 0 }),
+    ])
+
     mannschaftRoutes = teams.map((m) => ({
       url: `${BASE_URL}/mannschaften/${m.slug}`,
       priority: 0.8,
     }))
 
-    const { docs: artikel } = await payload.find({ collection: 'artikel', limit: 100, depth: 0 })
     artikelRoutes = artikel.map((a) => ({
       url: `${BASE_URL}/aktuelles/${a.slug}`,
       lastModified: new Date(a.updatedAt),
