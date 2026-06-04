@@ -209,6 +209,35 @@ export default async function ImpressumPage() {
 
         <div className="border-t border-gray-100" />
 
+        <section className="space-y-4">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400">
+            Bildnachweise &amp; Technische Umsetzung
+          </h2>
+
+          <div className="space-y-1">
+            <h3 className="text-sm font-semibold text-gray-700">Bildnachweise</h3>
+            <p className="text-sm leading-relaxed text-gray-600">
+              Die auf dieser Website verwendeten Fotos stammen aus privaten Archiven von
+              Mitgliedern, Spielern und Trainern der Spielgemeinschaft, sofern nicht anders direkt
+              am Bild angegeben.
+            </p>
+          </div>
+
+          <div className="space-y-1">
+            <h3 className="text-sm font-semibold text-gray-700">Design &amp; Programmierung</h3>
+            <a
+              href="https://niklas-hoefling.de/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-gray-500 underline hover:text-primary transition-colors"
+            >
+              Niklas Höfling
+            </a>
+          </div>
+        </section>
+
+        <div className="border-t border-gray-100" />
+
         <p className="text-sm text-gray-500">
           Weitere Informationen zum Umgang mit deinen Daten findest du in unserer{' '}
           <Link

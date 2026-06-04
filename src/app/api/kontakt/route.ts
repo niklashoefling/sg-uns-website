@@ -5,8 +5,6 @@ import config from '@payload-config'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-const FALLBACK_EMAIL = 'hoefling.niklas@gmx.de'
-
 export async function POST(req: Request) {
   const data = await req.formData()
 
@@ -16,9 +14,13 @@ export async function POST(req: Request) {
   const betreff = data.get('betreff')?.toString() ?? '-'
   const nachricht = data.get('nachricht')?.toString() ?? '-'
 
-  let to = FALLBACK_EMAIL
+  const payload = await getPayload({ config })
+
+  const impressum = await payload.findGlobal({ slug: 'impressum' })
+  const fallbackEmail = impressum.kontaktEmail as string | undefined
+
+  let to = fallbackEmail ?? ''
   if (anliegen !== 'allgemein' && anliegen !== '-') {
-    const payload = await getPayload({ config })
     const { docs } = await payload.find({
       collection: 'mannschaften',
       where: { slug: { equals: anliegen } },
@@ -26,6 +28,10 @@ export async function POST(req: Request) {
     })
     const mannschaftEmail = docs[0]?.email
     if (mannschaftEmail) to = mannschaftEmail
+  }
+
+  if (!to) {
+    return NextResponse.json({ ok: false }, { status: 500 })
   }
 
   try {

@@ -59,7 +59,7 @@ export const Impressum: GlobalConfig = {
           type: 'text',
           label: 'Vereinsregister (optional)',
           admin: {
-            description: 'z.B. "14 VR 1161"',
+            description: 'z.B. "VR 1161"',
           },
         },
         {
@@ -93,7 +93,7 @@ export const Impressum: GlobalConfig = {
         {
           name: 'adresse',
           type: 'text',
-          label: 'Adresse (optional)',
+          label: 'Adresse',
           admin: {
             description: 'Straße, PLZ Ort',
           },

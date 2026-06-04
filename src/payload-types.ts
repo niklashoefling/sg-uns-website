@@ -607,7 +607,7 @@ export interface Impressum {
         email?: string | null;
         website?: string | null;
         /**
-         * z.B. "14 VR 1161"
+         * z.B. "VR 1161"
          */
         vereinsregister?: string | null;
         /**
