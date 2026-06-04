@@ -20,7 +20,8 @@ export const metadata = {
 type TrainingsGruppe = {
   mannschaft: string
   slug: string
-  zeilen: { halle: string; tag: string; uhrzeit: string }[]
+  halle: string
+  zeilen: { tag: string; uhrzeit: string }[]
 }
 
 export default async function MannschaftenPage() {
@@ -40,7 +41,7 @@ export default async function MannschaftenPage() {
       teamfoto: resolveMediaUrl(m.teamfoto) ?? undefined,
       trainer: filterRelations((m.trainer as unknown[]) ?? []).map((t) => {
         const u = t as { email?: string; name?: string }
-        return { name: u.name ?? u.email ?? '–', email: u.email }
+        return { name: u.name ?? u.email ?? '-', email: u.email }
       }),
       training: m.training ?? [],
       halle: halle?.name ?? '',
@@ -54,13 +55,13 @@ export default async function MannschaftenPage() {
   const trainingsgruppen: TrainingsGruppe[] = docs.flatMap((m) => {
     const halle = m.halle && typeof m.halle === 'object' ? (m.halle as Hallen) : null
     const zeilen = (m.training ?? [])
-      .map((t) => ({ halle: halle?.name ?? '–', tag: t.tag, uhrzeit: t.uhrzeit }))
+      .map((t) => ({ tag: t.tag, uhrzeit: t.uhrzeit }))
       .sort((a, b) => {
         const tagDiff = WOCHENTAGE.indexOf(a.tag) - WOCHENTAGE.indexOf(b.tag)
         return tagDiff !== 0 ? tagDiff : a.uhrzeit.localeCompare(b.uhrzeit)
       })
     if (zeilen.length === 0) return []
-    return [{ mannschaft: m.name, slug: m.slug, zeilen }]
+    return [{ mannschaft: m.name, slug: m.slug, halle: halle?.name ?? '-', zeilen }]
   })
 
   return (
@@ -85,12 +86,19 @@ export default async function MannschaftenPage() {
           <div className="space-y-4">
             {trainingsgruppen.map((gruppe) => (
               <div key={gruppe.slug} className="border border-gray-100 rounded-xl overflow-hidden">
-                <div className="bg-gray-50 px-4 py-2">
+                <div className="bg-gray-50 px-4 py-2 flex items-center gap-2">
                   <Link
                     href={`/mannschaften/${gruppe.slug}`}
                     className="text-sm font-semibold text-secondary hover:text-primary transition-colors"
                   >
                     {gruppe.mannschaft}
+                  </Link>
+                  <span className="text-gray-300">·</span>
+                  <Link
+                    href="/hallen"
+                    className="text-sm text-gray-500 underline hover:text-primary transition-colors"
+                  >
+                    {gruppe.halle}
                   </Link>
                 </div>
                 <div className="divide-y divide-gray-100">
@@ -98,14 +106,6 @@ export default async function MannschaftenPage() {
                     <div key={`${z.tag}-${z.uhrzeit}`} className="px-4 py-3 text-sm">
                       <div className="font-medium text-secondary">
                         {z.tag} · {z.uhrzeit}
-                      </div>
-                      <div className="text-gray-500 mt-0.5">
-                        <Link
-                          href="/hallen"
-                          className="underline hover:text-primary transition-colors"
-                        >
-                          {z.halle}
-                        </Link>
                       </div>
                     </div>
                   ))}
