@@ -7,7 +7,7 @@ import RichTextRenderer from '@/components/ui/RichTextRenderer'
 export const metadata = {
   title: 'Jugendarbeit | SG U.N.S. Rheinhessen',
   description:
-    'Erfolgreiche Jugendarbeit der SG U.N.S. Rheinhessen – Tradition, Nachwuchs und Ziele.',
+    'Erfolgreiche Jugendarbeit der SG U.N.S. Rheinhessen - Tradition, Nachwuchs und Ziele.',
 }
 
 export const dynamic = 'force-dynamic'

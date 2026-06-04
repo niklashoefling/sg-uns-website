@@ -12,6 +12,7 @@ import { Mannschaften } from './collections/Mannschaften'
 import { Artikel } from './collections/Artikel'
 import { Hallen } from './collections/Hallen'
 import { Jugendarbeit } from './globals/Jugendarbeit'
+import { Impressum } from './globals/Impressum'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -40,7 +41,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Mannschaften, Artikel, Hallen],
-  globals: [Jugendarbeit],
+  globals: [Jugendarbeit, Impressum],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

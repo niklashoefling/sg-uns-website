@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Kontakt | SG U.N.S. Rheinhessen',
-  description: 'Schreib uns – wir freuen uns über deine Nachricht.',
+  description: 'Schreib uns - wir freuen uns über deine Nachricht.',
 }
 
 export default async function KontaktPage() {

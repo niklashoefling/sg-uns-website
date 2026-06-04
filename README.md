@@ -74,7 +74,7 @@ Admin-Panel: [http://localhost:3000/admin](http://localhost:3000/admin)
 * Neon DPA
 * Strato SMTP Setup
 * Cookie Banner
-* Impressum + Datenschutz final
+* Impressum (in Arbeit) + Datenschutz final
 * Sitemap + robots prüfen
 
 ---

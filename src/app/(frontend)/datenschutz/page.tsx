@@ -2,6 +2,7 @@ import PageHeader from '@/components/layout/PageHeader'
 
 export const metadata = {
   title: 'Datenschutz | SG U.N.S. Rheinhessen',
+  description: 'Datenschutzerklärung der SG U.N.S. Rheinhessen.',
   robots: { index: false },
 }
 

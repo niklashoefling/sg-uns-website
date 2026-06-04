@@ -95,9 +95,11 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     jugendarbeit: Jugendarbeit;
+    impressum: Impressum;
   };
   globalsSelect: {
     jugendarbeit: JugendarbeitSelect<false> | JugendarbeitSelect<true>;
+    impressum: ImpressumSelect<false> | ImpressumSelect<true>;
   };
   locale: null;
   widgets: {
@@ -586,6 +588,63 @@ export interface Jugendarbeit {
   createdAt?: string | null;
 }
 /**
+ * Angaben für das Impressum - Vereine, Redaktionell Verantwortlicher, Social Media
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "impressum".
+ */
+export interface Impressum {
+  id: number;
+  /**
+   * Alle Vereine, die im Impressum aufgeführt werden (Reihenfolge per Drag & Drop)
+   */
+  vereine?:
+    | {
+        name: string;
+        strasse: string;
+        ort: string;
+        telefon?: string | null;
+        email?: string | null;
+        website?: string | null;
+        /**
+         * z.B. "14 VR 1161"
+         */
+        vereinsregister?: string | null;
+        /**
+         * z.B. "Amtsgericht Mainz"
+         */
+        registergericht?: string | null;
+        /**
+         * z.B. "Claudia Schäffer (Vorstand)"
+         */
+        vertretung?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  redaktionellVerantwortlicher?: {
+    name?: string | null;
+    /**
+     * Straße, PLZ Ort
+     */
+    adresse?: string | null;
+  };
+  /**
+   * Profile, für die dieses Impressum gilt
+   */
+  socialMedia?:
+    | {
+        /**
+         * z.B. "Instagram", "Facebook"
+         */
+        plattform?: string | null;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "jugendarbeit_select".
  */
@@ -595,6 +654,42 @@ export interface JugendarbeitSelect<T extends boolean = true> {
     | {
         titel?: T;
         inhalt?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "impressum_select".
+ */
+export interface ImpressumSelect<T extends boolean = true> {
+  vereine?:
+    | T
+    | {
+        name?: T;
+        strasse?: T;
+        ort?: T;
+        telefon?: T;
+        email?: T;
+        website?: T;
+        vereinsregister?: T;
+        registergericht?: T;
+        vertretung?: T;
+        id?: T;
+      };
+  redaktionellVerantwortlicher?:
+    | T
+    | {
+        name?: T;
+        adresse?: T;
+      };
+  socialMedia?:
+    | T
+    | {
+        plattform?: T;
+        url?: T;
         id?: T;
       };
   updatedAt?: T;

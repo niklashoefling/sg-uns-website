@@ -5,6 +5,12 @@ import UeberUnsSection from '@/components/sections/UeberUnsSection'
 import AktuellesPreview from '@/components/sections/AktuellesPreview'
 import { resolveMediaUrl } from '@/lib/media'
 
+export const metadata = {
+  title: 'SG U.N.S. Rheinhessen',
+  description:
+    'Volleyball in Rheinhessen - SG U.N.S. Rheinhessen, Spielgemeinschaft aus Undenheim, Nieder-Olm und Schornsheim.',
+}
+
 export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {

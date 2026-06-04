@@ -13,7 +13,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Mannschaften | SG U.N.S. Rheinhessen',
-  description: 'Alle Herrenmannschaften der SG U.N.S. Rheinhessen – 1., 2. und 3. Herren.',
+  description: 'Alle Herrenmannschaften der SG U.N.S. Rheinhessen.',
 }
 
 type TrainingsGruppe = {
