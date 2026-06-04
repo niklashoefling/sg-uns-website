@@ -3,15 +3,29 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useSyncExternalStore } from 'react'
 import { navLinks } from '@/lib/site'
+
+function subscribeToScroll(callback: () => void) {
+  window.addEventListener('scroll', callback, { passive: true })
+  return () => window.removeEventListener('scroll', callback)
+}
+
+function getScrollSnapshot() {
+  return typeof window !== 'undefined' ? window.scrollY > 20 : false
+}
 
 export default function Navbar() {
   const router = useRouter()
+  const scrolled = useSyncExternalStore(subscribeToScroll, getScrollSnapshot, () => false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
-  const dropdownRefs = useRef<Map<string, HTMLLIElement>>(new Map())
+  const dropdownRefs = useRef<Map<string, HTMLLIElement> | null>(null)
+
+  function getDropdownRefs() {
+    if (dropdownRefs.current === null) dropdownRefs.current = new Map()
+    return dropdownRefs.current
+  }
 
   function closeAll() {
     setMenuOpen(false)
@@ -26,12 +40,6 @@ export default function Navbar() {
   }
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  useEffect(() => {
     const onPopState = () => setOpenDropdown(null)
     window.addEventListener('popstate', onPopState)
     return () => window.removeEventListener('popstate', onPopState)
@@ -39,7 +47,7 @@ export default function Navbar() {
 
   useEffect(() => {
     if (!openDropdown) return
-    const el = dropdownRefs.current.get(openDropdown)
+    const el = getDropdownRefs().get(openDropdown)
     const handler = (e: MouseEvent) => {
       if (el && !el.contains(e.target as Node)) {
         setOpenDropdown(null)
@@ -72,8 +80,8 @@ export default function Navbar() {
                 key={link.href}
                 className="relative"
                 ref={(el) => {
-                  if (el) dropdownRefs.current.set(link.href, el)
-                  else dropdownRefs.current.delete(link.href)
+                  if (el) getDropdownRefs().set(link.href, el)
+                  else getDropdownRefs().delete(link.href)
                 }}
               >
                 <button

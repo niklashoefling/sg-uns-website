@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import PageHeader from '@/components/layout/PageHeader'
@@ -50,18 +51,17 @@ export default async function MannschaftenPage() {
     }
   })
 
-  const trainingsgruppen: TrainingsGruppe[] = docs
-    .map((m) => {
-      const halle = m.halle && typeof m.halle === 'object' ? (m.halle as Hallen) : null
-      const zeilen = (m.training ?? [])
-        .map((t) => ({ halle: halle?.name ?? '–', tag: t.tag, uhrzeit: t.uhrzeit }))
-        .sort((a, b) => {
-          const tagDiff = WOCHENTAGE.indexOf(a.tag) - WOCHENTAGE.indexOf(b.tag)
-          return tagDiff !== 0 ? tagDiff : a.uhrzeit.localeCompare(b.uhrzeit)
-        })
-      return { mannschaft: m.name, slug: m.slug, zeilen }
-    })
-    .filter((g) => g.zeilen.length > 0)
+  const trainingsgruppen: TrainingsGruppe[] = docs.flatMap((m) => {
+    const halle = m.halle && typeof m.halle === 'object' ? (m.halle as Hallen) : null
+    const zeilen = (m.training ?? [])
+      .map((t) => ({ halle: halle?.name ?? '–', tag: t.tag, uhrzeit: t.uhrzeit }))
+      .sort((a, b) => {
+        const tagDiff = WOCHENTAGE.indexOf(a.tag) - WOCHENTAGE.indexOf(b.tag)
+        return tagDiff !== 0 ? tagDiff : a.uhrzeit.localeCompare(b.uhrzeit)
+      })
+    if (zeilen.length === 0) return []
+    return [{ mannschaft: m.name, slug: m.slug, zeilen }]
+  })
 
   return (
     <div className="min-h-screen bg-white">
@@ -86,26 +86,26 @@ export default async function MannschaftenPage() {
             {trainingsgruppen.map((gruppe) => (
               <div key={gruppe.slug} className="border border-gray-100 rounded-xl overflow-hidden">
                 <div className="bg-gray-50 px-4 py-2">
-                  <a
+                  <Link
                     href={`/mannschaften/${gruppe.slug}`}
                     className="text-sm font-semibold text-secondary hover:text-primary transition-colors"
                   >
                     {gruppe.mannschaft}
-                  </a>
+                  </Link>
                 </div>
                 <div className="divide-y divide-gray-100">
-                  {gruppe.zeilen.map((z, zi) => (
-                    <div key={zi} className="px-4 py-3 text-sm">
+                  {gruppe.zeilen.map((z) => (
+                    <div key={`${z.tag}-${z.uhrzeit}`} className="px-4 py-3 text-sm">
                       <div className="font-medium text-secondary">
                         {z.tag} · {z.uhrzeit}
                       </div>
                       <div className="text-gray-500 mt-0.5">
-                        <a
+                        <Link
                           href="/hallen"
                           className="underline hover:text-primary transition-colors"
                         >
                           {z.halle}
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   ))}

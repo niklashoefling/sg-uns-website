@@ -18,6 +18,7 @@ export default function BackButton({ href, label, variant = 'light' }: Props) {
 
   return (
     <button
+      type="button"
       onClick={() => {
         if (window.history.length > 1) {
           router.back()

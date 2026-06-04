@@ -108,6 +108,15 @@ function TeamDetails({
   )
 }
 
+// Spielplan kommt später per SAMS API
+const spielplan: {
+  datum: string
+  uhrzeit: string
+  heimspiel: boolean
+  gegner: string
+  ergebnis?: string
+}[] = []
+
 export default async function MannschaftPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
 
@@ -134,15 +143,6 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
   const trainer: TrainerData[] = filterRelations((team.trainer as unknown[]) ?? []).map(
     mapUserToTrainerData,
   )
-
-  // Spielplan kommt später per SAMS API
-  const spielplan: {
-    datum: string
-    uhrzeit: string
-    heimspiel: boolean
-    gegner: string
-    ergebnis?: string
-  }[] = []
 
   return (
     <div className="min-h-screen bg-white">

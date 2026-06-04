@@ -118,7 +118,7 @@ export default async function ImpressumPage() {
 
         <div className="border-t border-gray-100" />
 
-        <section className="space-y-3 bg-gray-50 rounded-xl px-6 py-6">
+        <section className="space-y-3 bg-gray-50 rounded-xl p-6">
           <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400">Kontakt</h2>
           <p className="text-sm leading-relaxed text-gray-600">
             Für Anfragen bezüglich dieser Webseite oder des Spielbetriebs der Spielgemeinschaft

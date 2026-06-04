@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function HeroSection({ heroBildUrl }: { heroBildUrl?: string | null }) {
   return (
@@ -30,18 +31,18 @@ export default function HeroSection({ heroBildUrl }: { heroBildUrl?: string | nu
         </p>
 
         <div className="flex gap-4 flex-wrap sm:flex-nowrap">
-          <a
+          <Link
             href="/mannschaften"
             className="bg-primary hover:bg-primary-dark text-white font-semibold px-7 py-3 rounded-lg transition-colors"
           >
             U.N.S.ere Mannschaften
-          </a>
-          <a
+          </Link>
+          <Link
             href="/kontakt"
             className="border-2 border-white/60 text-white hover:border-white hover:bg-white/10 font-semibold px-7 py-3 rounded-lg transition-colors"
           >
             Mitspielen
-          </a>
+          </Link>
         </div>
       </div>
 

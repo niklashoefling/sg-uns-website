@@ -1,9 +1,11 @@
 'use client'
 
+import Link from 'next/link'
+
 export default function AdminBackButton() {
   return (
     <div style={{ padding: '8px 16px 0' }}>
-      <a
+      <Link
         href="/"
         style={{
           display: 'flex',
@@ -40,7 +42,7 @@ export default function AdminBackButton() {
           <path d="M19 12H5M12 5l-7 7 7 7" />
         </svg>
         Zur Website
-      </a>
+      </Link>
       <div style={{ height: '1px', background: 'rgba(255,255,255,0.1)', margin: '8px 8px 0' }} />
     </div>
   )

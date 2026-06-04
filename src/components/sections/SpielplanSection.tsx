@@ -48,7 +48,7 @@ export default function SpielplanSection({ spielplan }: { spielplan: Spiel[] }) 
                 key={`${spiel.datum}-${spiel.gegner}`}
                 className="flex items-center gap-4 border border-gray-100 rounded-lg px-4 py-3 text-sm"
               >
-                <div className="w-2 h-2 rounded-full bg-primary shrink-0" />
+                <div className="size-2 rounded-full bg-primary shrink-0" />
                 <span className="text-gray-400 w-20 shrink-0">{spiel.datum}</span>
                 <span className="flex-1 text-secondary font-medium">
                   {spiel.heimspiel ? 'vs.' : '@'} {spiel.gegner}

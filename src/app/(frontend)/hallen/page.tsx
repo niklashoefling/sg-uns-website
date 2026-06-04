@@ -68,7 +68,7 @@ export default async function HallenPage() {
                     className="inline-flex items-center gap-1.5 mt-3 text-xs font-medium text-primary hover:underline transition-colors"
                   >
                     <svg
-                      className="w-3.5 h-3.5"
+                      className="size-3.5"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"

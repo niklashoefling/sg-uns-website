@@ -29,9 +29,9 @@ export default function ContactForm({ anliegen }: Props) {
   if (state === 'error') {
     return (
       <div className="text-center py-16">
-        <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-6">
+        <div className="size-16 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-6">
           <svg
-            className="w-8 h-8 text-red-600"
+            className="size-8 text-red-600"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -45,6 +45,7 @@ export default function ContactForm({ anliegen }: Props) {
           Deine Nachricht konnte nicht gesendet werden. Bitte versuche es erneut.
         </p>
         <button
+          type="button"
           onClick={() => setState('idle')}
           className="text-sm font-semibold text-primary hover:text-primary-dark transition-colors"
         >
@@ -57,9 +58,9 @@ export default function ContactForm({ anliegen }: Props) {
   if (state === 'success') {
     return (
       <div className="text-center py-16">
-        <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
+        <div className="size-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
           <svg
-            className="w-8 h-8 text-green-600"
+            className="size-8 text-green-600"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -73,6 +74,7 @@ export default function ContactForm({ anliegen }: Props) {
           Vielen Dank für deine Nachricht. Wir melden uns so bald wie möglich.
         </p>
         <button
+          type="button"
           onClick={() => setState('idle')}
           className="text-sm font-semibold text-primary hover:text-primary-dark transition-colors"
         >

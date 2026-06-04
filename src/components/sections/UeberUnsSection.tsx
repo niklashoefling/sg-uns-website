@@ -42,7 +42,7 @@ export default function UeberUnsSection() {
                   rel="noopener noreferrer"
                   className="flex flex-col items-center gap-3 group"
                 >
-                  <div className="w-20 h-20 flex items-center justify-center">
+                  <div className="size-20 flex items-center justify-center">
                     <Image
                       src={v.logo}
                       alt={v.name}

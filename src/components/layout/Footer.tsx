@@ -48,21 +48,21 @@ export default function Footer() {
                   {link.children ? (
                     <span className="text-sm cursor-default">{link.label}</span>
                   ) : (
-                    <a href={link.href} className="text-sm hover:text-white transition-colors">
+                    <Link href={link.href} className="text-sm hover:text-white transition-colors">
                       {link.label}
-                    </a>
+                    </Link>
                   )}
                   {link.children && (
                     <ul className="mt-1.5 space-y-1.5 pl-3 border-l border-white/10">
                       {link.children.map((child) => (
                         <li key={child.href} className="flex items-center gap-1.5">
                           <span className="text-white/30 text-sm">›</span>
-                          <a
+                          <Link
                             href={child.href}
                             className="text-sm text-white/60 hover:text-white transition-colors"
                           >
                             {child.label}
-                          </a>
+                          </Link>
                         </li>
                       ))}
                     </ul>
@@ -70,9 +70,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-            <a href="/kontakt" className="text-sm hover:text-white transition-colors mt-4 block">
+            <Link href="/kontakt" className="text-sm hover:text-white transition-colors mt-4 block">
               Kontakt
-            </a>
+            </Link>
           </div>
 
           <div>
@@ -93,7 +93,7 @@ export default function Footer() {
                     alt={v.name}
                     width={64}
                     height={64}
-                    className="w-14 h-14 object-contain opacity-80 group-hover:opacity-100 transition-opacity"
+                    className="size-14 object-contain opacity-80 group-hover:opacity-100 transition-opacity"
                   />
                   <span className="text-xs text-center leading-tight group-hover:text-white transition-colors">
                     {v.name}
@@ -105,7 +105,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
-          <p className="text-xs">© {new Date().getFullYear()} SG U.N.S. Rheinhessen Volleys</p>
+          <p className="text-xs" suppressHydrationWarning>© {new Date().getFullYear()} SG U.N.S. Rheinhessen Volleys</p>
           <div className="flex gap-5">
             <Link href="/impressum" className="text-xs hover:text-white transition-colors">
               Impressum

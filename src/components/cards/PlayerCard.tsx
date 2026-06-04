@@ -28,7 +28,7 @@ export default function PlayerCard({ spieler }: { spieler: SpielerData }) {
           <ImagePlaceholder emoji="👤" />
         )}
         {spieler.nummer != null && (
-          <div className="absolute top-3 left-3 w-9 h-9 rounded-full bg-secondary flex items-center justify-center shadow-md">
+          <div className="absolute top-3 left-3 size-9 rounded-full bg-secondary flex items-center justify-center shadow-md">
             <span className="text-white text-xs font-bold">{spieler.nummer}</span>
           </div>
         )}

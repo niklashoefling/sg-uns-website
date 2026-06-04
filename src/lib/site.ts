@@ -37,7 +37,7 @@ export const stammvereine = [
   { name: 'TV Nieder-Olm', url: 'https://www.tvno.de', logo: '/vereine/TVNO_Logo-Volleyball.png' },
 ]
 
-export const FLAGGEN: Record<string, string> = {
+const FLAGGEN: Record<string, string> = {
   deutschland: '🇩🇪',
   österreich: '🇦🇹',
   schweiz: '🇨🇭',
