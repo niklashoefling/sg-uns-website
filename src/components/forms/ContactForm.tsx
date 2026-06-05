@@ -9,11 +9,50 @@ type Props = {
   anliegen: { label: string; value: string }[]
 }
 
+const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+
 export default function ContactForm({ anliegen }: Props) {
   const [state, setState] = useState<FormState>('idle')
+  const [values, setValues] = useState({
+    name: '',
+    email: '',
+    anliegen: '',
+    betreff: '',
+    nachricht: '',
+  })
+  const [touched, setTouched] = useState<Record<string, boolean>>({})
+
+  const isComplete =
+    values.name.trim() !== '' &&
+    isValidEmail(values.email) &&
+    values.anliegen !== '' &&
+    values.betreff.trim() !== '' &&
+    values.nachricht.trim() !== ''
+
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) {
+    setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  function handleBlur(
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) {
+    setTouched((prev) => ({ ...prev, [e.target.name]: true }))
+  }
+
+  function getError(name: keyof typeof values): string | undefined {
+    if (!touched[name]) return undefined
+    const value = values[name]
+    if (!value.trim()) return 'Dieses Feld ist erforderlich.'
+    if (name === 'email' && !isValidEmail(value))
+      return 'Bitte eine gültige E-Mail-Adresse eingeben.'
+    return undefined
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    if (!isComplete) return
     setState('loading')
     try {
       const res = await fetch('/api/kontakt', {
@@ -91,15 +130,29 @@ export default function ContactForm({ anliegen }: Props) {
         aufnehmen? Schreib uns - wir freuen uns über jede Nachricht.
       </p>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} noValidate className="space-y-5">
         <div className="grid sm:grid-cols-2 gap-5">
-          <FormInput label="Name" type="text" name="name" required placeholder="Max Mustermann" />
+          <FormInput
+            label="Name"
+            type="text"
+            name="name"
+            required
+            placeholder="Max Mustermann"
+            value={values.name}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={getError('name')}
+          />
           <FormInput
             label="E-Mail"
             type="email"
             name="email"
             required
             placeholder="max@beispiel.de"
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={getError('email')}
           />
         </div>
 
@@ -107,9 +160,12 @@ export default function ContactForm({ anliegen }: Props) {
           label="Anliegen"
           name="anliegen"
           required
-          defaultValue=""
           options={anliegen}
           placeholder="Bitte wählen…"
+          value={values.anliegen}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={getError('anliegen')}
         />
 
         <FormInput
@@ -118,6 +174,10 @@ export default function ContactForm({ anliegen }: Props) {
           name="betreff"
           required
           placeholder="Ich möchte mitspielen"
+          value={values.betreff}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={getError('betreff')}
         />
 
         <FormTextarea
@@ -126,12 +186,16 @@ export default function ContactForm({ anliegen }: Props) {
           required
           rows={6}
           placeholder="Deine Nachricht…"
+          value={values.nachricht}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={getError('nachricht')}
         />
 
         <button
           type="submit"
-          disabled={state === 'loading'}
-          className="w-full bg-primary hover:bg-primary-dark disabled:opacity-60 text-white font-semibold px-6 py-3 rounded-lg text-sm transition-colors"
+          disabled={!isComplete || state === 'loading'}
+          className="w-full bg-primary hover:bg-primary-dark disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-6 py-3 rounded-lg text-sm transition-colors"
         >
           {state === 'loading' ? 'Wird gesendet…' : 'Nachricht senden'}
         </button>

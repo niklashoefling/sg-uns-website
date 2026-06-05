@@ -106,7 +106,7 @@ export const Impressum: GlobalConfig = {
       label: 'Zentrale Kontaktadresse der SG',
       admin: {
         description:
-          'Erscheint ganz unten auf der Impressumsseite als zentraler Kontakthinweis für Webseitenbesucher.',
+          'Erscheint auf der Impressumsseite als zentraler Kontakthinweis für Webseitenbesucher.',
       },
     },
     {

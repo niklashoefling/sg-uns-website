@@ -629,7 +629,7 @@ export interface Impressum {
     adresse?: string | null;
   };
   /**
-   * Erscheint ganz unten auf der Impressumsseite als zentraler Kontakthinweis für Webseitenbesucher.
+   * Erscheint auf der Impressumsseite als zentraler Kontakthinweis für Webseitenbesucher.
    */
   kontaktEmail?: string | null;
   /**
