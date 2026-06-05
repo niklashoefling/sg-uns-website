@@ -9,6 +9,7 @@ export type TrainerData = {
   lizenz?: string | null
   aktivSeit?: number | null
   nationalitaet?: string | null
+  mannschaft?: string | null
 }
 
 export default function TrainerCard({
@@ -58,12 +59,20 @@ export default function TrainerCard({
             </span>
           )}
         </div>
-        {trainer.aktivSeit && (
-          <div className="mt-3 border-t border-gray-50 pt-3">
-            <div className="flex justify-between text-xs text-gray-500">
-              <span>Trainer seit</span>
-              <span className="font-medium text-secondary">{trainer.aktivSeit}</span>
-            </div>
+        {(trainer.aktivSeit || (!clickable && trainer.mannschaft)) && (
+          <div className="mt-3 border-t border-gray-50 pt-3 space-y-1">
+            {!clickable && trainer.mannschaft && (
+              <div className="flex justify-between text-xs text-gray-500">
+                <span>Mannschaft</span>
+                <span className="font-medium text-secondary">{trainer.mannschaft}</span>
+              </div>
+            )}
+            {trainer.aktivSeit && (
+              <div className="flex justify-between text-xs text-gray-500">
+                <span>Trainer seit</span>
+                <span className="font-medium text-secondary">{trainer.aktivSeit}</span>
+              </div>
+            )}
           </div>
         )}
       </div>

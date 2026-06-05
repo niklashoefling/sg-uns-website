@@ -36,13 +36,17 @@ export function mapUserToTrainerData(user: unknown): TrainerData {
     lizenz?: string
     aktivSeit?: number
     nationalitaet?: string
+    mannschaft?: { name?: string } | null
   }
+  const mannschaftName =
+    u.mannschaft && typeof u.mannschaft === 'object' ? (u.mannschaft.name ?? null) : null
   return {
     name: u.name ?? u.email ?? '–',
     fotoUrl: resolveMediaUrl(u.foto),
     lizenz: u.lizenz,
     aktivSeit: u.aktivSeit,
     nationalitaet: u.nationalitaet,
+    mannschaft: mannschaftName,
   }
 }
 

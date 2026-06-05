@@ -16,7 +16,7 @@ export default async function TrainerPage() {
   const { docs } = await payload.find({
     collection: 'users',
     where: { rolle: { equals: 'trainer' } },
-    depth: 1,
+    depth: 2,
     limit: 50,
   })
 
