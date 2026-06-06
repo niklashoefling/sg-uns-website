@@ -1,4 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { de } from '@payloadcms/translations/languages/de'
@@ -19,6 +20,19 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+  email: nodemailerAdapter({
+    defaultFromAddress: process.env.SMTP_USER || '',
+    defaultFromName: 'SG U.N.S. Rheinhessen',
+    transportOptions: {
+      host: process.env.SMTP_HOST,
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    },
+  }),
   i18n: {
     supportedLanguages: { de },
     fallbackLanguage: 'de',

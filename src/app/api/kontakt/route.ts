@@ -1,9 +1,6 @@
-import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
   const data = await req.formData()
@@ -38,8 +35,8 @@ export async function POST(req: Request) {
   }
 
   try {
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
+    await payload.sendEmail({
+      from: process.env.SMTP_USER,
       to,
       replyTo: email,
       subject: `Kontaktformular: ${betreff}`,
@@ -47,7 +44,8 @@ export async function POST(req: Request) {
     })
 
     return NextResponse.json({ ok: true })
-  } catch {
+  } catch (err) {
+    console.error('[kontakt] SMTP error:', err)
     return NextResponse.json({ ok: false }, { status: 500 })
   }
 }
