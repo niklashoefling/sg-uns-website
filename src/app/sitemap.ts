@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
-const BASE_URL = 'https://sg-uns-website.vercel.app'
+const BASE_URL = 'https://sgunsrheinhessen.de'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [

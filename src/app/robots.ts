@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 
-const BASE_URL = 'https://sg-uns-website.vercel.app'
+const BASE_URL = 'https://sgunsrheinhessen.de'
 
 export default function robots(): MetadataRoute.Robots {
   return {
