@@ -18,14 +18,24 @@ export async function generateMetadata({
   const { docs } = await payload.find({
     collection: 'artikel',
     where: { slug: { equals: slug } },
-    depth: 0,
+    depth: 1,
     limit: 1,
   })
   if (docs.length > 0) {
     const a = docs[0]
+    const description = lexicalToPlainText(a.inhalt).slice(0, 160)
+    const imageUrl = resolveMediaUrl(
+      typeof a.bild === 'object' && a.bild !== null ? (a.bild as { url?: string }).url : undefined,
+    )
     return {
-      title: `${a.titel} | SG U.N.S. Rheinhessen`,
-      description: lexicalToPlainText(a.inhalt).slice(0, 160),
+      title: a.titel,
+      description,
+      openGraph: {
+        title: `${a.titel} | SG U.N.S. Rheinhessen`,
+        description,
+        type: 'article',
+        ...(imageUrl ? { images: [{ url: imageUrl, alt: a.titel }] } : {}),
+      },
     }
   }
   return {}

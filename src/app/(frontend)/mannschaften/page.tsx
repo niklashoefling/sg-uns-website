@@ -13,8 +13,8 @@ import { WOCHENTAGE } from '@/lib/site'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: 'Mannschaften | SG U.N.S. Rheinhessen',
-  description: 'Alle Herrenmannschaften der SG U.N.S. Rheinhessen.',
+  title: 'Mannschaften',
+  description: 'Alle Mannschaften der SG U.N.S. Rheinhessen – Kader, Trainingszeiten und Spielplan.',
 }
 
 type TrainingsGruppe = {

@@ -6,7 +6,7 @@ import PageHeader from '@/components/layout/PageHeader'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: 'Impressum | SG U.N.S. Rheinhessen',
+  title: 'Impressum',
   description: 'Impressum der SG U.N.S. Rheinhessen.',
   robots: { index: false },
 }

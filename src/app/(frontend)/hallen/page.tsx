@@ -7,8 +7,8 @@ import { resolveMediaUrl } from '@/lib/media'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Hallen | SG U.N.S. Rheinhessen',
-  description: 'Spielhallen der SG U.N.S. Rheinhessen - Adressen und Wegbeschreibungen.',
+  title: 'Hallen',
+  description: 'Spielhallen der SG U.N.S. Rheinhessen – Adressen, Anfahrt und Trainingszeiten.',
 }
 
 export default async function HallenPage() {

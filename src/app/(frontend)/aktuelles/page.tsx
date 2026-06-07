@@ -6,8 +6,8 @@ import ArtikelCard from '@/components/cards/ArtikelCard'
 import type { ArtikelData } from '@/components/cards/ArtikelCard'
 
 export const metadata = {
-  title: 'Aktuelles | SG U.N.S. Rheinhessen',
-  description: 'Neuigkeiten und Berichte der SG U.N.S. Rheinhessen.',
+  title: 'Aktuelles',
+  description: 'Neuigkeiten, Spielberichte und Ankündigungen der SG U.N.S. Rheinhessen.',
 }
 
 export const dynamic = 'force-dynamic'

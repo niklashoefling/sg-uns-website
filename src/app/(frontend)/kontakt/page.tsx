@@ -6,8 +6,8 @@ import ContactForm from '@/components/forms/ContactForm'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: 'Kontakt | SG U.N.S. Rheinhessen',
-  description: 'Schreib uns - wir freuen uns über deine Nachricht.',
+  title: 'Kontakt',
+  description: 'Kontaktiere die SG U.N.S. Rheinhessen – für Anfragen zu Mannschaften, Training oder der Spielgemeinschaft.',
 }
 
 export default async function KontaktPage() {

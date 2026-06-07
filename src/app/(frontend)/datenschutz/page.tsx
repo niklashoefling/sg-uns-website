@@ -5,7 +5,7 @@ import PageHeader from '@/components/layout/PageHeader'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: 'Datenschutz | SG U.N.S. Rheinhessen',
+  title: 'Datenschutz',
   description: 'Datenschutzerklärung der SG U.N.S. Rheinhessen.',
   robots: { index: false },
 }
@@ -420,6 +420,7 @@ export default async function DatenschutzPage() {
             Inhalt dieser Datenschutzerklärung zu informieren.
           </p>
         </section>
+
       </div>
     </div>
   )

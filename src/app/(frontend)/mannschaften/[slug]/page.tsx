@@ -25,14 +25,25 @@ export async function generateMetadata({
   const { docs } = await payload.find({
     collection: 'mannschaften',
     where: { slug: { equals: slug } },
-    depth: 0,
+    depth: 1,
     limit: 1,
   })
   if (docs.length > 0) {
     const team = docs[0]
+    const description = `${team.name} der SG U.N.S. Rheinhessen – ${team.liga}. Kader, Trainingszeiten und Spielplan.`
+    const imageUrl = resolveMediaUrl(
+      typeof team.foto === 'object' && team.foto !== null
+        ? (team.foto as { url?: string }).url
+        : undefined,
+    )
     return {
-      title: `${team.name} | SG U.N.S. Rheinhessen`,
-      description: `${team.name} - ${team.liga}`,
+      title: team.name,
+      description,
+      openGraph: {
+        title: `${team.name} | SG U.N.S. Rheinhessen`,
+        description,
+        ...(imageUrl ? { images: [{ url: imageUrl, alt: team.name }] } : {}),
+      },
     }
   }
   return {}

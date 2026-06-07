@@ -7,8 +7,8 @@ import { mapUserToTrainerData, filterRelations } from '@/lib/utils'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: 'Trainerstab | SG U.N.S. Rheinhessen',
-  description: 'Der Trainerstab der SG U.N.S. Rheinhessen.',
+  title: 'Trainerstab',
+  description: 'Der Trainerstab der SG U.N.S. Rheinhessen – erfahrene Trainer mit Lizenz für alle Mannschaften.',
 }
 
 export default async function TrainerPage() {
