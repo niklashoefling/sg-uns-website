@@ -8,7 +8,8 @@ export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Trainerstab',
-  description: 'Der Trainerstab der SG U.N.S. Rheinhessen – erfahrene Trainer mit Lizenz für alle Mannschaften.',
+  description:
+    'Der Trainerstab der SG U.N.S. Rheinhessen – erfahrene Trainer mit Lizenz für alle Mannschaften.',
 }
 
 export default async function TrainerPage() {

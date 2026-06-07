@@ -420,7 +420,6 @@ export default async function DatenschutzPage() {
             Inhalt dieser Datenschutzerklärung zu informieren.
           </p>
         </section>
-
       </div>
     </div>
   )

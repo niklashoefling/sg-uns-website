@@ -32,8 +32,8 @@ export async function generateMetadata({
     const team = docs[0]
     const description = `${team.name} der SG U.N.S. Rheinhessen – ${team.liga}. Kader, Trainingszeiten und Spielplan.`
     const imageUrl = resolveMediaUrl(
-      typeof team.foto === 'object' && team.foto !== null
-        ? (team.foto as { url?: string }).url
+      typeof team.teamfoto === 'object' && team.teamfoto !== null
+        ? (team.teamfoto as { url?: string }).url
         : undefined,
     )
     return {

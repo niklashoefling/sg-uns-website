@@ -7,7 +7,8 @@ export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Kontakt',
-  description: 'Kontaktiere die SG U.N.S. Rheinhessen – für Anfragen zu Mannschaften, Training oder der Spielgemeinschaft.',
+  description:
+    'Kontaktiere die SG U.N.S. Rheinhessen – für Anfragen zu Mannschaften, Training oder der Spielgemeinschaft.',
 }
 
 export default async function KontaktPage() {

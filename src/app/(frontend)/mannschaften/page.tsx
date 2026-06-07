@@ -14,7 +14,8 @@ export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Mannschaften',
-  description: 'Alle Mannschaften der SG U.N.S. Rheinhessen – Kader, Trainingszeiten und Spielplan.',
+  description:
+    'Alle Mannschaften der SG U.N.S. Rheinhessen – Kader, Trainingszeiten und Spielplan.',
 }
 
 type TrainingsGruppe = {
