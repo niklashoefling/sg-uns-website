@@ -189,14 +189,14 @@ export interface Mannschaften {
    */
   slug: string;
   name: string;
-  liga: string;
+  liga?: string | null;
   beschreibung: string;
   /**
    * Nur User mit Rolle "Trainer" werden angezeigt
    */
   trainer?: (number | User)[] | null;
   /**
-   * Kontaktadresse der Mannschaft, z.B. "1herren@sg-uns.de"
+   * Kontaktadresse der Mannschaft, z.B. "h1@sgunsrheinhessen.de"
    */
   email?: string | null;
   /**

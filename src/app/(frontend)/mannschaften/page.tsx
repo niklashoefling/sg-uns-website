@@ -38,7 +38,7 @@ export default async function MannschaftenPage() {
     return {
       slug: m.slug,
       name: m.name,
-      liga: m.liga,
+      liga: m.liga ?? undefined,
       teamfoto: resolveMediaUrl(m.teamfoto) ?? undefined,
       trainer: filterRelations((m.trainer as unknown[]) ?? []).map((t) => {
         const u = t as { email?: string; name?: string }

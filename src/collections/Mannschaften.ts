@@ -47,7 +47,6 @@ export const Mannschaften: CollectionConfig = {
     {
       name: 'liga',
       type: 'text',
-      required: true,
     },
     {
       name: 'beschreibung',

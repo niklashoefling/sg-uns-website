@@ -27,7 +27,7 @@ export type Spiel = {
 export type Mannschaft = {
   slug: string
   name: string
-  liga: string
+  liga?: string
   teamfoto?: string
   trainer: { name: string; email?: string }[]
   training: { tag: string; uhrzeit: string }[]

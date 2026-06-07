@@ -30,7 +30,7 @@ export async function generateMetadata({
   })
   if (docs.length > 0) {
     const team = docs[0]
-    const description = `${team.name} der SG U.N.S. Rheinhessen – ${team.liga}. Kader, Trainingszeiten und Spielplan.`
+    const description = `${team.name} der SG U.N.S. Rheinhessen${team.liga ? ` – ${team.liga}` : ''}. Kader, Trainingszeiten und Spielplan.`
     const imageUrl = resolveMediaUrl(
       typeof team.teamfoto === 'object' && team.teamfoto !== null
         ? (team.teamfoto as { url?: string }).url
@@ -162,9 +162,11 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
           <div className="mb-8">
             <BackButton href="/mannschaften" label="Zurück" variant="dark" />
           </div>
-          <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">
-            {team.liga}
-          </span>
+          {team.liga && (
+            <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">
+              {team.liga}
+            </span>
+          )}
           <h1 className="text-5xl font-bold text-white">{team.name}</h1>
         </div>
       </div>

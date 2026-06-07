@@ -34,7 +34,7 @@ export default function TeamCard({ team, index }: { team: Mannschaft; index: num
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-3 mb-1">
             <h2 className="text-xl font-bold text-secondary">{team.name}</h2>
-            <CategoryBadge label={team.liga} />
+            {team.liga && <CategoryBadge label={team.liga} />}
           </div>
           <p className="text-sm text-gray-500 line-clamp-3">{team.beschreibung}</p>
         </div>
