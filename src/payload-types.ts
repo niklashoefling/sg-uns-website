@@ -196,7 +196,7 @@ export interface Mannschaften {
    */
   trainer?: (number | User)[] | null;
   /**
-   * Kontaktadresse der Mannschaft, z.B. "h1@sgunsrheinhessen.de"
+   * Kontaktadresse der Mannschaft, z.B. "1herren@sg-uns.de"
    */
   email?: string | null;
   /**

@@ -20,6 +20,7 @@ export default function ContactForm({ anliegen }: Props) {
     betreff: '',
     nachricht: '',
   })
+  const [datenschutz, setDatenschutz] = useState(false)
   const [touched, setTouched] = useState<Record<string, boolean>>({})
 
   const isComplete =
@@ -27,7 +28,8 @@ export default function ContactForm({ anliegen }: Props) {
     isValidEmail(values.email) &&
     values.anliegen !== '' &&
     values.betreff.trim() !== '' &&
-    values.nachricht.trim() !== ''
+    values.nachricht.trim() !== '' &&
+    datenschutz
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
@@ -191,6 +193,26 @@ export default function ContactForm({ anliegen }: Props) {
           onBlur={handleBlur}
           error={getError('nachricht')}
         />
+
+        <label className="flex items-start gap-3 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={datenschutz}
+            onChange={(e) => setDatenschutz(e.target.checked)}
+            className="mt-0.5 size-4 rounded border-gray-300 text-primary focus:ring-primary accent-primary"
+          />
+          <span className="text-sm text-gray-600 leading-relaxed">
+            Ich habe die{' '}
+            <a
+              href="/datenschutz"
+              target="_blank"
+              className="text-gray-500 underline hover:text-primary transition-colors"
+            >
+              Datenschutzerklärung
+            </a>{' '}
+            gelesen und bin mit der Verarbeitung meiner Daten einverstanden.
+          </span>
+        </label>
 
         <button
           type="submit"
