@@ -1,156 +1,95 @@
 # SG U.N.S. Rheinhessen Volleys – Website
 
-Next.js 16 + Payload CMS 3 Vereinswebseite für die SG U.N.S. Rheinhessen.
+Club website for [SG U.N.S. Rheinhessen](https://sgunsrheinhessen.de), a volleyball association in Rheinhessen, Germany.
 
----
+Built with **Next.js 16** (App Router) + **Payload CMS 3**.
 
-## Setup
+## Stack
 
-```bash
-npm install
-npm run dev
-```
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js 16 (App Router) |
+| CMS | Payload CMS 3 |
+| Database | Neon (Postgres, EU Frankfurt) |
+| Hosting | Vercel |
+| Mail | Nodemailer + Netcup SMTP |
+| Analytics | Vercel Analytics (cookieless) |
 
-Admin-Panel: [http://localhost:3000/admin](http://localhost:3000/admin)
+## CMS Collections
 
----
+**Active**
+- Articles
+- Teams
+- Coaches
+- Venues
 
-## Architektur
-
-- Frontend: Next.js 16 (App Router)
-- CMS: Payload CMS 3
-- Hosting: Vercel
-- Database: Neon (Postgres)
-- Mail: Nodemailer + Netcup SMTP
-- Analytics: Vercel Analytics (cookieless)
-
----
-
-## DSGVO & Datenschutz
-
-### Hosting – Vercel
-
-- Anbieter: Vercel Inc., USA
-- Serverstandort: Frankfurt (EU)
-- **TODO: Vercel DPA abschließen** (Vercel Account → Settings → Legal)
-
-### Datenbank – Neon
-
-- Anbieter: Neon Inc., USA
-- Region: EU (Frankfurt / AWS eu-central-1)
-- **TODO: Neon DPA abschließen** (Neon Legal Settings)
-
-### Kontaktformular
-
-- Name, E-Mail, Nachricht
-- Zweck: Bearbeitung von Anfragen
-- Rechtsgrundlage: Art. 6 Abs. 1 lit. b oder f DSGVO
-- Nur E-Mail-Versand, keine DB-Speicherung
-- Nodemailer + Netcup SMTP
-- Löschung nach Bearbeitung
-
-### Spielerdaten
-
-- Name, Position, Nummer, Foto
-- Art. 6 Abs. 1 lit. f DSGVO
-- Fotos nur mit Einwilligung
-- Widerruf jederzeit möglich
-
-### Analytics
-
-- Vercel Analytics
-- cookieless, keine personenbezogenen Daten
-
----
-
-## CMS Struktur
-
-Aktiv:
-
-- Artikel
-- Mannschaften
-- Trainer
-- Hallen
-
-Geplant:
-
+**Planned**
 - Events
 - Announcements
-- Galerie
+- Gallery
 
----
-
-## Conversion & Engagement
-
-### Kurzfristig (ohne SAMS)
-
-**Announcement-Banner**
-
-- Einzeiliger Banner oben auf der Homepage
-- Aus Payload pflegbar (Titel + optionaler Link)
-- Use Cases: Heimspiele, Trainingsänderungen, Kurznews
-- Collection: Announcements
-
-**Join-Section (Homepage)**
-
-- Klarer CTA: "Komm zum Probetraining"
-- Direktlink zum Kontaktformular
-- Kein separater `/probetraining`-Funnel
-
-### Mittelfristig (mit SAMS-API)
-
-**Nächstes Spiel Widget**
-
-- Countdown zum nächsten Heimspiel
-- Heim/Auswärts-Unterscheidung
-- Platzierung: Homepage Hero oder eigene Section
-
-**Spielplan-Seite `/spiele`**
-
-- Kommende Spiele nach Mannschaft gefiltert
-- Vergangene Ergebnisse
-- Optional: Kalender-Export (.ics)
-
----
-
-## Geplante Features
+## Planned Features
 
 ### Announcements
-
-- Titel + kurzer Text (1–5 Sätze)
-- Optional: Bild, Mannschaftszuweisung
-- Automatisches Datum
-- Kein Editorial Workflow – schnelle Updates
+- Title + short text (1–5 sentences)
+- Optional: image, team assignment
+- Auto-dated, no editorial workflow — fast updates
 
 ### Events
+- Title, date/time, location
+- Team assignment
+- Type (match, tournament, training, other)
+- Description
 
-- Titel, Datum/Zeit, Ort
-- Mannschaftszuweisung
-- Typ (Spiel, Turnier, Training, Sonstiges)
-- Beschreibung
+### Gallery
+- Title, images, description
+- Scope: team or club-wide
+- Routes: `/galerie` and `/mannschaften/[team]/galerie`
 
-### Galerie
+## Conversion & Engagement Ideas
 
-- Titel, Bilder, Beschreibung
-- Zugehörigkeit: Team oder Verein
-- Routen: `/galerie` und `/mannschaften/[team]/galerie`
+### Short-term (no SAMS dependency)
 
----
+**Announcement Banner**
+- Single-line banner at the top of the homepage
+- Managed in Payload (title + optional link)
+- Use cases: home matches, training changes, quick news
+
+**Join Section (Homepage)**
+- Clear CTA: "Come to a trial training"
+- Direct link to contact form
+- No separate `/probetraining` funnel needed
+
+### Mid-term (requires SAMS API)
+
+**Next Match Widget**
+- Countdown to next home match
+- Home/away distinction
+- Placement: homepage hero or dedicated section
+
+**Match Schedule Page `/spiele`**
+- Upcoming matches, filterable by team
+- Past results
+- Optional: calendar export (.ics)
 
 ## Content Governance
 
-### Rollen
+**Roles**
+- Coach: team content (own team only)
+- Editor: news articles
+- Admin: full access to all collections
 
-- Trainer: Team-Content (eigene Mannschaft)
-- Redakteur: News-Artikel
-- Admin: Struktur und alle Collections
+**Principle**
+Content is part of club operations. Rule: at least one post after every match.
 
-### Prinzip
+## Goal
 
-Content ist Teil des Trainingsbetriebs. Regel: Nach jedem Spiel mindestens ein Post.
+Recruit players for the teams of SG U.N.S. Rheinhessen — interested players join one of the three member clubs and play under the SG umbrella.
 
----
+## GDPR Notes
 
-## Zielsetzung
-
-Spieler für die Mannschaften der SG U.N.S. Rheinhessen gewinnen — Interessenten treten einem der drei Stammvereine bei und spielen unter dem SG-Dach.
+- **Hosting (Vercel):** Server location Frankfurt (EU). TODO: Sign Vercel DPA via Account → Settings → Legal.
+- **Database (Neon):** Region EU (Frankfurt / AWS eu-central-1). TODO: Sign Neon DPA via Legal Settings.
+- **Contact form:** Name, email, message — processed via email only, no DB storage. Deleted after handling. Legal basis: Art. 6(1)(b)/(f) GDPR.
+- **Player data:** Name, position, number, photo — photos only with consent, revocable at any time. Legal basis: Art. 6(1)(f) GDPR.
+- **Analytics:** Vercel Analytics, cookieless, no personal data collected.
