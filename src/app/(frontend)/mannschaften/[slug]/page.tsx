@@ -191,9 +191,9 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
         {trainer.length > 0 && (
           <div>
             <SectionHeading>Trainerstab</SectionHeading>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {trainer.map((t) => (
-                <TrainerCard key={t.name} trainer={t} />
+                <TrainerCard key={t.name} trainer={t} horizontal />
               ))}
             </div>
           </div>

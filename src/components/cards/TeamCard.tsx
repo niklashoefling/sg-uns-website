@@ -4,7 +4,7 @@ import type { Mannschaft } from '@/lib/mannschaften'
 import CategoryBadge from '@/components/ui/CategoryBadge'
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 
-export default function TeamCard({ team, index }: { team: Mannschaft; index: number }) {
+export default function TeamCard({ team }: { team: Mannschaft; index: number }) {
   return (
     <Link
       href={`/mannschaften/${team.slug}`}
@@ -25,12 +25,6 @@ export default function TeamCard({ team, index }: { team: Mannschaft; index: num
       </div>
 
       <div className="flex flex-1 flex-col md:flex-row md:items-center gap-4 p-6 md:py-8">
-        <div className="shrink-0 size-10 rounded-full bg-secondary/10 border border-secondary/20 flex items-center justify-center group-hover:bg-primary/10 group-hover:border-primary/30 transition-colors">
-          <span className="text-secondary group-hover:text-primary font-bold transition-colors">
-            {index + 1}
-          </span>
-        </div>
-
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-3 mb-1">
             <h2 className="text-xl font-bold text-secondary">{team.name}</h2>

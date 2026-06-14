@@ -43,7 +43,8 @@ export default function PlayerCard({ spieler }: { spieler: SpielerData }) {
       </div>
 
       <div className="p-4">
-        <p className="font-bold text-secondary text-sm mb-1">{spieler.name}</p>
+        <p className="font-bold text-secondary text-sm mb-0.5">{spieler.name}</p>
+        <p className="text-xs text-primary font-medium mb-1">{spieler.position}</p>
 
         {(spieler.geburtsjahr || spieler.groesse) && (
           <div className="mt-3 space-y-1 border-t border-gray-50 pt-3">

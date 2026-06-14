@@ -15,11 +15,50 @@ export type TrainerData = {
 export default function TrainerCard({
   trainer,
   clickable = true,
+  horizontal = false,
 }: {
   trainer: TrainerData
   clickable?: boolean
+  horizontal?: boolean
 }) {
-  const inner = (
+  const inner = horizontal ? (
+    <div
+      className={`group border border-gray-100 rounded-xl overflow-hidden transition-all flex ${clickable ? 'hover:shadow-md hover:border-primary/30' : ''}`}
+    >
+      <div className="relative w-20 shrink-0 bg-secondary/10">
+        {trainer.fotoUrl ? (
+          <Image
+            src={trainer.fotoUrl}
+            alt={trainer.name}
+            fill
+            sizes="80px"
+            className="object-cover object-top"
+          />
+        ) : (
+          <ImagePlaceholder emoji="👤" size="sm" />
+        )}
+      </div>
+      <div className="flex flex-1 items-center gap-3 px-4 py-3">
+        <div className="flex-1 min-w-0">
+          <p className="font-bold text-secondary text-sm">{trainer.name}</p>
+          {trainer.lizenz && (
+            <p className="text-xs text-primary font-medium">{trainer.lizenz}</p>
+          )}
+          {trainer.aktivSeit && (
+            <p className="text-xs text-gray-400 mt-0.5">Trainer seit {trainer.aktivSeit}</p>
+          )}
+          {!clickable && trainer.mannschaft && (
+            <p className="text-xs text-gray-400 mt-0.5">{trainer.mannschaft}</p>
+          )}
+        </div>
+        {clickable && (
+          <span className="text-gray-300 group-hover:text-primary transition-colors text-lg shrink-0">
+            →
+          </span>
+        )}
+      </div>
+    </div>
+  ) : (
     <div
       className={`group border border-gray-100 rounded-xl overflow-hidden transition-all ${clickable ? 'hover:shadow-md hover:border-primary/30' : ''}`}
     >
@@ -44,7 +83,6 @@ export default function TrainerCard({
           </div>
         )}
       </div>
-
       <div className="p-4">
         <div className="flex items-start justify-between gap-2">
           <div>
