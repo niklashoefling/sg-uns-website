@@ -41,9 +41,7 @@ export default function TrainerCard({
       <div className="flex flex-1 items-center gap-3 px-4 py-3">
         <div className="flex-1 min-w-0">
           <p className="font-bold text-secondary text-sm">{trainer.name}</p>
-          {trainer.lizenz && (
-            <p className="text-xs text-primary font-medium">{trainer.lizenz}</p>
-          )}
+          {trainer.lizenz && <p className="text-xs text-primary font-medium">{trainer.lizenz}</p>}
           {trainer.aktivSeit && (
             <p className="text-xs text-gray-400 mt-0.5">Trainer seit {trainer.aktivSeit}</p>
           )}

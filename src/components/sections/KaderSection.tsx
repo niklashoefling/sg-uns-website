@@ -14,8 +14,8 @@ export default function KaderSection({ spieler }: { spieler: SpielerData[] }) {
             return a.nummer - b.nummer
           })
           .map((s) => (
-          <PlayerCard key={`${s.name}-${s.nummer}`} spieler={s} />
-        ))}
+            <PlayerCard key={`${s.name}-${s.nummer}`} spieler={s} />
+          ))}
       </div>
     </div>
   )
