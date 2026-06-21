@@ -1,4 +1,61 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, CollectionAfterChangeHook } from 'payload'
+import { resolvePayloadId, toNumIds } from '@/lib/utils'
+
+export const syncingFromUser = new Set<number>()
+
+const syncMannschaftTrainer: CollectionAfterChangeHook = async ({ doc, previousDoc, req }) => {
+  if (doc.rolle !== 'trainer') return
+  const { payload } = req
+
+  const newMannschaftId = resolvePayloadId(doc.mannschaft)
+  const oldMannschaftId = resolvePayloadId(previousDoc?.mannschaft)
+
+  if (newMannschaftId === oldMannschaftId) return
+
+  const trainerId = Number(doc.id)
+
+  await Promise.all([
+    (async () => {
+      if (!oldMannschaftId || syncingFromUser.has(oldMannschaftId)) return
+      syncingFromUser.add(oldMannschaftId)
+      try {
+        const old = await payload.findByID({
+          collection: 'mannschaften',
+          id: oldMannschaftId,
+          select: { trainer: true },
+        })
+        await payload.update({
+          collection: 'mannschaften',
+          id: oldMannschaftId,
+          data: { trainer: toNumIds(old.trainer as unknown[]).filter((id) => id !== trainerId) },
+        })
+      } finally {
+        syncingFromUser.delete(oldMannschaftId)
+      }
+    })(),
+    (async () => {
+      if (!newMannschaftId || syncingFromUser.has(newMannschaftId)) return
+      syncingFromUser.add(newMannschaftId)
+      try {
+        const next = await payload.findByID({
+          collection: 'mannschaften',
+          id: newMannschaftId,
+          select: { trainer: true },
+        })
+        const current = toNumIds(next.trainer as unknown[])
+        if (!current.includes(trainerId)) {
+          await payload.update({
+            collection: 'mannschaften',
+            id: newMannschaftId,
+            data: { trainer: [...current, trainerId] },
+          })
+        }
+      } finally {
+        syncingFromUser.delete(newMannschaftId)
+      }
+    })(),
+  ])
+}
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -11,6 +68,9 @@ export const Users: CollectionConfig = {
     defaultColumns: ['name', 'email', 'rolle'],
   },
   auth: true,
+  hooks: {
+    afterChange: [syncMannschaftTrainer],
+  },
   access: {
     read: ({ req }) => !!req.user,
     create: ({ req }) => isAdmin(req.user),

@@ -6,7 +6,7 @@ import TeamCard from '@/components/cards/TeamCard'
 import SectionHeading from '@/components/ui/SectionHeading'
 import type { Mannschaft } from '@/lib/mannschaften'
 import type { Hallen } from '@/payload-types'
-import { resolveMediaUrl } from '@/lib/media'
+import { resolveMediaUrl } from '@/lib/utils'
 import { filterRelations } from '@/lib/utils'
 import { WOCHENTAGE } from '@/lib/site'
 

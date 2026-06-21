@@ -21,7 +21,14 @@ export default async function TrainerPage() {
     limit: 50,
   })
 
-  const trainer: TrainerData[] = filterRelations(docs as unknown[]).map(mapUserToTrainerData)
+  const trainer: TrainerData[] = filterRelations(docs as unknown[])
+    .map(mapUserToTrainerData)
+    .sort((a, b) => {
+      if (a.mannschaft && b.mannschaft) return a.mannschaft.localeCompare(b.mannschaft, 'de')
+      if (a.mannschaft) return -1
+      if (b.mannschaft) return 1
+      return 0
+    })
 
   return (
     <div className="min-h-screen bg-white">

@@ -1,4 +1,4 @@
-import { type Tabelle } from '@/lib/tabelle'
+import { type Tabelle } from '@/lib/mannschaften'
 
 export default function LigaTabelle({ tabelle }: { tabelle: Tabelle | null }) {
   if (!tabelle) {

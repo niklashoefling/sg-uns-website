@@ -3,7 +3,7 @@ import config from '@payload-config'
 import PageHeader from '@/components/layout/PageHeader'
 import Image from 'next/image'
 import type { Metadata } from 'next'
-import { resolveMediaUrl } from '@/lib/media'
+import { resolveMediaUrl } from '@/lib/utils'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {

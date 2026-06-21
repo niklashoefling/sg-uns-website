@@ -3,7 +3,7 @@ import config from '@payload-config'
 import HeroSection from '@/components/sections/HeroSection'
 import UeberUnsSection from '@/components/sections/UeberUnsSection'
 import AktuellesPreview from '@/components/sections/AktuellesPreview'
-import { resolveMediaUrl } from '@/lib/media'
+import { resolveMediaUrl } from '@/lib/utils'
 
 export const metadata = {
   title: 'SG U.N.S. Rheinhessen',

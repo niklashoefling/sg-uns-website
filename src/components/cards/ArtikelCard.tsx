@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { formatDatum, lexicalToPlainText } from '@/lib/utils'
-import { resolveMediaUrl } from '@/lib/media'
+import { resolveMediaUrl } from '@/lib/utils'
 import CategoryBadge from '@/components/ui/CategoryBadge'
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 
