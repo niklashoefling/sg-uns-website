@@ -57,7 +57,21 @@ export function mapUserToTrainerData(user: unknown): TrainerData {
   }
 }
 
-export function filterRelations(relations: unknown[]): unknown[] {
+export function resolveHalleName(halle: unknown): string | null {
+  if (halle && typeof halle === 'object') {
+    return (halle as { name?: string }).name ?? null
+  }
+  return null
+}
+
+export function extractJoinDocs<T>(join: unknown): T[] {
+  if (join && typeof join === 'object' && 'docs' in join) {
+    return (join as { docs: T[] }).docs ?? []
+  }
+  return []
+}
+
+
   return relations.filter((r) => typeof r === 'object' && r !== null)
 }
 

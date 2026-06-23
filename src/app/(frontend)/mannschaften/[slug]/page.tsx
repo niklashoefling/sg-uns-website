@@ -4,9 +4,7 @@ import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Metadata } from 'next'
-import type { Hallen } from '@/payload-types'
-import { resolveMediaUrl } from '@/lib/utils'
-import { mapUserToTrainerData } from '@/lib/utils'
+import { resolveMediaUrl, mapUserToTrainerData, resolveHalleName, extractJoinDocs } from '@/lib/utils'
 import LigaTabelle from '@/components/sections/LigaTabelle'
 import type { SpielerData } from '@/components/cards/PlayerCard'
 import KaderSection from '@/components/sections/KaderSection'
@@ -145,16 +143,13 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
     toSpielerData(s, (foto) => resolveMediaUrl(foto)),
   )
 
-  const trainerDocs =
-    team.trainer && typeof team.trainer === 'object' && 'docs' in team.trainer
-      ? (team.trainer.docs as Parameters<typeof mapUserToTrainerData>[0][])
-      : []
-  const trainer: TrainerData[] = trainerDocs.map(mapUserToTrainerData)
+  const trainer: TrainerData[] = extractJoinDocs<Parameters<typeof mapUserToTrainerData>[0]>(team.trainer).map(mapUserToTrainerData)
 
-  const training = (team.training ?? []).map((t) => {
-    const th = t.halle && typeof t.halle === 'object' ? (t.halle as Hallen) : null
-    return { tag: t.tag, uhrzeit: t.uhrzeit, halle: th?.name ?? null }
-  })
+  const training = (team.training ?? []).map((t) => ({
+    tag: t.tag,
+    uhrzeit: t.uhrzeit,
+    halle: resolveHalleName(t.halle),
+  }))
 
   return (
     <div className="min-h-screen bg-white">

@@ -5,7 +5,7 @@ import PageHeader from '@/components/layout/PageHeader'
 import TeamCard from '@/components/cards/TeamCard'
 import SectionHeading from '@/components/ui/SectionHeading'
 import type { Mannschaft } from '@/lib/mannschaften'
-import { resolveMediaUrl } from '@/lib/utils'
+import { resolveMediaUrl, resolveHalleName, extractJoinDocs } from '@/lib/utils'
 import { WOCHENTAGE } from '@/lib/site'
 
 export const dynamic = 'force-dynamic'
@@ -31,20 +31,18 @@ export default async function MannschaftenPage() {
   })
 
   const mannschaften: Mannschaft[] = docs.map((m) => {
-    const trainerDocs =
-      m.trainer && typeof m.trainer === 'object' && 'docs' in m.trainer
-        ? (m.trainer.docs as { name?: string; email?: string }[])
-        : []
+    const trainerDocs = extractJoinDocs<{ name?: string; email?: string }>(m.trainer)
     return {
       slug: m.slug,
       name: m.name,
       liga: m.liga ?? undefined,
       teamfoto: resolveMediaUrl(m.teamfoto) ?? undefined,
       trainer: trainerDocs.map((t) => ({ name: t.name ?? t.email ?? '-', email: t.email })),
-      training: (m.training ?? []).map((t) => {
-        const th = t.halle && typeof t.halle === 'object' ? (t.halle as { name?: string }) : null
-        return { tag: t.tag, uhrzeit: t.uhrzeit, halle: th?.name ?? undefined }
-      }),
+      training: (m.training ?? []).map((t) => ({
+        tag: t.tag,
+        uhrzeit: t.uhrzeit,
+        halle: resolveHalleName(t.halle) ?? undefined,
+      })),
       beschreibung: m.beschreibung,
       spieler: [],
       spielplan: [],
@@ -53,10 +51,7 @@ export default async function MannschaftenPage() {
 
   const trainingsgruppen: TrainingsGruppe[] = docs.flatMap((m) => {
     const zeilen = (m.training ?? [])
-      .map((t) => {
-        const th = t.halle && typeof t.halle === 'object' ? (t.halle as { name?: string }) : null
-        return { tag: t.tag, uhrzeit: t.uhrzeit, halle: th?.name ?? '-' }
-      })
+      .map((t) => ({ tag: t.tag, uhrzeit: t.uhrzeit, halle: resolveHalleName(t.halle) ?? '-' }))
       .sort((a, b) => {
         const tagDiff = WOCHENTAGE.indexOf(a.tag) - WOCHENTAGE.indexOf(b.tag)
         return tagDiff !== 0 ? tagDiff : a.uhrzeit.localeCompare(b.uhrzeit)
