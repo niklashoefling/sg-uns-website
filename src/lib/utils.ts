@@ -70,4 +70,3 @@ export function extractJoinDocs<T>(join: unknown): T[] {
   }
   return []
 }
-
