@@ -4,7 +4,12 @@ import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Metadata } from 'next'
-import { resolveMediaUrl, mapUserToTrainerData, resolveHalleName, extractJoinDocs } from '@/lib/utils'
+import {
+  resolveMediaUrl,
+  mapUserToTrainerData,
+  resolveHalleName,
+  extractJoinDocs,
+} from '@/lib/utils'
 import LigaTabelle from '@/components/sections/LigaTabelle'
 import type { SpielerData } from '@/components/cards/PlayerCard'
 import KaderSection from '@/components/sections/KaderSection'
@@ -143,7 +148,9 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
     toSpielerData(s, (foto) => resolveMediaUrl(foto)),
   )
 
-  const trainer: TrainerData[] = extractJoinDocs<Parameters<typeof mapUserToTrainerData>[0]>(team.trainer).map(mapUserToTrainerData)
+  const trainer: TrainerData[] = extractJoinDocs<Parameters<typeof mapUserToTrainerData>[0]>(
+    team.trainer,
+  ).map(mapUserToTrainerData)
 
   const training = (team.training ?? []).map((t) => ({
     tag: t.tag,

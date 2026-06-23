@@ -71,7 +71,7 @@ export function extractJoinDocs<T>(join: unknown): T[] {
   return []
 }
 
-
+export function filterRelations(relations: unknown[]): unknown[] {
   return relations.filter((r) => typeof r === 'object' && r !== null)
 }
 
