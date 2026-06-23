@@ -1,12 +1,12 @@
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Metadata } from 'next'
 import type { Hallen } from '@/payload-types'
 import { resolveMediaUrl } from '@/lib/utils'
-import { mapUserToTrainerData, filterRelations } from '@/lib/utils'
+import { mapUserToTrainerData } from '@/lib/utils'
 import LigaTabelle from '@/components/sections/LigaTabelle'
 import type { SpielerData } from '@/components/cards/PlayerCard'
 import KaderSection from '@/components/sections/KaderSection'
@@ -75,13 +75,11 @@ function toSpielerData(
 
 function TeamDetails({
   team,
-  halle,
 }: {
   team: {
     beschreibung: string
-    training: { tag: string; uhrzeit: string }[]
+    training: { tag: string; uhrzeit: string; halle?: string | null }[]
   }
-  halle: { name: string; adresse: string } | null
 }) {
   return (
     <div className="grid md:grid-cols-2 gap-10">
@@ -92,23 +90,22 @@ function TeamDetails({
       <div>
         <SectionHeading className="mb-4">Trainingsdaten</SectionHeading>
         <div className="space-y-3">
-          {halle && (
-            <div className="flex gap-4 text-sm">
-              <span className="w-24 shrink-0 font-semibold text-secondary">Halle</span>
-              <Link
-                href="/hallen"
-                className="text-gray-500 underline hover:text-primary transition-colors"
-              >
-                {halle.name}
-              </Link>
-            </div>
-          )}
           <div className="flex gap-4 text-sm">
             <span className="w-24 shrink-0 font-semibold text-secondary">Training</span>
             <div className="space-y-1">
               {team.training.map((t) => (
                 <div key={t.tag} className="text-gray-500">
                   {t.tag} · {t.uhrzeit}
+                  {t.halle && (
+                    <div>
+                      <Link
+                        href="/hallen"
+                        className="text-gray-400 underline hover:text-primary transition-colors"
+                      >
+                        {t.halle}
+                      </Link>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -148,12 +145,16 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
     toSpielerData(s, (foto) => resolveMediaUrl(foto)),
   )
 
-  const halle: { name: string; adresse: string } | null =
-    team.halle && typeof team.halle === 'object' ? (team.halle as Hallen) : null
+  const trainerDocs =
+    team.trainer && typeof team.trainer === 'object' && 'docs' in team.trainer
+      ? (team.trainer.docs as Parameters<typeof mapUserToTrainerData>[0][])
+      : []
+  const trainer: TrainerData[] = trainerDocs.map(mapUserToTrainerData)
 
-  const trainer: TrainerData[] = filterRelations((team.trainer as unknown[]) ?? []).map(
-    mapUserToTrainerData,
-  )
+  const training = (team.training ?? []).map((t) => {
+    const th = t.halle && typeof t.halle === 'object' ? (t.halle as Hallen) : null
+    return { tag: t.tag, uhrzeit: t.uhrzeit, halle: th?.name ?? null }
+  })
 
   return (
     <div className="min-h-screen bg-white">
@@ -187,7 +188,7 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
       )}
 
       <div className="max-w-6xl mx-auto px-6 py-16 space-y-16">
-        <TeamDetails team={team} halle={halle} />
+        <TeamDetails team={{ ...team, training }} />
         {trainer.length > 0 && (
           <div>
             <SectionHeading>Trainerstab</SectionHeading>

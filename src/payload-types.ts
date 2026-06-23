@@ -77,7 +77,11 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    mannschaften: {
+      trainer: 'users';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -192,17 +196,17 @@ export interface Mannschaften {
   liga?: string | null;
   beschreibung: string;
   /**
-   * Nur User mit Rolle "Trainer" werden angezeigt
+   * Trainer dieser Mannschaft (werden beim User gesetzt)
    */
-  trainer?: (number | User)[] | null;
+  trainer?: {
+    docs?: (number | User)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   /**
    * Kontaktadresse der Mannschaft, z.B. "1herren@sg-uns.de"
    */
   email?: string | null;
-  /**
-   * Spielhalle der Mannschaft
-   */
-  halle: number | Hallen;
   training: {
     /**
      * z.B. "Mittwoch"
@@ -212,6 +216,10 @@ export interface Mannschaften {
      * z.B. "20:00 - 22:00 Uhr"
      */
     uhrzeit: string;
+    /**
+     * Halle für dieses Training
+     */
+    halle?: (number | null) | Hallen;
     id?: string | null;
   }[];
   teamfoto?: (number | null) | Media;
@@ -461,12 +469,12 @@ export interface MannschaftenSelect<T extends boolean = true> {
   beschreibung?: T;
   trainer?: T;
   email?: T;
-  halle?: T;
   training?:
     | T
     | {
         tag?: T;
         uhrzeit?: T;
+        halle?: T;
         id?: T;
       };
   teamfoto?: T;

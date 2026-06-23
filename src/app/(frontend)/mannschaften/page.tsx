@@ -5,9 +5,7 @@ import PageHeader from '@/components/layout/PageHeader'
 import TeamCard from '@/components/cards/TeamCard'
 import SectionHeading from '@/components/ui/SectionHeading'
 import type { Mannschaft } from '@/lib/mannschaften'
-import type { Hallen } from '@/payload-types'
 import { resolveMediaUrl } from '@/lib/utils'
-import { filterRelations } from '@/lib/utils'
 import { WOCHENTAGE } from '@/lib/site'
 
 export const dynamic = 'force-dynamic'
@@ -21,8 +19,7 @@ export const metadata = {
 type TrainingsGruppe = {
   mannschaft: string
   slug: string
-  halle: string
-  zeilen: { tag: string; uhrzeit: string }[]
+  zeilen: { tag: string; uhrzeit: string; halle: string }[]
 }
 
 export default async function MannschaftenPage() {
@@ -30,23 +27,21 @@ export default async function MannschaftenPage() {
   const { docs } = await payload.find({
     collection: 'mannschaften',
     sort: 'name',
-    depth: 1,
+    depth: 2,
   })
 
   const mannschaften: Mannschaft[] = docs.map((m) => {
-    const halle = m.halle && typeof m.halle === 'object' ? (m.halle as Hallen) : null
+    const trainerDocs =
+      m.trainer && typeof m.trainer === 'object' && 'docs' in m.trainer
+        ? (m.trainer.docs as { name?: string; email?: string }[])
+        : []
     return {
       slug: m.slug,
       name: m.name,
       liga: m.liga ?? undefined,
       teamfoto: resolveMediaUrl(m.teamfoto) ?? undefined,
-      trainer: filterRelations((m.trainer as unknown[]) ?? []).map((t) => {
-        const u = t as { email?: string; name?: string }
-        return { name: u.name ?? u.email ?? '-', email: u.email }
-      }),
+      trainer: trainerDocs.map((t) => ({ name: t.name ?? t.email ?? '-', email: t.email })),
       training: m.training ?? [],
-      halle: halle?.name ?? '',
-      halleAdresse: halle?.adresse ?? '',
       beschreibung: m.beschreibung,
       spieler: [],
       spielplan: [],
@@ -54,15 +49,17 @@ export default async function MannschaftenPage() {
   })
 
   const trainingsgruppen: TrainingsGruppe[] = docs.flatMap((m) => {
-    const halle = m.halle && typeof m.halle === 'object' ? (m.halle as Hallen) : null
     const zeilen = (m.training ?? [])
-      .map((t) => ({ tag: t.tag, uhrzeit: t.uhrzeit }))
+      .map((t) => {
+        const th = t.halle && typeof t.halle === 'object' ? (t.halle as Hallen) : null
+        return { tag: t.tag, uhrzeit: t.uhrzeit, halle: th?.name ?? '-' }
+      })
       .sort((a, b) => {
         const tagDiff = WOCHENTAGE.indexOf(a.tag) - WOCHENTAGE.indexOf(b.tag)
         return tagDiff !== 0 ? tagDiff : a.uhrzeit.localeCompare(b.uhrzeit)
       })
     if (zeilen.length === 0) return []
-    return [{ mannschaft: m.name, slug: m.slug, halle: halle?.name ?? '-', zeilen }]
+    return [{ mannschaft: m.name, slug: m.slug, zeilen }]
   })
 
   return (
@@ -94,13 +91,6 @@ export default async function MannschaftenPage() {
                   >
                     {gruppe.mannschaft}
                   </Link>
-                  <span className="text-gray-300">·</span>
-                  <Link
-                    href="/hallen"
-                    className="text-sm text-gray-500 underline hover:text-primary transition-colors"
-                  >
-                    {gruppe.halle}
-                  </Link>
                 </div>
                 <div className="divide-y divide-gray-100">
                   {gruppe.zeilen.map((z) => (
@@ -108,6 +98,14 @@ export default async function MannschaftenPage() {
                       <div className="font-medium text-secondary">
                         {z.tag} · {z.uhrzeit}
                       </div>
+                      {z.halle && (
+                        <Link
+                          href="/hallen"
+                          className="text-gray-400 underline hover:text-primary transition-colors"
+                        >
+                          {z.halle}
+                        </Link>
+                      )}
                     </div>
                   ))}
                 </div>

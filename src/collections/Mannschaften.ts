@@ -1,59 +1,5 @@
-import type { CollectionConfig, CollectionAfterChangeHook } from 'payload'
-import { isAdmin, isTrainerOf, syncingFromUser } from './Users'
-import { resolvePayloadId, toNumIds } from '@/lib/utils'
-
-const syncingFromMannschaft = new Set<number>()
-
-const syncTrainerMannschaft: CollectionAfterChangeHook = async ({ doc, previousDoc, req }) => {
-  const { payload } = req
-  const mannschaftId = Number(doc.id)
-
-  if (syncingFromUser.has(mannschaftId)) return
-
-  const newTrainerIds = toNumIds(doc.trainer ?? [])
-  const oldTrainerIds = toNumIds(previousDoc?.trainer ?? [])
-
-  const added = newTrainerIds.filter((id) => !oldTrainerIds.includes(id))
-  const removed = oldTrainerIds.filter((id) => !newTrainerIds.includes(id))
-
-  await Promise.all([
-    ...added
-      .filter((id) => !syncingFromMannschaft.has(id))
-      .map(async (trainerId) => {
-        syncingFromMannschaft.add(trainerId)
-        try {
-          await payload.update({
-            collection: 'users',
-            id: trainerId,
-            data: { mannschaft: mannschaftId },
-          })
-        } finally {
-          syncingFromMannschaft.delete(trainerId)
-        }
-      }),
-    ...removed
-      .filter((id) => !syncingFromMannschaft.has(id))
-      .map(async (trainerId) => {
-        syncingFromMannschaft.add(trainerId)
-        try {
-          const user = await payload.findByID({
-            collection: 'users',
-            id: trainerId,
-            select: { mannschaft: true },
-          })
-          if (resolvePayloadId(user.mannschaft) === mannschaftId) {
-            await payload.update({
-              collection: 'users',
-              id: trainerId,
-              data: { mannschaft: null },
-            })
-          }
-        } finally {
-          syncingFromMannschaft.delete(trainerId)
-        }
-      }),
-  ])
-}
+import type { CollectionConfig } from 'payload'
+import { isAdmin } from './Users'
 
 export const Mannschaften: CollectionConfig = {
   slug: 'mannschaften',
@@ -63,11 +9,8 @@ export const Mannschaften: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'liga', 'saison'],
+    defaultColumns: ['name', 'liga'],
     description: 'Verwalte die Mannschaften der SG U.N.S. Rheinhessen',
-  },
-  hooks: {
-    afterChange: [syncTrainerMannschaft],
   },
   access: {
     read: () => true,
@@ -75,7 +18,6 @@ export const Mannschaften: CollectionConfig = {
     delete: ({ req }) => isAdmin(req.user),
     update: ({ req }) => {
       if (isAdmin(req.user)) return true
-      // Trainer darf nur eigene Mannschaft bearbeiten – Payload prüft dann per ID-Constraint
       if (req.user?.rolle === 'trainer') {
         const eigene =
           typeof req.user.mannschaft === 'object' ? req.user.mannschaft?.id : req.user.mannschaft
@@ -112,14 +54,12 @@ export const Mannschaften: CollectionConfig = {
     },
     {
       name: 'trainer',
-      type: 'relationship',
-      relationTo: 'users',
-      hasMany: true,
-      filterOptions: {
-        rolle: { equals: 'trainer' },
-      },
+      type: 'join',
+      collection: 'users',
+      on: 'mannschaft',
+      where: { rolle: { equals: 'trainer' } },
       admin: {
-        description: 'Nur User mit Rolle "Trainer" werden angezeigt',
+        description: 'Trainer dieser Mannschaft (werden beim User gesetzt)',
       },
     },
     {
@@ -127,15 +67,6 @@ export const Mannschaften: CollectionConfig = {
       type: 'email',
       admin: {
         description: 'Kontaktadresse der Mannschaft, z.B. "1herren@sg-uns.de"',
-      },
-    },
-    {
-      name: 'halle',
-      type: 'relationship',
-      relationTo: 'hallen',
-      required: true,
-      admin: {
-        description: 'Spielhalle der Mannschaft',
       },
     },
     {
@@ -158,6 +89,14 @@ export const Mannschaften: CollectionConfig = {
           required: true,
           admin: {
             description: 'z.B. "20:00 - 22:00 Uhr"',
+          },
+        },
+        {
+          name: 'halle',
+          type: 'relationship',
+          relationTo: 'hallen',
+          admin: {
+            description: 'Halle für dieses Training',
           },
         },
       ],
