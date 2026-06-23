@@ -15,15 +15,20 @@ export default async function HallenPage() {
   const payload = await getPayload({ config })
   const [{ docs: hallen }, { docs: mannschaften }] = await Promise.all([
     payload.find({ collection: 'hallen', sort: 'name', depth: 1 }),
-    payload.find({ collection: 'mannschaften', sort: 'name', depth: 0, limit: 100 }),
+    payload.find({ collection: 'mannschaften', sort: 'name', depth: 1, limit: 100 }),
   ])
 
   const mannschaftenByHalle = mannschaften.reduce<Record<string, { name: string; slug: string }[]>>(
     (acc, m) => {
-      const halleId = typeof m.halle === 'object' ? m.halle?.id : m.halle
-      if (!halleId) return acc
-      const key = String(halleId)
-      acc[key] = [...(acc[key] ?? []), { name: m.name, slug: m.slug }]
+      const halleIds = new Set(
+        (m.training ?? [])
+          .map((t) => (typeof t.halle === 'object' ? t.halle?.id : t.halle))
+          .filter(Boolean)
+          .map(String),
+      )
+      for (const key of halleIds) {
+        acc[key] = [...(acc[key] ?? []), { name: m.name, slug: m.slug }]
+      }
       return acc
     },
     {},
