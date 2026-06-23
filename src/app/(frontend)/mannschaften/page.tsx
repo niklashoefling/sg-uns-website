@@ -71,8 +71,8 @@ export default async function MannschaftenPage() {
 
       <div className="max-w-6xl mx-auto px-6 py-16 space-y-16">
         <div className="flex flex-col gap-5">
-          {mannschaften.map((team, i) => (
-            <TeamCard key={team.slug} team={team} index={i} />
+          {mannschaften.map((team) => (
+            <TeamCard key={team.slug} team={team} />
           ))}
         </div>
 

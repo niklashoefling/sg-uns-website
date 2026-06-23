@@ -97,11 +97,3 @@ export const Users: CollectionConfig = {
 export function isAdmin(user: any): boolean {
   return user?.rolle === 'admin'
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function isTrainerOf(user: any, mannschaftId: string | number | null | undefined): boolean {
-  if (!user || !mannschaftId) return false
-  if (isAdmin(user)) return true
-  const eigene = typeof user.mannschaft === 'object' ? user.mannschaft?.id : user.mannschaft
-  return String(eigene) === String(mannschaftId)
-}

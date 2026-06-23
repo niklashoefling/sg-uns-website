@@ -4,7 +4,7 @@ import type { Mannschaft } from '@/lib/mannschaften'
 import CategoryBadge from '@/components/ui/CategoryBadge'
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 
-export default function TeamCard({ team }: { team: Mannschaft; index: number }) {
+export default function TeamCard({ team }: { team: Mannschaft }) {
   return (
     <Link
       href={`/mannschaften/${team.slug}`}
