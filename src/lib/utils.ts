@@ -71,15 +71,3 @@ export function extractJoinDocs<T>(join: unknown): T[] {
   return []
 }
 
-export function filterRelations(relations: unknown[]): unknown[] {
-  return relations.filter((r) => typeof r === 'object' && r !== null)
-}
-
-export function resolvePayloadId(relation: unknown): number | null {
-  if (!relation) return null
-  return typeof relation === 'object' ? Number((relation as { id: unknown }).id) : Number(relation)
-}
-
-export function toNumIds(list: unknown[]): number[] {
-  return (list ?? []).map(resolvePayloadId).filter((id): id is number => id !== null && !isNaN(id))
-}

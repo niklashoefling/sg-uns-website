@@ -2,7 +2,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import PageHeader from '@/components/layout/PageHeader'
 import TrainerCard, { type TrainerData } from '@/components/cards/TrainerCard'
-import { mapUserToTrainerData, filterRelations } from '@/lib/utils'
+import { mapUserToTrainerData } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
 
@@ -21,7 +21,7 @@ export default async function TrainerPage() {
     limit: 50,
   })
 
-  const trainer: TrainerData[] = filterRelations(docs as unknown[])
+  const trainer: TrainerData[] = docs
     .map(mapUserToTrainerData)
     .sort((a, b) => {
       if (a.mannschaft && b.mannschaft) return a.mannschaft.localeCompare(b.mannschaft, 'de')
