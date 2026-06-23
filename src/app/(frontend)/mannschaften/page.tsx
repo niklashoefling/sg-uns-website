@@ -41,7 +41,10 @@ export default async function MannschaftenPage() {
       liga: m.liga ?? undefined,
       teamfoto: resolveMediaUrl(m.teamfoto) ?? undefined,
       trainer: trainerDocs.map((t) => ({ name: t.name ?? t.email ?? '-', email: t.email })),
-      training: m.training ?? [],
+      training: (m.training ?? []).map((t) => {
+        const th = t.halle && typeof t.halle === 'object' ? (t.halle as { name?: string }) : null
+        return { tag: t.tag, uhrzeit: t.uhrzeit, halle: th?.name ?? undefined }
+      }),
       beschreibung: m.beschreibung,
       spieler: [],
       spielplan: [],
@@ -51,7 +54,7 @@ export default async function MannschaftenPage() {
   const trainingsgruppen: TrainingsGruppe[] = docs.flatMap((m) => {
     const zeilen = (m.training ?? [])
       .map((t) => {
-        const th = t.halle && typeof t.halle === 'object' ? (t.halle as Hallen) : null
+        const th = t.halle && typeof t.halle === 'object' ? (t.halle as { name?: string }) : null
         return { tag: t.tag, uhrzeit: t.uhrzeit, halle: th?.name ?? '-' }
       })
       .sort((a, b) => {
