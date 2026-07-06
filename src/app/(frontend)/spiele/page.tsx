@@ -36,7 +36,9 @@ export default async function SpielePage({
     samsTeamUuid?: string
   }
 
-  const teamsWithSams = (docs as TeamDoc[]).filter((t) => t.samsLeagueUuid && t.samsTeamUuid)
+  const teamsWithSams = (docs as TeamDoc[]).filter(
+    (t) => t.liga && t.samsLeagueUuid && t.samsTeamUuid,
+  )
 
   const results = await Promise.all(
     teamsWithSams.map(async (t) => {

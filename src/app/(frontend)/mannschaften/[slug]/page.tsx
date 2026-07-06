@@ -166,7 +166,7 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
   let naechsteSpiele: Spiel[] = []
   let tabelle: Tabelle | null = null
   let samsTeamName = team.name
-  if (samsLeagueUuid && samsTeamUuid) {
+  if (team.liga && samsLeagueUuid && samsTeamUuid) {
     ;[{ ergebnisse, naechsteSpiele }, tabelle, samsTeamName] = await Promise.all([
       fetchSpielplan(samsTeamUuid, samsLeagueUuid, { limit: 3 }).catch(() => ({
         ergebnisse: [],
@@ -223,12 +223,16 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
           </div>
         )}
         {spieler.length > 0 && <KaderSection spieler={spieler} />}
-        <SpielplanSection
-          ergebnisse={ergebnisse}
-          naechsteSpiele={naechsteSpiele}
-          teamName={samsTeamName}
-        />
-        <LigaTabelle tabelle={tabelle} />
+        {team.liga && samsLeagueUuid && samsTeamUuid && (
+          <>
+            <SpielplanSection
+              ergebnisse={ergebnisse}
+              naechsteSpiele={naechsteSpiele}
+              teamName={samsTeamName}
+            />
+            <LigaTabelle tabelle={tabelle} />
+          </>
+        )}
       </div>
     </div>
   )
