@@ -10,6 +10,10 @@ export default function LigaTabelle({ tabelle }: { tabelle: Tabelle | null }) {
     )
   }
 
+  const total = tabelle.eintraege.length
+  const aufstieg = tabelle.aufstieg ?? 0
+  const abstieg = tabelle.abstieg ?? 0
+
   return (
     <div>
       <div className="flex items-end justify-between mb-6">
@@ -48,60 +52,75 @@ export default function LigaTabelle({ tabelle }: { tabelle: Tabelle | null }) {
             </tr>
           </thead>
           <tbody>
-            {tabelle.eintraege.map((eintrag) => (
-              <tr
-                key={eintrag.platz}
-                className={`border-b border-gray-50 transition-colors ${
-                  eintrag.highlight
-                    ? 'bg-primary/5 border-l-2 border-l-primary'
-                    : 'hover:bg-gray-50'
-                }`}
-              >
-                <td className="py-3 px-2">
-                  <span
-                    className={`font-bold ${eintrag.platz <= 3 ? 'text-primary' : 'text-gray-400'}`}
-                  >
-                    {eintrag.platz}
-                  </span>
-                </td>
-                <td className="py-3 px-2">
-                  <span
-                    className={`font-medium ${eintrag.highlight ? 'text-primary' : 'text-secondary'}`}
-                  >
-                    {eintrag.verein}
-                  </span>
-                </td>
-                <td className="py-3 px-2 text-center text-gray-500">{eintrag.spiele}</td>
-                <td className="py-3 px-2 text-center text-green-600 font-medium">
-                  {eintrag.siege}
-                </td>
-                <td className="py-3 px-2 text-center text-red-400 font-medium">
-                  {eintrag.niederlagen}
-                </td>
-                <td className="py-3 px-2 text-center text-gray-500 hidden sm:table-cell">
-                  {eintrag.saetze_gewonnen}:{eintrag.saetze_verloren}
-                </td>
-                <td className="py-3 px-2 text-center text-gray-500 hidden md:table-cell">
-                  {eintrag.punkte_gewonnen}:{eintrag.punkte_verloren}
-                </td>
-                <td className="py-3 px-2 text-center">
-                  <span
-                    className={`font-bold ${eintrag.highlight ? 'text-primary' : 'text-secondary'}`}
-                  >
-                    {eintrag.punkte}
-                  </span>
-                </td>
-              </tr>
-            ))}
+            {tabelle.eintraege.map((eintrag) => {
+              const istAufstieg = aufstieg > 0 && eintrag.platz <= aufstieg
+              const istAbstieg = abstieg > 0 && eintrag.platz > total - abstieg
+              return (
+                <tr
+                  key={eintrag.platz}
+                  className={`border-b border-gray-50 transition-colors ${eintrag.highlight ? 'bg-primary/5' : 'hover:bg-gray-50'}`}
+                >
+                  <td className="py-3 px-2">
+                    <div className="flex items-center gap-1.5">
+                      <div
+                        className={`w-1 self-stretch rounded-full ${istAufstieg ? 'bg-green-400' : istAbstieg ? 'bg-red-400' : 'bg-transparent'}`}
+                      />
+                      <span
+                        className={`font-bold ${eintrag.highlight ? 'text-primary' : 'text-gray-400'}`}
+                      >
+                        {eintrag.platz}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="py-3 px-2">
+                    <span
+                      className={`font-medium ${eintrag.highlight ? 'text-primary' : 'text-secondary'}`}
+                    >
+                      {eintrag.verein}
+                    </span>
+                  </td>
+                  <td className="py-3 px-2 text-center text-gray-500">{eintrag.spiele}</td>
+                  <td className="py-3 px-2 text-center text-green-600 font-medium">
+                    {eintrag.siege}
+                  </td>
+                  <td className="py-3 px-2 text-center text-red-400 font-medium">
+                    {eintrag.niederlagen}
+                  </td>
+                  <td className="py-3 px-2 text-center text-gray-500 hidden sm:table-cell">
+                    {eintrag.saetze_gewonnen}:{eintrag.saetze_verloren}
+                  </td>
+                  <td className="py-3 px-2 text-center text-gray-500 hidden md:table-cell">
+                    {eintrag.punkte_gewonnen}:{eintrag.punkte_verloren}
+                  </td>
+                  <td className="py-3 px-2 text-center">
+                    <span
+                      className={`font-bold ${eintrag.highlight ? 'text-primary' : 'text-secondary'}`}
+                    >
+                      {eintrag.punkte}
+                    </span>
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>
 
-      <div className="mt-3 flex gap-4 text-xs text-gray-400">
+      <div className="mt-3 flex flex-wrap gap-4 text-xs text-gray-400">
         <span>Sp = Spiele</span>
         <span>S = Siege</span>
         <span>N = Niederlagen</span>
         <span>Pkt = Punkte</span>
+        {aufstieg > 0 && (
+          <span className="flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full bg-green-400 inline-block" /> Aufstieg
+          </span>
+        )}
+        {abstieg > 0 && (
+          <span className="flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full bg-red-400 inline-block" /> Abstieg
+          </span>
+        )}
       </div>
     </div>
   )

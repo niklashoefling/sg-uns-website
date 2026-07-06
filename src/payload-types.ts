@@ -194,6 +194,22 @@ export interface Mannschaften {
   slug: string;
   name: string;
   liga?: string | null;
+  /**
+   * SAMS Liga-UUID für Spielplan und Tabelle (z.B. aus vvrp.de)
+   */
+  samsLeagueUuid?: string | null;
+  /**
+   * SAMS Team-UUID für gefilterten Spielplan (z.B. aus vvrp.de/api/v2/leagues/{uuid}/teams)
+   */
+  samsTeamUuid?: string | null;
+  /**
+   * Anzahl Aufstiegsplätze in dieser Liga (z.B. 2)
+   */
+  tabelleAufstieg?: number | null;
+  /**
+   * Anzahl Abstiegsplätze in dieser Liga (z.B. 3)
+   */
+  tabelleAbstieg?: number | null;
   beschreibung: string;
   /**
    * Trainer dieser Mannschaft (werden beim User gesetzt)
@@ -466,6 +482,10 @@ export interface MannschaftenSelect<T extends boolean = true> {
   slug?: T;
   name?: T;
   liga?: T;
+  samsLeagueUuid?: T;
+  samsTeamUuid?: T;
+  tabelleAufstieg?: T;
+  tabelleAbstieg?: T;
   beschreibung?: T;
   trainer?: T;
   email?: T;

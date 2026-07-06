@@ -17,11 +17,28 @@ export type Spieler = {
 }
 
 export type Spiel = {
+  uuid?: string
   datum: string
   uhrzeit: string
   heimspiel: boolean
   gegner: string
   ergebnis?: string
+}
+
+export type SpielDetail = {
+  uuid: string
+  datum: string
+  uhrzeit: string
+  heimteam: string
+  gastteam: string
+  ergebnis?: string
+  saetze?: { nummer: number; punkte: string }[]
+  ort?: {
+    name: string
+    adresse?: string
+    mapsUrl?: string
+  }
+  ligaName?: string
 }
 
 export type Mannschaft = {
@@ -32,8 +49,6 @@ export type Mannschaft = {
   trainer: { name: string; email?: string }[]
   training: { tag: string; uhrzeit: string; halle?: string }[]
   beschreibung: string
-  spieler: Spieler[]
-  spielplan: Spiel[]
 }
 
 export type Tabellenplatz = {
@@ -55,4 +70,6 @@ export type Tabelle = {
   saison: string
   stand: string
   eintraege: Tabellenplatz[]
+  aufstieg?: number // Anzahl Aufstiegsplätze
+  abstieg?: number // Anzahl Abstiegsplätze
 }

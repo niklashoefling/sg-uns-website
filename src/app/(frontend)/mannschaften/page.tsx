@@ -44,8 +44,6 @@ export default async function MannschaftenPage() {
         halle: resolveHalleName(t.halle) ?? undefined,
       })),
       beschreibung: m.beschreibung,
-      spieler: [],
-      spielplan: [],
     }
   })
 

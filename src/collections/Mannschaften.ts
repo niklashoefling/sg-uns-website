@@ -48,6 +48,35 @@ export const Mannschaften: CollectionConfig = {
       type: 'text',
     },
     {
+      name: 'samsLeagueUuid',
+      type: 'text',
+      admin: {
+        description: 'SAMS Liga-UUID für Spielplan und Tabelle (z.B. aus vvrp.de)',
+      },
+    },
+    {
+      name: 'samsTeamUuid',
+      type: 'text',
+      admin: {
+        description:
+          'SAMS Team-UUID für gefilterten Spielplan (z.B. aus vvrp.de/api/v2/leagues/{uuid}/teams)',
+      },
+    },
+    {
+      name: 'tabelleAufstieg',
+      type: 'number',
+      admin: {
+        description: 'Anzahl Aufstiegsplätze in dieser Liga (z.B. 2)',
+      },
+    },
+    {
+      name: 'tabelleAbstieg',
+      type: 'number',
+      admin: {
+        description: 'Anzahl Abstiegsplätze in dieser Liga (z.B. 3)',
+      },
+    },
+    {
       name: 'beschreibung',
       type: 'textarea',
       required: true,

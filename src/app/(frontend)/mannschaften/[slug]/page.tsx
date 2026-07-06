@@ -11,6 +11,8 @@ import {
   extractJoinDocs,
 } from '@/lib/utils'
 import LigaTabelle from '@/components/sections/LigaTabelle'
+import { fetchSpielplan, fetchTabelle, fetchTeamName } from '@/lib/sams'
+import type { Spiel, Tabelle } from '@/lib/mannschaften'
 import type { SpielerData } from '@/components/cards/PlayerCard'
 import KaderSection from '@/components/sections/KaderSection'
 import SpielplanSection from '@/components/sections/SpielplanSection'
@@ -119,15 +121,6 @@ function TeamDetails({
   )
 }
 
-// Spielplan kommt später per SAMS API
-const spielplan: {
-  datum: string
-  uhrzeit: string
-  heimspiel: boolean
-  gegner: string
-  ergebnis?: string
-}[] = []
-
 export default async function MannschaftPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
 
@@ -144,6 +137,18 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
   const team = docs[0]
   const teamfotoUrl = resolveMediaUrl(team.teamfoto)
 
+  type TeamWithSams = typeof team & {
+    samsLeagueUuid?: string
+    samsTeamUuid?: string
+    tabelleAufstieg?: number
+    tabelleAbstieg?: number
+  }
+  const t = team as unknown as TeamWithSams
+  const samsLeagueUuid = t.samsLeagueUuid ?? null
+  const samsTeamUuid = t.samsTeamUuid ?? null
+  const tabelleAufstieg = t.tabelleAufstieg
+  const tabelleAbstieg = t.tabelleAbstieg
+
   const spieler: SpielerData[] = (team.spieler ?? []).map((s) =>
     toSpielerData(s, (foto) => resolveMediaUrl(foto)),
   )
@@ -152,11 +157,27 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
     team.trainer,
   ).map(mapUserToTrainerData)
 
-  const training = (team.training ?? []).map((t) => ({
-    tag: t.tag,
-    uhrzeit: t.uhrzeit,
-    halle: resolveHalleName(t.halle),
+  const training = (team.training ?? []).map((tr) => ({
+    tag: tr.tag,
+    uhrzeit: tr.uhrzeit,
+    halle: resolveHalleName(tr.halle),
   }))
+  let ergebnisse: Spiel[] = []
+  let naechsteSpiele: Spiel[] = []
+  let tabelle: Tabelle | null = null
+  let samsTeamName = team.name
+  if (samsLeagueUuid && samsTeamUuid) {
+    ;[{ ergebnisse, naechsteSpiele }, tabelle, samsTeamName] = await Promise.all([
+      fetchSpielplan(samsTeamUuid, samsLeagueUuid, { limit: 3 }).catch(() => ({
+        ergebnisse: [],
+        naechsteSpiele: [],
+      })),
+      fetchTabelle(samsLeagueUuid, { aufstieg: tabelleAufstieg, abstieg: tabelleAbstieg }).catch(
+        () => null,
+      ),
+      fetchTeamName(samsTeamUuid).catch(() => team.name),
+    ])
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -202,8 +223,12 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
           </div>
         )}
         {spieler.length > 0 && <KaderSection spieler={spieler} />}
-        {spielplan.length > 0 && <SpielplanSection spielplan={spielplan} />}
-        {spielplan.length > 0 && <LigaTabelle tabelle={null} />}
+        <SpielplanSection
+          ergebnisse={ergebnisse}
+          naechsteSpiele={naechsteSpiele}
+          teamName={samsTeamName}
+        />
+        <LigaTabelle tabelle={tabelle} />
       </div>
     </div>
   )
