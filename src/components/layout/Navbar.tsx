@@ -54,11 +54,11 @@ export default function Navbar() {
     if (!openDropdown) return
     const el = getDropdownRefs().get(openDropdown)
     const handler = (e: MouseEvent) => {
-      if (el && !el.contains(e.target as Node)) handleDropdownClose()
+      if (el && !el.contains(e.target as Node)) setOpenDropdown(null)
     }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
-  }, [openDropdown, handleDropdownClose])
+  }, [openDropdown])
 
   return (
     <header

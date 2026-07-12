@@ -21,10 +21,10 @@ export default async function HallenPage() {
   const mannschaftenByHalle = mannschaften.reduce<Record<string, { name: string; slug: string }[]>>(
     (acc, m) => {
       const halleIds = new Set(
-        (m.training ?? [])
-          .map((t) => (typeof t.halle === 'object' ? t.halle?.id : t.halle))
-          .filter(Boolean)
-          .map(String),
+        (m.training ?? []).flatMap((t) => {
+          const id = typeof t.halle === 'object' ? t.halle?.id : t.halle
+          return id != null ? [String(id)] : []
+        }),
       )
       for (const key of halleIds) {
         acc[key] = [...(acc[key] ?? []), { name: m.name, slug: m.slug }]

@@ -162,22 +162,25 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
     uhrzeit: tr.uhrzeit,
     halle: resolveHalleName(tr.halle),
   }))
-  let ergebnisse: Spiel[] = []
-  let naechsteSpiele: Spiel[] = []
-  let tabelle: Tabelle | null = null
-  let samsTeamName = team.name
-  if (team.liga && samsLeagueUuid && samsTeamUuid) {
-    ;[{ ergebnisse, naechsteSpiele }, tabelle, samsTeamName] = await Promise.all([
-      fetchSpielplan(samsTeamUuid, samsLeagueUuid, { limit: 3 }).catch(() => ({
-        ergebnisse: [],
-        naechsteSpiele: [],
-      })),
-      fetchTabelle(samsLeagueUuid, { aufstieg: tabelleAufstieg, abstieg: tabelleAbstieg }).catch(
-        () => null,
-      ),
-      fetchTeamName(samsTeamUuid).catch(() => team.name),
-    ])
-  }
+  const samsData =
+    team.liga && samsLeagueUuid && samsTeamUuid
+      ? await Promise.all([
+          fetchSpielplan(samsTeamUuid, samsLeagueUuid, { limit: 3 }).catch(() => ({
+            ergebnisse: [] as Spiel[],
+            naechsteSpiele: [] as Spiel[],
+          })),
+          fetchTabelle(samsLeagueUuid, {
+            aufstieg: tabelleAufstieg,
+            abstieg: tabelleAbstieg,
+          }).catch(() => null),
+          fetchTeamName(samsTeamUuid).catch(() => team.name),
+        ])
+      : null
+
+  const ergebnisse: Spiel[] = samsData?.[0]?.ergebnisse ?? []
+  const naechsteSpiele: Spiel[] = samsData?.[0]?.naechsteSpiele ?? []
+  const tabelle: Tabelle | null = samsData?.[1] ?? null
+  const samsTeamName: string = samsData?.[2] ?? team.name
 
   return (
     <div className="min-h-screen bg-white">

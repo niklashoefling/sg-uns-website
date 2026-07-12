@@ -11,6 +11,11 @@ export const metadata: Metadata = {
   description: 'Spielplan und Ergebnisse aller Mannschaften der SG U.N.S. Rheinhessen.',
 }
 
+function parseDate(d: string) {
+  const [day, month, year] = d.split('.')
+  return new Date(+year, +month - 1, +day).getTime()
+}
+
 type SpielMitMannschaft = Spiel & {
   mannschaft: string
   samsTeamName: string
@@ -52,11 +57,6 @@ export default async function SpielePage({
       return { team: t, spielplan, samsTeamName }
     }),
   )
-
-  const parseDate = (d: string) => {
-    const [day, month, year] = d.split('.')
-    return new Date(+year, +month - 1, +day).getTime()
-  }
 
   const filtered = filterSlug ? results.filter((r) => r.team.slug === filterSlug) : results
 

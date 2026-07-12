@@ -1,5 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import Link from 'next/link'
 import PageHeader from '@/components/layout/PageHeader'
 
 export const dynamic = 'force-dynamic'
@@ -76,12 +77,12 @@ export default async function DatenschutzPage() {
           ))}
           <p className="text-sm text-gray-600 pt-1">
             <span className="font-medium text-gray-800">Impressum:</span>{' '}
-            <a
+            <Link
               href="/impressum"
               className="text-gray-500 underline hover:text-primary transition-colors"
             >
               sgunsrheinhessen.de/impressum
-            </a>
+            </Link>
           </p>
         </section>
 
@@ -264,12 +265,12 @@ export default async function DatenschutzPage() {
           <p className="text-sm leading-relaxed text-gray-600">
             Betroffene Personen können jederzeit die Löschung oder Berichtigung ihrer Daten
             verlangen. Bitte wenden Sie sich dazu über das{' '}
-            <a
+            <Link
               href="/kontakt"
               className="text-gray-500 underline hover:text-primary transition-colors"
             >
               Kontaktformular
-            </a>{' '}
+            </Link>{' '}
             an uns.
           </p>
         </section>
