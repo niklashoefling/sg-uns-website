@@ -46,7 +46,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="de">
-      <body className="antialiased text-gray-900 bg-white overflow-x-hidden">
+      <body className="antialiased text-gray-900 bg-white">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

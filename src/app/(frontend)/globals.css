@@ -7,6 +7,12 @@
   --color-secondary-dark: #152b47;
 }
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
 html {
   scrollbar-gutter: stable;
 }

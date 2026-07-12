@@ -21,16 +21,25 @@ function SpielZeile({ spiel, teamName }: { spiel: Spiel; teamName: string }) {
       ) : (
         <div className="w-2 h-2 rounded-full shrink-0 bg-primary" />
       )}
-      <span className="text-gray-400 w-20 shrink-0">{spiel.datum}</span>
-      <span className="flex-1 text-secondary font-medium truncate">
-        {heimName} – {gastName}
-      </span>
+      <div className="flex-1 min-w-0 flex flex-col sm:flex-row sm:items-center sm:gap-3">
+        <span className="text-gray-400 shrink-0">
+          {spiel.datum}
+          {!spiel.ergebnis && spiel.uhrzeit && (
+            <span className="ml-1 sm:hidden">{spiel.uhrzeit}</span>
+          )}
+        </span>
+        <span className="text-secondary font-medium truncate">
+          {heimName} – {gastName}
+        </span>
+      </div>
       {spiel.ergebnis ? (
         <span className={`font-bold shrink-0 ${gewonnen ? 'text-green-600' : 'text-red-500'}`}>
           {spiel.ergebnis}
         </span>
       ) : (
-        spiel.uhrzeit && <span className="text-gray-400 shrink-0">{spiel.uhrzeit}</span>
+        spiel.uhrzeit && (
+          <span className="text-gray-400 shrink-0 hidden sm:inline">{spiel.uhrzeit}</span>
+        )
       )}
     </div>
   )
