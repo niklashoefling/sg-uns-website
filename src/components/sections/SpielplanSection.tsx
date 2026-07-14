@@ -28,7 +28,7 @@ function SpielZeile({ spiel, teamName }: { spiel: Spiel; teamName: string }) {
             <span className="ml-1 sm:hidden">{spiel.uhrzeit}</span>
           )}
         </span>
-        <span className="text-secondary font-medium truncate">
+        <span className="text-secondary font-medium break-words min-w-0">
           {heimName} – {gastName}
         </span>
       </div>
