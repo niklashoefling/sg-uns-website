@@ -282,16 +282,15 @@ export default async function DatenschutzPage() {
             Spam-Schutz durch Cloudflare Turnstile
           </h2>
           <p className="text-sm leading-relaxed text-gray-600">
-            Unser Kontaktformular ist mit „Cloudflare Turnstile" geschützt, einem
-            Spam-Schutzdienst der Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107,
-            USA. Turnstile analysiert das Verhalten beim Ausfüllen des Formulars, um automatisierte
-            Anfragen (Bots) von menschlichen Nutzern zu unterscheiden. Es werden dabei keine Cookies
-            gesetzt. Cloudflare verarbeitet hierbei technische Daten wie IP-Adresse,
-            Browser-Informationen und Interaktionsdaten. Rechtsgrundlage ist Art.&nbsp;6
-            Abs.&nbsp;1 lit.&nbsp;f DSGVO (berechtigtes Interesse am Schutz vor Missbrauch). Da
-            Cloudflare ein US-amerikanisches Unternehmen ist, stützt sich die Übermittlung auf
-            Standardvertragsklauseln gemäß Art.&nbsp;46 Abs.&nbsp;2 lit.&nbsp;c DSGVO. Weitere
-            Informationen:{' '}
+            Unser Kontaktformular ist mit „Cloudflare Turnstile" geschützt, einem Spam-Schutzdienst
+            der Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA. Turnstile
+            analysiert das Verhalten beim Ausfüllen des Formulars, um automatisierte Anfragen (Bots)
+            von menschlichen Nutzern zu unterscheiden. Es werden dabei keine Cookies gesetzt.
+            Cloudflare verarbeitet hierbei technische Daten wie IP-Adresse, Browser-Informationen
+            und Interaktionsdaten. Rechtsgrundlage ist Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO
+            (berechtigtes Interesse am Schutz vor Missbrauch). Da Cloudflare ein US-amerikanisches
+            Unternehmen ist, stützt sich die Übermittlung auf Standardvertragsklauseln gemäß
+            Art.&nbsp;46 Abs.&nbsp;2 lit.&nbsp;c DSGVO. Weitere Informationen:{' '}
             <a
               href="https://www.cloudflare.com/privacypolicy/"
               target="_blank"

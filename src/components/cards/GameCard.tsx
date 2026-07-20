@@ -30,16 +30,12 @@ export default function GameCard({ spiel, teamName, label }: GameCardProps) {
       <div className="flex-1 min-w-0 flex flex-col sm:flex-row sm:items-center sm:gap-3">
         <span className="text-gray-400 shrink-0">
           {spiel.datum}
-          {!spiel.ergebnis && spiel.uhrzeit && (
-            <span className="ml-1">· {spiel.uhrzeit}</span>
-          )}
+          {!spiel.ergebnis && spiel.uhrzeit && <span className="ml-1">· {spiel.uhrzeit}</span>}
         </span>
         <span className="text-secondary font-medium wrap-break-word min-w-0">
           {heimName} – {gastName}
         </span>
-        {label && (
-          <span className="text-xs text-gray-400 shrink-0 hidden sm:inline">{label}</span>
-        )}
+        {label && <span className="text-xs text-gray-400 shrink-0 hidden sm:inline">{label}</span>}
       </div>
       {spiel.ergebnis && (
         <span className={`font-bold shrink-0 ${gewonnen ? 'text-green-600' : 'text-red-500'}`}>
