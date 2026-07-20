@@ -2,6 +2,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import Link from 'next/link'
 import PageHeader from '@/components/layout/PageHeader'
+import { obfuscateEmail } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
 
@@ -68,9 +69,8 @@ export default async function DatenschutzPage() {
                   <a
                     href={`mailto:${verein.email}`}
                     className="text-gray-500 underline hover:text-primary transition-colors"
-                  >
-                    {verein.email}
-                  </a>
+                    dangerouslySetInnerHTML={{ __html: obfuscateEmail(verein.email) }}
+                  />
                 </p>
               )}
             </div>
@@ -97,9 +97,8 @@ export default async function DatenschutzPage() {
             <a
               href={`mailto:${kontaktEmail}`}
               className="text-gray-500 underline hover:text-primary transition-colors"
-            >
-              {kontaktEmail}
-            </a>
+              dangerouslySetInnerHTML={{ __html: obfuscateEmail(kontaktEmail) }}
+            />
           ) : (
             <p className="text-sm text-gray-400 italic">Wird in Kürze ergänzt.</p>
           )}
@@ -272,6 +271,36 @@ export default async function DatenschutzPage() {
               Kontaktformular
             </Link>{' '}
             an uns.
+          </p>
+        </section>
+
+        <div className="border-t border-gray-100" />
+
+        {/* Turnstile */}
+        <section className="space-y-2">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400">
+            Spam-Schutz durch Cloudflare Turnstile
+          </h2>
+          <p className="text-sm leading-relaxed text-gray-600">
+            Unser Kontaktformular ist mit „Cloudflare Turnstile" geschützt, einem
+            Spam-Schutzdienst der Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107,
+            USA. Turnstile analysiert das Verhalten beim Ausfüllen des Formulars, um automatisierte
+            Anfragen (Bots) von menschlichen Nutzern zu unterscheiden. Es werden dabei keine Cookies
+            gesetzt. Cloudflare verarbeitet hierbei technische Daten wie IP-Adresse,
+            Browser-Informationen und Interaktionsdaten. Rechtsgrundlage ist Art.&nbsp;6
+            Abs.&nbsp;1 lit.&nbsp;f DSGVO (berechtigtes Interesse am Schutz vor Missbrauch). Da
+            Cloudflare ein US-amerikanisches Unternehmen ist, stützt sich die Übermittlung auf
+            Standardvertragsklauseln gemäß Art.&nbsp;46 Abs.&nbsp;2 lit.&nbsp;c DSGVO. Weitere
+            Informationen:{' '}
+            <a
+              href="https://www.cloudflare.com/privacypolicy/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 underline hover:text-primary transition-colors"
+            >
+              Datenschutzerklärung von Cloudflare
+            </a>
+            .
           </p>
         </section>
 

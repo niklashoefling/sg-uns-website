@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Turnstile from 'react-turnstile'
 import { FormInput, FormSelect, FormTextarea } from '@/components/ui/FormFields'
 
 type FormState = 'idle' | 'loading' | 'success' | 'error'
@@ -22,6 +23,7 @@ export default function ContactForm({ anliegen }: Props) {
   })
   const [datenschutz, setDatenschutz] = useState(false)
   const [touched, setTouched] = useState<Record<string, boolean>>({})
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
 
   const isComplete =
     values.name.trim() !== '' &&
@@ -29,7 +31,8 @@ export default function ContactForm({ anliegen }: Props) {
     values.anliegen !== '' &&
     values.betreff.trim() !== '' &&
     values.nachricht.trim() !== '' &&
-    datenschutz
+    datenschutz &&
+    captchaToken !== null
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
@@ -57,9 +60,11 @@ export default function ContactForm({ anliegen }: Props) {
     if (!isComplete) return
     setState('loading')
     try {
+      const formData = new FormData(e.currentTarget)
+      formData.set('cf-turnstile-response', captchaToken!)
       const res = await fetch('/api/kontakt', {
         method: 'POST',
-        body: new FormData(e.currentTarget),
+        body: formData,
       })
       setState(res.ok ? 'success' : 'error')
     } catch {
@@ -213,6 +218,14 @@ export default function ContactForm({ anliegen }: Props) {
             gelesen und bin mit der Verarbeitung meiner Daten einverstanden.
           </span>
         </label>
+
+        <Turnstile
+          sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITEKEY!}
+          onSuccess={(token) => setCaptchaToken(token)}
+          onExpire={() => setCaptchaToken(null)}
+          onError={() => setCaptchaToken(null)}
+          theme="light"
+        />
 
         <button
           type="submit"

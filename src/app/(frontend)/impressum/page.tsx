@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import PageHeader from '@/components/layout/PageHeader'
+import { obfuscateEmail } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
 
@@ -56,9 +57,8 @@ export default async function ImpressumPage() {
                     <a
                       href={`mailto:${verein.email}`}
                       className="text-gray-500 underline hover:text-primary transition-colors"
-                    >
-                      {verein.email}
-                    </a>
+                      dangerouslySetInnerHTML={{ __html: obfuscateEmail(verein.email) }}
+                    />
                   </p>
                 )}
                 {verein.website && (
@@ -128,9 +128,8 @@ export default async function ImpressumPage() {
             <a
               href={`mailto:${kontaktEmail}`}
               className="text-gray-500 underline hover:text-primary transition-colors"
-            >
-              {kontaktEmail}
-            </a>
+              dangerouslySetInnerHTML={{ __html: obfuscateEmail(kontaktEmail) }}
+            />
           ) : (
             <p className="text-sm text-gray-400 italic">Wird in Kürze ergänzt.</p>
           )}

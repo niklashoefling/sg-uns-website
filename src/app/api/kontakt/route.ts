@@ -2,8 +2,26 @@ import { NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
+async function verifyCaptcha(token: string): Promise<boolean> {
+  const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      secret: process.env.TURNSTILE_SECRET,
+      response: token,
+    }),
+  })
+  const data = await res.json()
+  return data.success === true
+}
+
 export async function POST(req: Request) {
   const data = await req.formData()
+
+  const solution = data.get('cf-turnstile-response')?.toString() ?? ''
+  if (!solution || !(await verifyCaptcha(solution))) {
+    return NextResponse.json({ ok: false, error: 'captcha' }, { status: 400 })
+  }
 
   const name = data.get('name')?.toString() ?? '-'
   const email = data.get('email')?.toString() ?? '-'

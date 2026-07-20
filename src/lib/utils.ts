@@ -64,6 +64,13 @@ export function resolveHalleName(halle: unknown): string | null {
   return null
 }
 
+export function obfuscateEmail(email: string): string {
+  return email
+    .split('')
+    .map((c) => `&#${c.charCodeAt(0)};`)
+    .join('')
+}
+
 export function extractJoinDocs<T>(join: unknown): T[] {
   if (join && typeof join === 'object' && 'docs' in join) {
     return (join as { docs: T[] }).docs ?? []
