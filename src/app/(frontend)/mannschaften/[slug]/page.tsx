@@ -232,6 +232,7 @@ export default async function MannschaftPage({ params }: { params: Promise<{ slu
               ergebnisse={ergebnisse}
               naechsteSpiele={naechsteSpiele}
               teamName={samsTeamName}
+              kalenderSlug={team.slug}
             />
             <LigaTabelle tabelle={tabelle} />
           </>

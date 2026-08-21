@@ -96,11 +96,6 @@ Live game data is fetched from the [SAMS REST API v2](https://www.vvrp.de/api/v2
 - Countdown to next home match
 - Placement: homepage hero or dedicated section
 
-**Calendar export**
-
-- `.ics` export from `/spiele`
-- Standard format, importable into Google/Apple Calendar
-
 ## Content Governance
 
 **Roles**
@@ -108,9 +103,6 @@ Live game data is fetched from the [SAMS REST API v2](https://www.vvrp.de/api/v2
 - Coach: team content (own team only)
 - Editor: news articles
 - Admin: full access to all collections
-
-**Principle**
-Content is part of club operations. Rule: at least one post after every match.
 
 ## Goal
 

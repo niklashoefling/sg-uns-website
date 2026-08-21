@@ -25,7 +25,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     { url: `${BASE_URL}/hallen`, priority: 0.6, changeFrequency: 'monthly', lastModified: now },
     { url: `${BASE_URL}/kontakt`, priority: 0.6, changeFrequency: 'yearly', lastModified: now },
-    { url: `${BASE_URL}/spiele`, priority: 0.7, changeFrequency: 'daily', lastModified: now },
     { url: `${BASE_URL}/impressum`, priority: 0.3, changeFrequency: 'yearly', lastModified: now },
     { url: `${BASE_URL}/datenschutz`, priority: 0.3, changeFrequency: 'yearly', lastModified: now },
   ]

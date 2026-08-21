@@ -11,7 +11,6 @@ export const navLinks = [
     ],
   },
   { href: '/aktuelles', label: 'Aktuelles' },
-  { href: '/spiele', label: 'Spiele' },
 ]
 
 export const WOCHENTAGE = [

@@ -28,7 +28,7 @@ type SamsTeamEmbed = {
   name: string
 }
 
-type SamsLeagueMatch = {
+export type SamsLeagueMatch = {
   uuid: string
   date?: string
   time?: string
@@ -70,7 +70,7 @@ type SamsRankingEntry = {
 
 // ---- API helper ----
 
-async function samsGet<T>(path: string, params?: Record<string, string>): Promise<T> {
+export async function samsGet<T>(path: string, params?: Record<string, string>): Promise<T> {
   const apiKey = process.env.SAMS_API_KEY
   if (!apiKey) throw new Error('SAMS_API_KEY not set')
 
@@ -88,7 +88,7 @@ async function samsGet<T>(path: string, params?: Record<string, string>): Promis
   return res.json() as Promise<T>
 }
 
-async function samsGetAll<T>(path: string, params?: Record<string, string>): Promise<T[]> {
+export async function samsGetAll<T>(path: string, params?: Record<string, string>): Promise<T[]> {
   const all: T[] = []
   let page = 0
   while (true) {
@@ -119,7 +119,7 @@ function formatTime(timeStr?: string): string {
   return timeStr.slice(0, 5)
 }
 
-function resolveTeams(m: SamsLeagueMatch): { heimteam: string; gastteam: string } {
+export function resolveTeams(m: SamsLeagueMatch): { heimteam: string; gastteam: string } {
   const t1 = m._embedded?.team1?.name ?? m.team1Description ?? 'Team 1'
   const t2 = m._embedded?.team2?.name ?? m.team2Description ?? 'Team 2'
   // host is a UUID — match against embedded team UUIDs
