@@ -122,7 +122,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ slug: s
     'PRODID:-//SG U.N.S. Rheinhessen//Spielplan//DE',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
-    `X-WR-CALNAME:${team.name} – Spielplan`,
+    `X-WR-CALNAME:SG U.N.S. Rheinhessen – ${team.name}`,
     'X-WR-CALDESC:Spielplan der SG U.N.S. Rheinhessen',
     'X-WR-TIMEZONE:Europe/Berlin',
     ...vevents,
