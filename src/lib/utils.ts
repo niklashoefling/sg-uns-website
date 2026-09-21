@@ -3,7 +3,19 @@ import type { Media } from '@/payload-types'
 
 export function resolveMediaUrl(obj: unknown): string | null {
   if (obj && typeof obj === 'object') {
-    return (obj as Media).url ?? null
+    const url = (obj as Media).url ?? null
+    if (!url) return null
+    // Strip the server origin so Next.js Image uses a relative path (avoids
+    // the "resolved to private ip" error when the optimizer fetches localhost).
+    try {
+      const parsed = new URL(url)
+      if (parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1') {
+        return parsed.pathname + parsed.search
+      }
+    } catch {
+      // Already a relative URL
+    }
+    return url
   }
   return null
 }
