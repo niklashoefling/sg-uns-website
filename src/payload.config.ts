@@ -71,6 +71,7 @@ export default buildConfig({
     vercelBlobStorage({
       enabled: !!process.env.BLOB_READ_WRITE_TOKEN,
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
+      baseUrl: `https://${process.env.BLOB_STORE_ID ?? 'store_DwVs3Doc6iCoo45x'}.public.blob.vercel-storage.com`,
       collections: {
         media: true,
       },
