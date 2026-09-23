@@ -34,10 +34,10 @@ export const stammvereine = [
     url: '',
     logo: '/vereine/SCS_Logo.png',
   },
-  { 
-    name: 'TV Nieder-Olm', 
-    url: 'https://www.tvno.de', 
-    logo: '/vereine/TVNO_Logo-Volleyball.png' 
+  {
+    name: 'TV Nieder-Olm',
+    url: 'https://www.tvno.de',
+    logo: '/vereine/TVNO_Logo-Volleyball.png',
   },
 ]
 
