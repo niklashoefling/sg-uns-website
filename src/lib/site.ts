@@ -31,10 +31,14 @@ export const stammvereine = [
   },
   {
     name: 'SC Schornsheim',
-    url: 'https://www.scs97.de/abteilungen/volleyball',
+    url: '',
     logo: '/vereine/SCS_Logo.png',
   },
-  { name: 'TV Nieder-Olm', url: 'https://www.tvno.de', logo: '/vereine/TVNO_Logo-Volleyball.png' },
+  { 
+    name: 'TV Nieder-Olm', 
+    url: 'https://www.tvno.de', 
+    logo: '/vereine/TVNO_Logo-Volleyball.png' 
+  },
 ]
 
 const FLAGGEN: Record<string, string> = {
