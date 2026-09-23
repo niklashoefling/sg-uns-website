@@ -26,7 +26,7 @@ export const WOCHENTAGE = [
 export const stammvereine = [
   {
     name: 'TV Undenheim',
-    url: 'https://tv-undenheim.de/volleyball/',
+    url: '',
     logo: '/vereine/TVU_Logo.png',
   },
   {
